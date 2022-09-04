@@ -1,12 +1,9 @@
-#ifndef _MATRICES_H
-#define _MATRICES_H
+//
+// Guilherme Wagner Correa
+// Cartão: 00303992
+//
 
-#include <cstdio>
-#include <cstdlib>
-
-#include <glm/mat4x4.hpp>
-#include <glm/vec4.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "wrong/matrices.h"
 
 // Esta função Matrix() auxilia na criação de matrizes usando a biblioteca GLM.
 // Note que em OpenGL (e GLM) as matrizes são definidas como "column-major",
@@ -28,17 +25,17 @@
 // Para conseguirmos definir matrizes através de suas LINHAS, a função Matrix()
 // computa a transposta usando os elementos passados por parâmetros.
 glm::mat4 Matrix(
-    float m00, float m01, float m02, float m03, // LINHA 1
-    float m10, float m11, float m12, float m13, // LINHA 2
-    float m20, float m21, float m22, float m23, // LINHA 3
-    float m30, float m31, float m32, float m33  // LINHA 4
+        float m00, float m01, float m02, float m03, // LINHA 1
+        float m10, float m11, float m12, float m13, // LINHA 2
+        float m20, float m21, float m22, float m23, // LINHA 3
+        float m30, float m31, float m32, float m33  // LINHA 4
 )
 {
     return glm::mat4(
-        m00, m10, m20, m30, // COLUNA 1
-        m01, m11, m21, m31, // COLUNA 2
-        m02, m12, m22, m32, // COLUNA 3
-        m03, m13, m23, m33  // COLUNA 4
+            m00, m10, m20, m30, // COLUNA 1
+            m01, m11, m21, m31, // COLUNA 2
+            m02, m12, m22, m32, // COLUNA 3
+            m03, m13, m23, m33  // COLUNA 4
     );
 }
 
@@ -46,10 +43,10 @@ glm::mat4 Matrix(
 glm::mat4 Matrix_Identity()
 {
     return Matrix(
-        1.0f , 0.0f , 0.0f , 0.0f , // LINHA 1
-        0.0f , 1.0f , 0.0f , 0.0f , // LINHA 2
-        0.0f , 0.0f , 1.0f , 0.0f , // LINHA 3
-        0.0f , 0.0f , 0.0f , 1.0f   // LINHA 4
+            1.0f , 0.0f , 0.0f , 0.0f , // LINHA 1
+            0.0f , 1.0f , 0.0f , 0.0f , // LINHA 2
+            0.0f , 0.0f , 1.0f , 0.0f , // LINHA 3
+            0.0f , 0.0f , 0.0f , 1.0f   // LINHA 4
     );
 }
 
@@ -62,10 +59,10 @@ glm::mat4 Matrix_Identity()
 glm::mat4 Matrix_Translate(float tx, float ty, float tz)
 {
     return Matrix(
-        1.0f , 0.0f , 0.0f , tx ,
-        0.0f , 1.0f , 0.0f , ty ,
-        0.0f , 0.0f , 1.0f , tz ,
-        0.0f , 0.0f , 0.0f , 1.0f
+            1.0f , 0.0f , 0.0f , tx ,
+            0.0f , 1.0f , 0.0f , ty ,
+            0.0f , 0.0f , 1.0f , tz ,
+            0.0f , 0.0f , 0.0f , 1.0f
     );
 }
 
@@ -78,10 +75,10 @@ glm::mat4 Matrix_Translate(float tx, float ty, float tz)
 glm::mat4 Matrix_Scale(float sx, float sy, float sz)
 {
     return Matrix(
-        sx   , 0.0f , 0.0f , 0.0f ,
-        0.0f , sy   , 0.0f , 0.0f ,
-        0.0f , 0.0f , sz   , 0.0f ,
-        0.0f , 0.0f , 0.0f , 1.0f
+            sx   , 0.0f , 0.0f , 0.0f ,
+            0.0f , sy   , 0.0f , 0.0f ,
+            0.0f , 0.0f , sz   , 0.0f ,
+            0.0f , 0.0f , 0.0f , 1.0f
     );
 }
 
@@ -98,10 +95,10 @@ glm::mat4 Matrix_Rotate_X(float angle)
     float c = cos(angle);
     float s = sin(angle);
     return Matrix(
-        1.0f , 0.0f , 0.0f , 0.0f ,
-        0.0f ,  c   , -s   , 0.0f ,
-        0.0f ,  s   ,  c   , 0.0f ,
-        0.0f , 0.0f , 0.0f , 1.0f
+            1.0f , 0.0f , 0.0f , 0.0f ,
+            0.0f ,  c   , -s   , 0.0f ,
+            0.0f ,  s   ,  c   , 0.0f ,
+            0.0f , 0.0f , 0.0f , 1.0f
     );
 }
 
@@ -118,10 +115,10 @@ glm::mat4 Matrix_Rotate_Y(float angle)
     float c = cos(angle);
     float s = sin(angle);
     return Matrix(
-         c   , 0.0f ,  s   , 0.0f ,
-        0.0f , 1.0f , 0.0f , 0.0f ,
-        -s   , 0.0f ,  c   , 0.0f ,
-        0.0f , 0.0f , 0.0f , 1.0f
+            c   , 0.0f ,  s   , 0.0f ,
+            0.0f , 1.0f , 0.0f , 0.0f ,
+            -s   , 0.0f ,  c   , 0.0f ,
+            0.0f , 0.0f , 0.0f , 1.0f
     );
 }
 
@@ -138,10 +135,10 @@ glm::mat4 Matrix_Rotate_Z(float angle)
     float c = cos(angle);
     float s = sin(angle);
     return Matrix(
-         c   , -s   , 0.0f , 0.0f ,
-         s   ,  c   , 0.0f , 0.0f ,
-        0.0f , 0.0f , 1.0f , 0.0f ,
-        0.0f , 0.0f , 0.0f , 1.0f
+            c   , -s   , 0.0f , 0.0f ,
+            s   ,  c   , 0.0f , 0.0f ,
+            0.0f , 0.0f , 1.0f , 0.0f ,
+            0.0f , 0.0f , 0.0f , 1.0f
     );
 }
 
@@ -172,10 +169,10 @@ glm::mat4 Matrix_Rotate(float angle, glm::vec4 axis)
     float vz = v.z;
 
     return Matrix(
-        vx*vx*(1.0f-c)+c    , vx*vy*(1.0f-c)-vz*s , vx*vz*(1-c)+vy*s , 0.0f ,
-        vx*vy*(1.0f-c)+vz*s , vy*vy*(1.0f-c)+c    , vy*vz*(1-c)-vx*s , 0.0f ,
-        vx*vz*(1-c)-vy*s    , vy*vz*(1-c)+vx*s    , vz*vz*(1.0f-c)+c , 0.0f ,
-        0.0f                , 0.0f                , 0.0f             , 1.0f
+            vx*vx*(1.0f-c)+c    , vx*vy*(1.0f-c)-vz*s , vx*vz*(1-c)+vy*s , 0.0f ,
+            vx*vy*(1.0f-c)+vz*s , vy*vy*(1.0f-c)+c    , vy*vz*(1-c)-vx*s , 0.0f ,
+            vx*vz*(1-c)-vy*s    , vy*vz*(1-c)+vx*s    , vz*vz*(1.0f-c)+c , 0.0f ,
+            0.0f                , 0.0f                , 0.0f             , 1.0f
     );
 }
 
@@ -191,10 +188,10 @@ glm::vec4 crossproduct(glm::vec4 u, glm::vec4 v)
     float v3 = v.z;
 
     return glm::vec4(
-        u2*v3 - u3*v2, // Primeiro coeficiente
-        u3*v1 - u1*v3, // Segundo coeficiente
-        u1*v2 - u2*v1, // Terceiro coeficiente
-        0.0f // w = 0 para vetores.
+            u2*v3 - u3*v2, // Primeiro coeficiente
+            u3*v1 - u1*v3, // Segundo coeficiente
+            u1*v2 - u2*v1, // Terceiro coeficiente
+            0.0f // w = 0 para vetores.
     );
 }
 
@@ -245,10 +242,10 @@ glm::mat4 Matrix_Camera_View(glm::vec4 position_c, glm::vec4 view_vector, glm::v
     float wz = w.z;
 
     return Matrix(
-        ux   , uy   , uz   , -dotproduct(u , position_c - origin_o) ,
-        vx   , vy   , vz   , -dotproduct(v , position_c - origin_o) ,
-        wx   , wy   , wz   , -dotproduct(w , position_c - origin_o) ,
-        0.0f , 0.0f , 0.0f , 1.0f
+            ux   , uy   , uz   , -dotproduct(u , position_c - origin_o) ,
+            vx   , vy   , vz   , -dotproduct(v , position_c - origin_o) ,
+            wx   , wy   , wz   , -dotproduct(w , position_c - origin_o) ,
+            0.0f , 0.0f , 0.0f , 1.0f
     );
 }
 
@@ -256,10 +253,10 @@ glm::mat4 Matrix_Camera_View(glm::vec4 position_c, glm::vec4 view_vector, glm::v
 glm::mat4 Matrix_Orthographic(float l, float r, float b, float t, float n, float f)
 {
     glm::mat4 M = Matrix(
-        2.0f/(r-l) , 0.0f       , 0.0f       , -(r+l)/(r-l) ,
-        0.0f       , 2.0f/(t-b) , 0.0f       , -(t+b)/(t-b) ,
-        0.0f       , 0.0f       , 2.0f/(f-n) , -(f+n)/(f-n) ,
-        0.0f       , 0.0f       , 0.0f       , 1.0f
+            2.0f/(r-l) , 0.0f       , 0.0f       , -(r+l)/(r-l) ,
+            0.0f       , 2.0f/(t-b) , 0.0f       , -(t+b)/(t-b) ,
+            0.0f       , 0.0f       , 2.0f/(f-n) , -(f+n)/(f-n) ,
+            0.0f       , 0.0f       , 0.0f       , 1.0f
     );
 
     return M;
@@ -274,10 +271,10 @@ glm::mat4 Matrix_Perspective(float field_of_view, float aspect, float n, float f
     float l = -r;
 
     glm::mat4 P = Matrix(
-        n    , 0.0f , 0.0f , 0.0f,
-        0.0f , n    , 0.0f , 0.0f,
-        0.0f , 0.0f , n+f  , -f*n,
-        0.0f , 0.0f , 1.0f , 0.0f
+            n    , 0.0f , 0.0f , 0.0f,
+            0.0f , n    , 0.0f , 0.0f,
+            0.0f , 0.0f , n+f  , -f*n,
+            0.0f , 0.0f , 1.0f , 0.0f
     );
 
     // A matriz M é a mesma computada acima em Matrix_Orthographic().
@@ -363,7 +360,3 @@ void PrintMatrixVectorProductDivW(glm::mat4 M, glm::vec4 v)
     printf("[ %+0.2f  %+0.2f  %+0.2f  %+0.2f ][ %+0.2f ]   [ %+0.2f ]            [ %+0.2f ]\n", M[0][2], M[1][2], M[2][2], M[3][2], v[2], r[2], r[2]/w);
     printf("[ %+0.2f  %+0.2f  %+0.2f  %+0.2f ][ %+0.2f ]   [ %+0.2f ]            [ %+0.2f ]\n", M[0][3], M[1][3], M[2][3], M[3][3], v[3], r[3], r[3]/w);
 }
-
-
-#endif // _MATRICES_H
-// vim: set spell spelllang=pt_br :

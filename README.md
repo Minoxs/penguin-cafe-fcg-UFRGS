@@ -58,13 +58,21 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
 - [ ] Animação de Movimento baseada no tempo
   - [ ] Todas as movimentações de objetos (incluindo da câmera) devem ser computadas baseado no tempo.
 
+# Compilação
+
+Para compilar o código com biblioteca estática, basta buildar o target `PenguinCafe`.   
+Caso prefira utilizar bibliotecas dinâmicas, disponibilizamos o target `PenguinCafeDLL`.
+
+Na pasta `lib` estão disponilizadas as bibliotecas. Utilizamos o GLFW do mingw64, porém, caso precise mudar para outro compilador ou plataforma
+basta modificar os arquivos que estão na pasta e o resto da compilação deve funcionar corretamente.
+
 # Tarefas
 
-- [ ] Organizar código atual em diferentes pacotes
-	- [ ] File Handling
-	- [ ] Rendering
-	- [ ] Player Movement
-	- [ ] Apenas código do GLFW na main
+- [X] Organizar código atual em diferentes pacotes
+	- [X] File Handling
+	- [X] Rendering
+	- [X] Player Movement
+	- [X] Apenas código do GLFW na main
 - [ ] Mapear funcionalidades
 
 # Referências

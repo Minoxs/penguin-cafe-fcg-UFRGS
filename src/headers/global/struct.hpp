@@ -6,9 +6,9 @@
 #ifndef PENGUINCAFE_STRUCTS_HEADERS_GLOBALS
 #define PENGUINCAFE_STRUCTS_HEADERS_GLOBALS
 
-#include <GL/gl.h>
-#include "tiny_obj_loader.h"
+#include "glad/glad.h"
 #include "glm/vec3.hpp"
+#include "tiny_obj_loader.h"
 
 // Estrutura que representa um modelo geométrico carregado a partir de um
 // arquivo ".obj". Veja https://en.wikipedia.org/wiki/Wavefront_.obj_file .

@@ -3,7 +3,8 @@
 // Cartão: 00303992
 //
 
-#include "globals/structs.hpp"
+#include "global/struct.hpp"
+#include <stdexcept>
 
 ObjModel::ObjModel(const char *filename, const char *basepath, bool triangulate) {
 	printf("Carregando modelo \"%s\"... ", filename);

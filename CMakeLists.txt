@@ -23,6 +23,8 @@ set(SOURCE_FILES
     src/imp/rendering/shader.cpp
     src/imp/rendering/text.cpp
     src/imp/rendering/window.cpp
+    src/imp/rendering/camera.cpp
+    src/imp/player/movement.cpp
 )
 
 # Executable with static libraries

@@ -28,6 +28,11 @@ float g_AngleX = 0.0f;
 float g_AngleY = 0.0f;
 float g_AngleZ = 0.0f;
 
+bool g_isWPressed = false;
+bool g_isSPressed = false;
+bool g_isAPressed = false;
+bool g_isDPressed = false;
+
 // Função callback chamada sempre que o usuário aperta algum dos botões do mouse
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
@@ -223,6 +228,11 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mod)
 		fprintf(stdout, "Shaders recarregados!\n");
 		fflush(stdout);
 	}
+
+    if (key == GLFW_KEY_W) g_isWPressed = (action != GLFW_RELEASE);
+    if (key == GLFW_KEY_S) g_isSPressed = (action != GLFW_RELEASE);
+    if (key == GLFW_KEY_A) g_isAPressed = (action != GLFW_RELEASE);
+    if (key == GLFW_KEY_D) g_isDPressed = (action != GLFW_RELEASE);
 }
 
 // Definimos o callback para impressão de erros da GLFW no terminal

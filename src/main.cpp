@@ -89,6 +89,7 @@ int main(int argc, char *argv[]) {
 	glfwSetKeyCallback(window, KeyCallback);
 	// ... ou clicar os botões do mouse ...
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	// ... ou movimentar o cursor do mouse em cima da janela ...
 	glfwSetCursorPosCallback(window, CursorPosCallback);
 	// ... ou rolar a "rodinha" do mouse.

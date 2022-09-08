@@ -153,14 +153,10 @@ int main(int argc, char *argv[]) {
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
-    float r = g_CameraDistance;
-    float y = r * sin(g_CameraPhi);
-    float z = r * cos(g_CameraPhi) * cos(g_CameraTheta);
-    float x = r * cos(g_CameraPhi) * sin(g_CameraTheta);
-
+	g_CameraTheta = 3.1415f;
     Camera camera = Camera {
-        glm::vec4(x, y, z, 1.0f),
-        glm::vec4(0.0f, 0.0f, 0.0f,1.0f) - glm::vec4(x, y, z, 1.0f),
+        glm::vec4(0.0f, 0.0f, 5.0f, 1.0f),
+        glm::vec4(0.0f, 0.0f, -1.0f,0.0f),
         glm::vec4(0.0f, 1.0f, 0.0f, 0.0f)
     };
 

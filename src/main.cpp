@@ -159,11 +159,17 @@ int main(int argc, char *argv[]) {
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
+    const glm::vec4 lookAtPoint_c = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+    const glm::vec4 viewVector_c = glm::vec4(0.0f, 0.0f, -1.0f,0.0f);
+    const glm::vec4 position_c = glm::vec4(0.0f, 0.0f, 5.0f, 1.0f);
+
+    // começa com look-at camera
 	g_CameraTheta = 3.1415f;
     Camera camera = Camera {
-        glm::vec4(0.0f, 0.0f, 5.0f, 1.0f),
-        glm::vec4(0.0f, 0.0f, -1.0f,0.0f),
-        glm::vec4(0.0f, 1.0f, 0.0f, 0.0f)
+            position_c,
+            lookAtPoint_c - position_c,
+            glm::vec4(0.0f, 1.0f, 0.0f, 0.0f),
+            lookAtPoint_c
     };
 
     auto prevFrameTime = (float) glfwGetTime();

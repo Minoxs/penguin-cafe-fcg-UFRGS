@@ -34,6 +34,8 @@ bool g_isSPressed = false;
 bool g_isAPressed = false;
 bool g_isDPressed = false;
 
+bool c_pressed = false;
+
 // Função callback chamada sempre que o usuário aperta algum dos botões do mouse
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
     if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
@@ -206,6 +208,10 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mod)
 				glfwSetInputMode(window, GLFW_CURSOR, cursorMode);
 			}
 			return;
+
+        case GLFW_KEY_C:
+            if (action == GLFW_PRESS) g_UseFreeCamera = !g_UseFreeCamera;
+            return;
 
 		default:
 			return;

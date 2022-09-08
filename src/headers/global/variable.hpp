@@ -27,6 +27,8 @@ extern float g_ScreenRatio;
 // Variável que controla o tipo de projeção utilizada: perspectiva ou ortográfica.
 extern bool g_UsePerspectiveProjection;
 
+extern bool g_UseFreeCamera;
+
 // Variável que controla se o texto informativo será mostrado na tela.
 extern bool g_ShowInfoText;
 

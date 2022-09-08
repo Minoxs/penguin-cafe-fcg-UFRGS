@@ -12,6 +12,7 @@ struct Camera {
     glm::vec4 position;
     glm::vec4 viewVector;
     glm::vec4 upVector;
+    glm::vec4 lookAtPoint;
 };
 
 glm::mat4 ComputeCamera(Camera camera);

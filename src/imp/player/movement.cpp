@@ -5,6 +5,7 @@
 #include "player/movement.hpp"
 #include "player/input.hpp"
 #include "matrices.h"
+#include "global/variable.hpp"
 
 void cameraTranslate(Camera* camera, float delta, float speed) {
     glm::vec4 d = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
@@ -42,5 +43,11 @@ void cameraPan(Camera* camera) {
 void ComputeMovement(Camera* camera, float delta) {
     const float speed = 5.0f;
     cameraTranslate(camera, delta, speed);
-	cameraPan(camera);
+
+    if (g_UseFreeCamera) {
+        cameraPan(camera);
+    } else {
+        const glm::vec4 diff = glm::vec4(camera->lookAtPoint - camera->position);
+        camera->viewVector = diff/norm(diff);
+    }
 }

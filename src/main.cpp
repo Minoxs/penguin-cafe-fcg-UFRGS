@@ -73,11 +73,15 @@ int main(int argc, char *argv[]) {
 	// Pedimos para utilizar o perfil "core", isto é, utilizaremos somente as
 	// funções modernas de OpenGL.
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
 	// Criamos uma janela do sistema operacional, com 800 colunas e 600 linhas
 	// de pixels, e com título "INF01047 ...".
 	GLFWwindow *window;
-	window = glfwCreateWindow(800, 600, "INF01047 - Seu Cartao - Seu Nome", NULL, NULL);
+	window = glfwCreateWindow(mode->width, mode->height, "INF01047 - Seu Cartao - Seu Nome", nullptr, nullptr);
 	if (!window) {
 		glfwTerminate();
 		fprintf(stderr, "ERROR: glfwCreateWindow() failed.\n");
@@ -106,7 +110,8 @@ int main(int argc, char *argv[]) {
 	// redimensionada, por consequência alterando o tamanho do "framebuffer"
 	// (região de memória onde são armazenados os pixels da imagem).
 	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
-	FramebufferSizeCallback(window, 800, 600); // Forçamos a chamada do callback acima, para definir g_ScreenRatio.
+	FramebufferSizeCallback(window, mode->width, mode->height); // Forçamos a chamada do callback acima, para definir g_ScreenRatio.
+	glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
 
 	// Imprimimos no terminal informações sobre a GPU do sistema
 	const GLubyte *vendor = glGetString(GL_VENDOR);

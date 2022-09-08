@@ -30,10 +30,17 @@ void cameraTranslate(Camera* camera, float delta, float speed) {
     }
 }
 
+void cameraPan(Camera* camera) {
+	float x = std::cos(g_CameraPhi) * std::sin(g_CameraTheta);
+	float y = std::sin(-g_CameraPhi);
+	float z = std::cos(g_CameraPhi) * std::cos(g_CameraTheta);
+
+	camera->viewVector  = glm::vec4(x, y, z, 0.0f);
+	camera->viewVector /= norm(camera->viewVector);
+}
+
 void ComputeMovement(Camera* camera, float delta) {
     const float speed = 5.0f;
     cameraTranslate(camera, delta, speed);
-
-    glm::vec4 camera_lookat_l = glm::vec4(0.0f, 0.0f, 0.0f,1.0f);
-    camera->viewVector = (camera_lookat_l - camera->position)/norm(camera_lookat_l - camera->position);
+	cameraPan(camera);
 }

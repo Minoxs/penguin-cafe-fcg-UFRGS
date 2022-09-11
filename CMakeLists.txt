@@ -25,6 +25,7 @@ set(SOURCE_FILES
     src/imp/rendering/window.cpp
     src/imp/rendering/camera.cpp
     src/imp/player/movement.cpp
+    src/imp/rendering/scene.cpp
 )
 
 # Executable with static libraries

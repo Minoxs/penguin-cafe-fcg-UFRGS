@@ -49,8 +49,6 @@ extern bool g_isSPressed;
 extern bool g_isAPressed;
 extern bool g_isDPressed;
 
-extern bool c_pressed;
-
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
 void ErrorCallback(int error, const char *description);
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);

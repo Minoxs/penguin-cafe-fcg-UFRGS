@@ -26,7 +26,7 @@ void RenderScene(Camera *camera) {
     // Conversaremos sobre sistemas de cores nas aulas de Modelos de Iluminação.
     //
     //           R     G     B     A
-    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClearColor(0.4f, 0.0f, 0.4f, 1.0f);
 
     // "Pintamos" todos os pixels do framebuffer com a cor definida acima,
     // e também resetamos todos os pixels do Z-buffer (depth buffer).

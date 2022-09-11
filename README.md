@@ -36,9 +36,9 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
 - [ ] Malhas poligonais complexas
   - [ ] Um modelo mais complexo que a vaca
 - [ ] Transformações geométricas em outros objetos além da câmera
-- [ ] Controle de câmeras virtuais
-  - [ ] Câmera Look-At
-  - [ ] Câmera Livre
+- [X] Controle de câmeras virtuais
+  - [X] Câmera Look-At
+  - [X] Câmera Livre
 - [ ] Diversas instâncias do mesmo objeto, com diferentes matrizes de modelo
 - [ ] Testes de intersecção entre objetos virtuais
   - [ ] Três tipos de teste de intersecção
@@ -55,8 +55,8 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
   - [ ] Dois objetos 
 - [ ] Curva de Bézier
   - [ ] Um objeto cujo caminho é definido por curva de Bézier
-- [ ] Animação de Movimento baseada no tempo
-  - [ ] Todas as movimentações de objetos (incluindo da câmera) devem ser computadas baseado no tempo.
+- [X] Animação de Movimento baseada no tempo
+  - [X] Todas as movimentações de objetos (incluindo da câmera) devem ser computadas baseado no tempo.
 
 # Compilação
 

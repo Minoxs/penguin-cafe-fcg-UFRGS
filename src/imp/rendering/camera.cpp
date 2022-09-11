@@ -5,6 +5,6 @@
 #include "rendering/camera.hpp"
 #include "matrices.h"
 
-glm::mat4 ComputeCamera(Camera camera) {
-    return Matrix_Camera_View(camera.position, camera.viewVector, camera.upVector);
+glm::mat4 Camera::GetViewMatrix() const {
+    return Matrix_Camera_View(this->position, this->viewVector, this->upVector);
 }

@@ -13,8 +13,8 @@ struct Camera {
     glm::vec4 viewVector;
     glm::vec4 upVector;
     glm::vec4 lookAtPoint;
-};
 
-glm::mat4 ComputeCamera(Camera camera);
+    glm::mat4 GetViewMatrix() const;
+};
 
 #endif //PENGUINCAFE_CAMERA_SRC_IMP_PLAYER

@@ -7,6 +7,6 @@
 
 #include "rendering/camera.hpp"
 
-void ComputeMovement(Camera* camera, float delta);
+void HandleCameraMovement(Camera* camera, float delta);
 
 #endif //PENGUINCAFE_MOVEMENT_SRC_IMP_PLAYER

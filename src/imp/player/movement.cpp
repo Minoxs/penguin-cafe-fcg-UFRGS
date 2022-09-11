@@ -40,11 +40,11 @@ void cameraPan(Camera* camera) {
 	camera->viewVector /= norm(camera->viewVector);
 }
 
-void ComputeMovement(Camera* camera, float delta) {
+void HandleCameraMovement(Camera* camera, float delta) {
     const float speed = 5.0f;
-    cameraTranslate(camera, delta, speed);
 
     if (g_UseFreeCamera) {
+        cameraTranslate(camera, delta, speed);
         cameraPan(camera);
     } else {
         const glm::vec4 diff = glm::vec4(camera->lookAtPoint - camera->position);

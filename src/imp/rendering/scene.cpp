@@ -12,10 +12,40 @@
 
 #include <player/input.hpp>
 #include <rendering/object.hpp>
+#include <loading/object.hpp>
 
 #define SPHERE 0
 #define BUNNY  1
 #define PLANE  2
+
+void InitializeScene(char* files[], int length) {
+    // Carregamos os shaders de vértices e de fragmentos que serão utilizados
+    // para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
+    //
+    LoadShadersFromFiles();
+
+    // Carregamos duas imagens para serem utilizadas como textura
+    LoadTextureImage("data/tc-earth_daymap_surface.jpg");      // TextureImage0
+    LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
+
+    // Construímos a representação de objetos geométricos através de malhas de triângulos
+    ObjModel spheremodel("data/sphere.obj");
+    ComputeNormals(&spheremodel);
+    BuildTrianglesAndAddToVirtualScene(&spheremodel);
+
+    ObjModel bunnymodel("data/bunny.obj");
+    ComputeNormals(&bunnymodel);
+    BuildTrianglesAndAddToVirtualScene(&bunnymodel);
+
+    ObjModel planemodel("data/plane.obj");
+    ComputeNormals(&planemodel);
+    BuildTrianglesAndAddToVirtualScene(&planemodel);
+
+    if (length > 1) {
+        ObjModel model(files[1]);
+        BuildTrianglesAndAddToVirtualScene(&model);
+    }
+}
 
 void RenderScene(Camera *camera) {
     // Aqui executamos as operações de renderização

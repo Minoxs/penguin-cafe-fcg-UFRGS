@@ -112,32 +112,7 @@ int main(int argc, char *argv[]) {
 
 	printf("GPU: %s, %s, OpenGL %s, GLSL %s\n", vendor, renderer, glversion, glslversion);
 
-	// Carregamos os shaders de vértices e de fragmentos que serão utilizados
-	// para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
-	//
-	LoadShadersFromFiles();
-
-	// Carregamos duas imagens para serem utilizadas como textura
-	LoadTextureImage("data/tc-earth_daymap_surface.jpg");      // TextureImage0
-	LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
-
-	// Construímos a representação de objetos geométricos através de malhas de triângulos
-	ObjModel spheremodel("data/sphere.obj");
-	ComputeNormals(&spheremodel);
-	BuildTrianglesAndAddToVirtualScene(&spheremodel);
-
-	ObjModel bunnymodel("data/bunny.obj");
-	ComputeNormals(&bunnymodel);
-	BuildTrianglesAndAddToVirtualScene(&bunnymodel);
-
-	ObjModel planemodel("data/plane.obj");
-	ComputeNormals(&planemodel);
-	BuildTrianglesAndAddToVirtualScene(&planemodel);
-
-	if (argc > 1) {
-		ObjModel model(argv[1]);
-		BuildTrianglesAndAddToVirtualScene(&model);
-	}
+	InitializeScene(argv, argc);
 
 	// Inicializamos o código para renderização de texto.
 	TextRendering_Init();

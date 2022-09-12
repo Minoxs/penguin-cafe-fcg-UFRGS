@@ -5,8 +5,8 @@
 #include "utils.h"
 #include "dejavufont.h"
 #include "matrices.h"
-#include "global/variable.hpp"
-#include "player/input.hpp"
+#include "global.hpp"
+#include "player.hpp"
 
 GLuint CreateGpuProgram(GLuint vertexShaderId, GLuint fragmentShaderId); // Função definida em main.cpp
 

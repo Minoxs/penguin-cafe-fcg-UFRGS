@@ -3,9 +3,9 @@
 //
 
 #include "player/movement.hpp"
-#include "player/input.hpp"
+#include "player.hpp"
 #include "matrices.h"
-#include "global/variable.hpp"
+#include "global.hpp"
 
 void cameraTranslate(Camera* camera, float delta, float speed) {
     glm::vec4 d = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);

@@ -4,8 +4,8 @@
 
 #include <limits>
 #include "player/input.hpp"
-#include "global/variable.hpp"
-#include "loading/object.hpp"
+#include "global.hpp"
+#include "loading.hpp"
 
 double g_LastCursorPosX;
 double g_LastCursorPosY;

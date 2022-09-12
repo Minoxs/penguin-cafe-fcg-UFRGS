@@ -8,11 +8,11 @@
 #include <matrices.h>
 #include "glad/glad.h"
 #include "glm/gtc/type_ptr.hpp"
-#include <global/variable.hpp>
+#include <global.hpp>
 
-#include <player/input.hpp>
-#include <rendering/object.hpp>
-#include <loading/object.hpp>
+#include <player.hpp>
+#include <rendering.hpp>
+#include <loading.hpp>
 
 #define SPHERE 0
 #define BUNNY  1

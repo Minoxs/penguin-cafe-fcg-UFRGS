@@ -9,8 +9,8 @@
 #include <fstream>
 #include <sstream>
 #include "glad/glad.h"
-#include "global/variable.hpp"
-#include "rendering/shader.hpp"
+#include "global.hpp"
+#include "rendering.hpp"
 
 
 // Função auxilar, utilizada pelas duas funções acima. Carrega código de GPU de

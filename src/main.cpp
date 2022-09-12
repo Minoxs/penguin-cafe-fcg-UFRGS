@@ -31,15 +31,10 @@
 
 // Headers locais, definidos na pasta "include/"
 #include "matrices.h"
-#include "global/struct.hpp"
-#include "loading/object.hpp"
-#include "rendering/text.hpp"
-#include "global/variable.hpp"
-#include "rendering/window.hpp"
-#include "rendering/object.hpp"
-#include "rendering/camera.hpp"
-#include "player/input.hpp"
-#include "player/movement.hpp"
+#include "global.hpp"
+#include "loading.hpp"
+#include "rendering.hpp"
+#include "player.hpp"
 
 int main(int argc, char *argv[]) {
 	// Inicializamos a biblioteca GLFW, utilizada para criar uma janela do

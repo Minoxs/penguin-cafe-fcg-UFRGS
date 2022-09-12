@@ -4,7 +4,7 @@
 
 #include "rendering/window.hpp"
 
-#include "global/variable.hpp"
+#include "global.hpp"
 
 // Definição da função que será chamada sempre que a janela do sistema
 // operacional for redimensionada, por consequência alterando o tamanho do

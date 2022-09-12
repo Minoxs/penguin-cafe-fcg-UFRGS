@@ -5,7 +5,7 @@
 #include "rendering/object.hpp"
 
 #include "glad/glad.h"
-#include "global/variable.hpp"
+#include "global.hpp"
 #include "matrices.h"
 
 // Função que computa as normais de um ObjModel, caso elas não tenham sido

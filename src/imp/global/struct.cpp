@@ -6,7 +6,7 @@
 #include "global/struct.hpp"
 #include <stdexcept>
 
-ObjModel::ObjModel(const char *filename, const char *basepath, bool triangulate) {
+ObjectModel::ObjectModel(const char *filename, const char *basepath, bool triangulate) {
 	printf("Carregando modelo \"%s\"... ", filename);
 
 	std::string err;

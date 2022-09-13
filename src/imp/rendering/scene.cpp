@@ -18,6 +18,25 @@
 #define BUNNY  1
 #define PLANE  2
 
+RenderObject getRenderObject(const char* filepath, int ID) {
+	ObjectModel model(filepath);
+	ComputeNormals(&model);
+	return BuildTriangles(&model, ID);
+}
+
+SceneObject createInstance(const char* name, glm::vec3 position, glm::vec3 rotation, RenderObject* triangles) {
+	return SceneObject{
+		name,
+		position,
+		rotation,
+		triangles
+	};
+}
+
+void addToScene(SceneObject* object) {
+	g_VirtualScene[object->name] = *object;
+}
+
 void InitializeScene(char* files[], int length) {
     // Carregamos os shaders de vértices e de fragmentos que serão utilizados
     // para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
@@ -29,22 +48,34 @@ void InitializeScene(char* files[], int length) {
     LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-    ObjModel spheremodel("data/sphere.obj");
-    ComputeNormals(&spheremodel);
-    BuildTrianglesAndAddToVirtualScene(&spheremodel);
+	RenderObject sphere = getRenderObject("data/sphere.obj", SPHERE);
 
-    ObjModel bunnymodel("data/bunny.obj");
-    ComputeNormals(&bunnymodel);
-    BuildTrianglesAndAddToVirtualScene(&bunnymodel);
+	auto p = (RenderObject*) malloc(sizeof sphere);
+	*p = sphere;
 
-    ObjModel planemodel("data/plane.obj");
-    ComputeNormals(&planemodel);
-    BuildTrianglesAndAddToVirtualScene(&planemodel);
+	SceneObject sphere1 = createInstance("planeta1",
+										 glm::vec3(-1.0f, 0.0f, 0.0f),
+										 glm::vec3(0.2f, 0.0f, 0.6f),
+										 p);
 
-    if (length > 1) {
-        ObjModel model(files[1]);
-        BuildTrianglesAndAddToVirtualScene(&model);
-    }
+	SceneObject sphere2 = createInstance("planeta2",
+										 glm::vec3(-2.0f, 5.0f, 3.0f),
+										 glm::vec3(0.2f, 0.0f, 0.6f),
+										 p);
+
+	// TODO OBJETOS EVOLUIREM AO LONGO DO TEMPO
+	// TODO OBJETO LUZ ?
+
+	addToScene(&sphere1);
+	addToScene(&sphere2);
+
+//    ObjectModel bunnymodel("data/bunny.obj");
+//    ComputeNormals(&bunnymodel);
+//	BuildTriangles(&bunnymodel);
+//
+//    ObjectModel planemodel("data/plane.obj");
+//    ComputeNormals(&planemodel);
+//	BuildTriangles(&planemodel);
 }
 
 void RenderScene(Camera *camera) {
@@ -101,26 +132,8 @@ void RenderScene(Camera *camera) {
     glUniformMatrix4fv(p_view_uniform, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(p_projection_uniform, 1, GL_FALSE, glm::value_ptr(projection));
 
-    // Desenhamos o modelo da esfera
-    model = Matrix_Translate(-1.0f, 0.0f, 0.0f)
-            * Matrix_Rotate_Z(0.6f)
-            * Matrix_Rotate_X(0.2f)
-            * Matrix_Rotate_Y(g_AngleY + (float) glfwGetTime() * 0.1f);
-    glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-    glUniform1i(p_object_id_uniform, SPHERE);
-    DrawVirtualObject("sphere");
-
-    // Desenhamos o modelo do coelho
-    model = Matrix_Translate(1.0f, 0.0f, 0.0f)
-            * Matrix_Rotate_X(g_AngleX + (float) glfwGetTime() * 0.1f);
-    glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-    glUniform1i(p_object_id_uniform, BUNNY);
-    DrawVirtualObject("bunny");
-
-    // Desenhamos o plano do chão
-    model = Matrix_Translate(0.0f, -1.1f, 0.0f);
-    glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-    glUniform1i(p_object_id_uniform, PLANE);
-    DrawVirtualObject("plane");
+	for (std::pair<const std::string, SceneObject> instance: g_VirtualScene) {
+		DrawSceneObject(&instance.second);
+	}
 }
 

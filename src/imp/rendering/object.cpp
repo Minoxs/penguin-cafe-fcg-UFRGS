@@ -7,10 +7,11 @@
 #include "glad/glad.h"
 #include "global.hpp"
 #include "matrices.h"
+#include "glm/gtc/type_ptr.hpp"
 
 // Função que computa as normais de um ObjModel, caso elas não tenham sido
 // especificadas dentro do arquivo ".obj"
-void ComputeNormals(ObjModel *model) {
+void ComputeNormals(ObjectModel* model) {
 	if (!model->attrib.normals.empty())
 		return;
 
@@ -66,7 +67,7 @@ void ComputeNormals(ObjModel *model) {
 }
 
 // Constrói triângulos para futura renderização a partir de um ObjModel.
-void BuildTrianglesAndAddToVirtualScene(ObjModel *model) {
+RenderObject BuildTriangles(ObjectModel *model, int ID) {
 	GLuint vertex_array_object_id;
 	glGenVertexArrays(1, &vertex_array_object_id);
 	glBindVertexArray(vertex_array_object_id);
@@ -75,6 +76,12 @@ void BuildTrianglesAndAddToVirtualScene(ObjModel *model) {
 	std::vector<float> model_coefficients;
 	std::vector<float> normal_coefficients;
 	std::vector<float> texture_coefficients;
+
+	RenderObject object {ID};
+
+	if (model->shapes.size() != 1) {
+		throw std::runtime_error("Invalid model");
+	}
 
 	for (size_t shape = 0; shape < model->shapes.size(); ++shape) {
 		size_t first_index = indices.size();
@@ -136,17 +143,13 @@ void BuildTrianglesAndAddToVirtualScene(ObjModel *model) {
 
 		size_t last_index = indices.size() - 1;
 
-		SceneObject theobject;
-		theobject.name = model->shapes[shape].name;
-		theobject.first_index = first_index; // Primeiro índice
-		theobject.num_indices = last_index - first_index + 1; // Número de indices
-		theobject.rendering_mode = GL_TRIANGLES;       // Índices correspondem ao tipo de rasterização GL_TRIANGLES.
-		theobject.vertex_array_object_id = vertex_array_object_id;
+		object.first_index = first_index; 						// Primeiro índice
+		object.num_indices = last_index - first_index + 1; 		// Número de indices
+		object.rendering_mode = GL_TRIANGLES;     				// Índices correspondem ao tipo de rasterização GL_TRIANGLES.
+		object.vertex_array_object_id = vertex_array_object_id;
 
-		theobject.bbox_min = bbox_min;
-		theobject.bbox_max = bbox_max;
-
-		g_VirtualScene[model->shapes[shape].name] = theobject;
+		object.bbox_min = bbox_min;
+		object.bbox_max = bbox_max;
 	}
 
 	GLuint VBO_model_coefficients_id;
@@ -199,20 +202,32 @@ void BuildTrianglesAndAddToVirtualScene(ObjModel *model) {
 	// "Desligamos" o VAO, evitando assim que operações posteriores venham a
 	// alterar o mesmo. Isso evita bugs.
 	glBindVertexArray(0);
+
+	return object;
 }
 
 // Função que desenha um objeto armazenado em g_VirtualScene. Veja definição
 // dos objetos na função BuildTrianglesAndAddToVirtualScene().
-void DrawVirtualObject(const char *object_name) {
+void DrawSceneObject(SceneObject* object) {
+	// Calcular a Model matrix
+	glm::mat4 model = Matrix_Translate(object->position.x, object->position.y, object->position.z)
+						* Matrix_Rotate_Z(object->rotation.z)
+						* Matrix_Rotate_X(object->rotation.x)
+						* Matrix_Rotate_Y(object->rotation.y);
+
+	// Enviar para GPU
+	glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1i(p_object_id_uniform, object->triangles->ID);
+
 	// "Ligamos" o VAO. Informamos que queremos utilizar os atributos de
 	// vértices apontados pelo VAO criado pela função BuildTrianglesAndAddToVirtualScene(). Veja
 	// comentários detalhados dentro da definição de BuildTrianglesAndAddToVirtualScene().
-	glBindVertexArray(g_VirtualScene[object_name].vertex_array_object_id);
+	glBindVertexArray(object->triangles->vertex_array_object_id);
 
 	// Setamos as variáveis "bbox_min" e "bbox_max" do fragment shader
 	// com os parâmetros da axis-aligned bounding box (AABB) do modelo.
-	glm::vec3 bbox_min = g_VirtualScene[object_name].bbox_min;
-	glm::vec3 bbox_max = g_VirtualScene[object_name].bbox_max;
+	glm::vec3 bbox_min = object->triangles->bbox_min;
+	glm::vec3 bbox_max = object->triangles->bbox_max;
 	glUniform4f(p_bbox_min_uniform, bbox_min.x, bbox_min.y, bbox_min.z, 1.0f);
 	glUniform4f(p_bbox_max_uniform, bbox_max.x, bbox_max.y, bbox_max.z, 1.0f);
 
@@ -222,10 +237,10 @@ void DrawVirtualObject(const char *object_name) {
 	// a documentação da função glDrawElements() em
 	// http://docs.gl/gl3/glDrawElements.
 	glDrawElements(
-			g_VirtualScene[object_name].rendering_mode,
-			g_VirtualScene[object_name].num_indices,
+			object->triangles->rendering_mode,
+			object->triangles->num_indices,
 			GL_UNSIGNED_INT,
-			(void *) (g_VirtualScene[object_name].first_index * sizeof(GLuint))
+			(void *) (object->triangles->first_index * sizeof(GLuint))
 	);
 
 	// "Desligamos" o VAO, evitando assim que operações posteriores venham a
@@ -236,7 +251,7 @@ void DrawVirtualObject(const char *object_name) {
 // Função para debugging: imprime no terminal todas informações de um modelo
 // geométrico carregado de um arquivo ".obj".
 // Veja: https://github.com/syoyo/tinyobjloader/blob/22883def8db9ef1f3ffb9b404318e7dd25fdbb51/loader_example.cc#L98
-void PrintObjModelInfo(ObjModel *model) {
+void PrintObjModelInfo(ObjectModel *model) {
 	const tinyobj::attrib_t &attrib = model->attrib;
 	const std::vector<tinyobj::shape_t> &shapes = model->shapes;
 	const std::vector<tinyobj::material_t> &materials = model->materials;

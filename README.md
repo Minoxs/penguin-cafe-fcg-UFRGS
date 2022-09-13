@@ -31,15 +31,15 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
 
 - [ ] Interação em Tempo Real
 - [ ] Objetivo/Lógica não-trivial
-- [ ] Utiliza as matrizes vista em aula
-- [ ] Interação com usuário utilizando teclado e mouse
-- [ ] Malhas poligonais complexas
-  - [ ] Um modelo mais complexo que a vaca
-- [ ] Transformações geométricas em outros objetos além da câmera
+- [X] Utiliza as matrizes vista em aula
+- [X] Interação com usuário utilizando teclado e mouse
+- [X] Malhas poligonais complexas
+  - [X] Um modelo mais complexo que a vaca
+- [X] Transformações geométricas em outros objetos além da câmera
 - [X] Controle de câmeras virtuais
   - [X] Câmera Look-At
   - [X] Câmera Livre
-- [ ] Diversas instâncias do mesmo objeto, com diferentes matrizes de modelo
+- [X] Diversas instâncias do mesmo objeto, com diferentes matrizes de modelo
 - [ ] Testes de intersecção entre objetos virtuais
   - [ ] Três tipos de teste de intersecção
     - Teste Cubo-Cubo
@@ -55,7 +55,7 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
   - [ ] Dois objetos 
 - [ ] Curva de Bézier
   - [ ] Um objeto cujo caminho é definido por curva de Bézier
-- [X] Animação de Movimento baseada no tempo
+- [ ] Animação de Movimento baseada no tempo
   - [X] Todas as movimentações de objetos (incluindo da câmera) devem ser computadas baseado no tempo.
 
 # Compilação
@@ -73,7 +73,7 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 	- [X] Rendering
 	- [X] Player Movement
 	- [X] Apenas código do GLFW na main
-- [ ] Mapear funcionalidades
+- [X] Mapear funcionalidades
 
 # Referências
 

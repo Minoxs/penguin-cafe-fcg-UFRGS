@@ -29,12 +29,12 @@ struct ObjectModel {
 // Estrutura que guarda os triangulos computados do object model
 struct RenderObject {
 	int ID;
-	size_t first_index; 			// Índice do primeiro vértice dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
-	size_t num_indices; 			// Número de índices do objeto dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
-	GLenum rendering_mode; 			// Modo de rasterização (GL_TRIANGLES, GL_TRIANGLE_STRIP, etc.)
-	GLuint vertex_array_object_id;  // ID do VAO onde estão armazenados os atributos do modelo
-	glm::vec3 bbox_min; 			// Ponto (0, 0, 0) da bounding box
-	glm::vec3 bbox_max;				// Ponto (1, 1, 1) da bounding box
+	size_t first_index{}; 			// Índice do primeiro vértice dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
+	size_t num_indices{}; 			// Número de índices do objeto dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
+	GLenum rendering_mode{}; 			// Modo de rasterização (GL_TRIANGLES, GL_TRIANGLE_STRIP, etc.)
+	GLuint vertex_array_object_id{};  // ID do VAO onde estão armazenados os atributos do modelo
+	glm::vec3 bbox_min{}; 			// Ponto (0, 0, 0) da bounding box
+	glm::vec3 bbox_max{};				// Ponto (1, 1, 1) da bounding box
 
 	RenderObject() = default;
 	RenderObject(const char* filepath, int ID);

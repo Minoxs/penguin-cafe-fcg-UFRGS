@@ -51,19 +51,20 @@ void InitializeScene(char* files[], int length) {
 						glm::vec3(0.2f, 0.0f, 0.6f),
 						sphere);
 
-	auto test1 = new RotatingObject(sphere2);
-	auto test2 = new SceneObject(sphere1);
+	addToScene(new RotatingObject(sphere2));
+	addToScene(new SceneObject(sphere1));
 
-	addToScene(test1);
-	addToScene(test2);
+    auto bunny = new RenderObject("data/bunny.obj", BUNNY);
 
-//    ObjectModel bunnymodel("data/bunny.obj");
-//    ComputeNormals(&bunnymodel);
-//	BuildTriangles(&bunnymodel);
-//
-//    ObjectModel planemodel("data/plane.obj");
-//    ComputeNormals(&planemodel);
-//	BuildTriangles(&planemodel);
+	auto bunny1 = SceneObject("bunny1", glm::vec3(), glm::vec3(), bunny);
+
+	addToScene(new RotatingObject(bunny1));
+
+    auto planemodel = new RenderObject("data/plane.obj", PLANE);
+	auto planemodel1 = SceneObject("planemodel1", glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(), planemodel);
+
+	addToScene(new SceneObject(planemodel1));
+
 }
 
 void RenderScene(Camera *camera, float time, float delta) {

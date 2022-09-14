@@ -2,9 +2,11 @@
 // Guilherme Wagner Correa
 // Cartão: 00303992
 //
-
+#pragma once
 #ifndef PENGUINCAFE_TEXT_HEADERS_RENDERING
 #define PENGUINCAFE_TEXT_HEADERS_RENDERING
+
+#include "rendering.hpp"
 
 #include <string>
 

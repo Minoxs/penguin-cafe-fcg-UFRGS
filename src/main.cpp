@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
         HandleCameraMovement(&camera, delta);
 
         // Render Scene
-        RenderScene(&camera);
+        RenderScene(&camera, frameTime, delta);
 
 		// O framebuffer onde OpenGL executa as operações de renderização não
 		// é o mesmo que está sendo mostrado para o usuário, caso contrário

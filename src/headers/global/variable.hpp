@@ -2,21 +2,16 @@
 // Guilherme Wagner Correa
 // Cartão: 00303992
 //
-
+#pragma once
 #ifndef PENGUINCAFE_VARIABLES_HEADERS_GLOBALS
 #define PENGUINCAFE_VARIABLES_HEADERS_GLOBALS
+
+#include "global.hpp"
 
 #include <string>
 #include <stack>
 #include "glad/glad.h"
 #include "glm/ext/matrix_float4x4.hpp"
-#include "struct.hpp"
-
-// A cena virtual é uma lista de objetos nomeados, guardados em um dicionário
-// (map).  Veja dentro da função BuildTrianglesAndAddToVirtualScene() como que são incluídos
-// objetos dentro da variável g_VirtualScene, e veja na função main() como
-// estes são acessados.
-extern std::map<std::string, SceneObject> g_VirtualScene;
 
 // Pilha que guardará as matrizes de modelagem.
 extern std::stack<glm::mat4> g_MatrixStack;

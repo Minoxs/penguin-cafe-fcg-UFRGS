@@ -2,12 +2,13 @@
 // Created by Nicolle on 9/5/2022.
 //
 
-#include "rendering/object.hpp"
+#include "rendering.hpp"
 
 #include "glad/glad.h"
-#include "global.hpp"
 #include "matrices.h"
 #include "glm/gtc/type_ptr.hpp"
+
+#include "global.hpp"
 
 // Função que computa as normais de um ObjModel, caso elas não tenham sido
 // especificadas dentro do arquivo ".obj"
@@ -67,7 +68,7 @@ void ComputeNormals(ObjectModel* model) {
 }
 
 // Constrói triângulos para futura renderização a partir de um ObjModel.
-RenderObject BuildTriangles(ObjectModel *model, int ID) {
+void BuildTriangles(ObjectModel *model, RenderObject* object) {
 	GLuint vertex_array_object_id;
 	glGenVertexArrays(1, &vertex_array_object_id);
 	glBindVertexArray(vertex_array_object_id);
@@ -76,8 +77,6 @@ RenderObject BuildTriangles(ObjectModel *model, int ID) {
 	std::vector<float> model_coefficients;
 	std::vector<float> normal_coefficients;
 	std::vector<float> texture_coefficients;
-
-	RenderObject object {ID};
 
 	if (model->shapes.size() != 1) {
 		throw std::runtime_error("Invalid model");
@@ -143,13 +142,13 @@ RenderObject BuildTriangles(ObjectModel *model, int ID) {
 
 		size_t last_index = indices.size() - 1;
 
-		object.first_index = first_index; 						// Primeiro índice
-		object.num_indices = last_index - first_index + 1; 		// Número de indices
-		object.rendering_mode = GL_TRIANGLES;     				// Índices correspondem ao tipo de rasterização GL_TRIANGLES.
-		object.vertex_array_object_id = vertex_array_object_id;
+		object->first_index = first_index; 						// Primeiro índice
+		object->num_indices = last_index - first_index + 1; 		// Número de indices
+		object->rendering_mode = GL_TRIANGLES;     				// Índices correspondem ao tipo de rasterização GL_TRIANGLES.
+		object->vertex_array_object_id = vertex_array_object_id;
 
-		object.bbox_min = bbox_min;
-		object.bbox_max = bbox_max;
+		object->bbox_min = bbox_min;
+		object->bbox_max = bbox_max;
 	}
 
 	GLuint VBO_model_coefficients_id;
@@ -202,8 +201,6 @@ RenderObject BuildTriangles(ObjectModel *model, int ID) {
 	// "Desligamos" o VAO, evitando assim que operações posteriores venham a
 	// alterar o mesmo. Isso evita bugs.
 	glBindVertexArray(0);
-
-	return object;
 }
 
 // Função que desenha um objeto armazenado em g_VirtualScene. Veja definição

@@ -2,8 +2,9 @@
 // Created by Nicolle on 9/5/2022.
 //
 
+#include "player.hpp"
+
 #include <limits>
-#include "player/input.hpp"
 #include "global.hpp"
 #include "loading.hpp"
 

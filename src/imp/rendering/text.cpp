@@ -1,6 +1,6 @@
 // Based on http://hamelot.io/visualization/opengl-text-without-any-external-libraries/
 //   and on https://github.com/rougier/freetype-gl
-#include "rendering/text.hpp"
+#include "rendering.hpp"
 
 #include "utils.h"
 #include "dejavufont.h"

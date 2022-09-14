@@ -15,7 +15,7 @@ set(SOURCE_FILES
     lib/imp/stb_image.cpp
     lib/imp/tiny_obj_loader.cpp
     lib/imp/matrices.cpp
-    src/imp/global/struct.cpp
+    src/imp/rendering/struct.cpp
     src/imp/global/variable.cpp
     src/imp/loading/object.cpp
     src/imp/player/input.cpp

@@ -2,9 +2,11 @@
 // Guilherme Wagner Correa
 // Cartão: 00303992
 //
-
+#pragma once
 #ifndef PENGUINCAFE_STRUCTS_HEADERS_GLOBALS
 #define PENGUINCAFE_STRUCTS_HEADERS_GLOBALS
+
+#include "rendering.hpp"
 
 #include "glad/glad.h"
 #include "tiny_obj_loader.h"
@@ -33,6 +35,9 @@ struct RenderObject {
 	GLuint vertex_array_object_id;  // ID do VAO onde estão armazenados os atributos do modelo
 	glm::vec3 bbox_min; 			// Ponto (0, 0, 0) da bounding box
 	glm::vec3 bbox_max;				// Ponto (1, 1, 1) da bounding box
+
+	RenderObject() = default;
+	RenderObject(const char* filepath, int ID);
 };
 
 // Guarda os dados de uma instância de um objeto da cena
@@ -40,10 +45,24 @@ struct RenderObject {
 struct SceneObject {
 	std::string name;
 
-	glm::vec3 position;
-	glm::vec3 rotation;
+	glm::vec3 position{};
+	glm::vec3 rotation{};
 
-	RenderObject* triangles;
+	RenderObject* triangles{};
+
+	// Copy constructor ClassName(ClassName const &copyFrom)
+	SceneObject(SceneObject const &object);
+	// Creates an instance of a scene object
+	explicit SceneObject(const char* name, glm::vec3 position, glm::vec3 rotation, RenderObject* triangles);
+
+	virtual void Proc(float time, float delta);
+};
+
+struct RotatingObject : public SceneObject {
+	// Constructor from parent from
+	explicit RotatingObject(const SceneObject &object);
+
+	void Proc(float time, float delta) override;
 };
 
 #endif //PENGUINCAFE_STRUCTS_HEADERS_GLOBALS

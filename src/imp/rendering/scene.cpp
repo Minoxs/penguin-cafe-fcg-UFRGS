@@ -3,7 +3,7 @@
 // Cartão: 00303992
 //
 
-#include "rendering/scene.hpp"
+#include "rendering.hpp"
 
 #include <matrices.h>
 #include "glad/glad.h"
@@ -18,23 +18,14 @@
 #define BUNNY  1
 #define PLANE  2
 
-RenderObject getRenderObject(const char* filepath, int ID) {
-	ObjectModel model(filepath);
-	ComputeNormals(&model);
-	return BuildTriangles(&model, ID);
-}
-
-SceneObject createInstance(const char* name, glm::vec3 position, glm::vec3 rotation, RenderObject* triangles) {
-	return SceneObject{
-		name,
-		position,
-		rotation,
-		triangles
-	};
-}
+// A cena virtual é uma lista de objetos nomeados, guardados em um dicionário
+// (map).  Veja dentro da função BuildTrianglesAndAddToVirtualScene() como que são incluídos
+// objetos dentro da variável g_VirtualScene, e veja na função main() como
+// estes são acessados.
+std::map<std::string, SceneObject*> g_VirtualScene;
 
 void addToScene(SceneObject* object) {
-	g_VirtualScene[object->name] = *object;
+	g_VirtualScene[object->name] = object;
 }
 
 void InitializeScene(char* files[], int length) {
@@ -48,26 +39,23 @@ void InitializeScene(char* files[], int length) {
     LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-	RenderObject sphere = getRenderObject("data/sphere.obj", SPHERE);
+	auto sphere = new RenderObject("data/sphere.obj", SPHERE);
 
-	auto p = (RenderObject*) malloc(sizeof sphere);
-	*p = sphere;
+	SceneObject sphere1("planeta1",
+						glm::vec3(-1.0f, 0.0f, 0.0f),
+						glm::vec3(0.2f, 0.0f, 0.6f),
+						sphere);
 
-	SceneObject sphere1 = createInstance("planeta1",
-										 glm::vec3(-1.0f, 0.0f, 0.0f),
-										 glm::vec3(0.2f, 0.0f, 0.6f),
-										 p);
+	SceneObject sphere2("planeta2",
+						glm::vec3(-2.0f, 5.0f, 3.0f),
+						glm::vec3(0.2f, 0.0f, 0.6f),
+						sphere);
 
-	SceneObject sphere2 = createInstance("planeta2",
-										 glm::vec3(-2.0f, 5.0f, 3.0f),
-										 glm::vec3(0.2f, 0.0f, 0.6f),
-										 p);
+	auto test1 = new RotatingObject(sphere2);
+	auto test2 = new SceneObject(sphere1);
 
-	// TODO OBJETOS EVOLUIREM AO LONGO DO TEMPO
-	// TODO OBJETO LUZ ?
-
-	addToScene(&sphere1);
-	addToScene(&sphere2);
+	addToScene(test1);
+	addToScene(test2);
 
 //    ObjectModel bunnymodel("data/bunny.obj");
 //    ComputeNormals(&bunnymodel);
@@ -78,7 +66,7 @@ void InitializeScene(char* files[], int length) {
 //	BuildTriangles(&planemodel);
 }
 
-void RenderScene(Camera *camera) {
+void RenderScene(Camera *camera, float time, float delta) {
     // Aqui executamos as operações de renderização
 
     // Definimos a cor do "fundo" do framebuffer como branco.  Tal cor é
@@ -132,8 +120,9 @@ void RenderScene(Camera *camera) {
     glUniformMatrix4fv(p_view_uniform, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(p_projection_uniform, 1, GL_FALSE, glm::value_ptr(projection));
 
-	for (std::pair<const std::string, SceneObject> instance: g_VirtualScene) {
-		DrawSceneObject(&instance.second);
+	for (const std::pair<const std::string, SceneObject*> &instance: g_VirtualScene) {
+		instance.second->Proc(time, delta);
+		DrawSceneObject(instance.second);
 	}
 }
 

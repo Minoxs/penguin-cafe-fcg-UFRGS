@@ -2,7 +2,8 @@
 // Created by Nicolle on 9/7/2022.
 //
 
-#include "rendering/camera.hpp"
+#include "rendering.hpp"
+
 #include "matrices.h"
 
 glm::mat4 Camera::GetViewMatrix() const {

@@ -2,7 +2,7 @@
 // Created by Nicolle on 9/5/2022.
 //
 
-#include "loading/object.hpp"
+#include "loading.hpp"
 
 #include "stb_image.h"
 #include <cstdlib>

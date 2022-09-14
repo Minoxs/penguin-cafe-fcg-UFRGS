@@ -2,7 +2,7 @@
 // Created by Nicolle on 9/5/2022.
 //
 
-#include "rendering/shader.hpp"
+#include "rendering.hpp"
 
 #include <string>
 

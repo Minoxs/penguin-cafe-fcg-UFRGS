@@ -2,7 +2,7 @@
 // Created by Nicolle on 9/5/2022.
 //
 
-#include "rendering/window.hpp"
+#include "rendering.hpp"
 
 #include "global.hpp"
 

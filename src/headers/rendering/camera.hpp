@@ -1,9 +1,11 @@
 //
 // Created by Nicolle on 9/7/2022.
 //
-
+#pragma once
 #ifndef PENGUINCAFE_CAMERA_SRC_IMP_PLAYER
 #define PENGUINCAFE_CAMERA_SRC_IMP_PLAYER
+
+#include "rendering.hpp"
 
 #include "glm/vec4.hpp"
 #include "glm/ext/matrix_float4x4.hpp"

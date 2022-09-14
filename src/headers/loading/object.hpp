@@ -1,10 +1,11 @@
 //
 // Created by Nicolle on 9/5/2022.
 //
-
+#pragma once
 #ifndef PENGUINCAFE_OBJECT_HEADERS_LOADING
 #define PENGUINCAFE_OBJECT_HEADERS_LOADING
 
+#include "loading.hpp"
 #include "glad/glad.h"
 
 void LoadShader(const char *filename, GLuint shader_id);

@@ -1,10 +1,11 @@
 //
 // Created by Nicolle on 9/5/2022.
 //
-
+#pragma once
 #ifndef PENGUINCAFE_INPUT_HEADERS_PLAYER
 #define PENGUINCAFE_INPUT_HEADERS_PLAYER
 
+#include "player.hpp"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 

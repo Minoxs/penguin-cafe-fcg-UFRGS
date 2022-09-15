@@ -123,7 +123,7 @@ void RenderScene(Camera *camera, float time, float delta) {
 
 	for (const std::pair<const std::string, ObjectInstance*> &instance: g_VirtualScene) {
 		instance.second->Proc(time, delta);
-		DrawSceneObject(instance.second);
+		instance.second->Draw();
 	}
 }
 

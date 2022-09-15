@@ -2,6 +2,7 @@
 // Created by Nicolle on 9/5/2022.
 //
 
+#include <stdexcept>
 #include "rendering.hpp"
 
 #include "glad/glad.h"
@@ -205,26 +206,26 @@ void BuildTriangles(ObjectModel *model, ObjectTriangles* object) {
 
 // Função que desenha um objeto armazenado em g_VirtualScene. Veja definição
 // dos objetos na função BuildTrianglesAndAddToVirtualScene().
-void DrawSceneObject(ObjectInstance* object) {
+void ObjectInstance::Draw() {
 	// Calcular a Model matrix
-	glm::mat4 model = Matrix_Translate(object->position.x, object->position.y, object->position.z)
-						* Matrix_Rotate_Z(object->rotation.z)
-						* Matrix_Rotate_X(object->rotation.x)
-						* Matrix_Rotate_Y(object->rotation.y);
+	glm::mat4 model = Matrix_Translate(position.x, position.y, position.z)
+						* Matrix_Rotate_Z(rotation.z)
+						* Matrix_Rotate_X(rotation.x)
+						* Matrix_Rotate_Y(rotation.y);
 
 	// Enviar para GPU
 	glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-	glUniform1i(p_object_id_uniform, object->triangles->ID);
+	glUniform1i(p_object_id_uniform, triangles->ID);
 
 	// "Ligamos" o VAO. Informamos que queremos utilizar os atributos de
 	// vértices apontados pelo VAO criado pela função BuildTrianglesAndAddToVirtualScene(). Veja
 	// comentários detalhados dentro da definição de BuildTrianglesAndAddToVirtualScene().
-	glBindVertexArray(object->triangles->vertex_array_object_id);
+	glBindVertexArray(triangles->vertex_array_object_id);
 
 	// Setamos as variáveis "bbox_min" e "bbox_max" do fragment shader
 	// com os parâmetros da axis-aligned bounding box (AABB) do modelo.
-	glm::vec3 bbox_min = object->triangles->bbox_min;
-	glm::vec3 bbox_max = object->triangles->bbox_max;
+	glm::vec3 bbox_min = triangles->bbox_min;
+	glm::vec3 bbox_max = triangles->bbox_max;
 	glUniform4f(p_bbox_min_uniform, bbox_min.x, bbox_min.y, bbox_min.z, 1.0f);
 	glUniform4f(p_bbox_max_uniform, bbox_max.x, bbox_max.y, bbox_max.z, 1.0f);
 
@@ -234,10 +235,10 @@ void DrawSceneObject(ObjectInstance* object) {
 	// a documentação da função glDrawElements() em
 	// http://docs.gl/gl3/glDrawElements.
 	glDrawElements(
-			object->triangles->rendering_mode,
-			object->triangles->num_indices,
+			triangles->rendering_mode,
+			triangles->num_indices,
 			GL_UNSIGNED_INT,
-			(void *) (object->triangles->first_index * sizeof(GLuint))
+			(void *) (triangles->first_index * sizeof(GLuint))
 	);
 
 	// "Desligamos" o VAO, evitando assim que operações posteriores venham a

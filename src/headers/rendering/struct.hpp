@@ -56,6 +56,8 @@ struct ObjectInstance {
 	explicit ObjectInstance(const char* name, glm::vec3 position, glm::vec3 rotation, ObjectTriangles* triangles);
 
 	virtual void Proc(float time, float delta);
+
+    virtual void Draw();
 };
 
 struct RotatingObject : public ObjectInstance {

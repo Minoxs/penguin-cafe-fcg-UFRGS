@@ -8,6 +8,5 @@
 #include "player.hpp"
 #include "rendering.hpp"
 
-void HandleCameraMovement(Camera* camera, float delta);
 
 #endif //PENGUINCAFE_MOVEMENT_SRC_IMP_PLAYER

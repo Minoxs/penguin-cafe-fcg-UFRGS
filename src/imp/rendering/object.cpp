@@ -19,7 +19,7 @@ ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     triangles = object.triangles;
 }
 
-ObjectInstance::ObjectInstance(const char* name, glm::vec4 position, glm::vec3 rotation, ObjectTriangles* triangles) {
+ObjectInstance::ObjectInstance(const char* name, glm::vec4 position, glm::vec4 rotation, ObjectTriangles* triangles) {
     this->name = name;
     this->position = position;
     this->rotation = rotation;

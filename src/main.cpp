@@ -107,7 +107,6 @@ int main(int argc, char *argv[]) {
 
 	printf("GPU: %s, %s, OpenGL %s, GLSL %s\n", vendor, renderer, glversion, glslversion);
 
-	InitializeScene(argv, argc);
 
 	// Inicializamos o código para renderização de texto.
 	TextRendering_Init();
@@ -120,19 +119,7 @@ int main(int argc, char *argv[]) {
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
-    const glm::vec4 lookAtPoint_c = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-    const glm::vec4 viewVector_c = glm::vec4(0.0f, 0.0f, -1.0f,0.0f);
-    const glm::vec4 position_c = glm::vec4(0.0f, 0.0f, 5.0f, 1.0f);
-
-    // começa com look-at camera
-	g_CameraTheta = 3.1415f;
-    Camera camera = Camera {
-            position_c,
-            lookAtPoint_c - position_c,
-            glm::vec4(0.0f, 1.0f, 0.0f, 0.0f),
-            lookAtPoint_c
-    };
-
+    auto scene = Scene();
     auto prevFrameTime = (float) glfwGetTime();
 
 	// Ficamos em loop, renderizando, até que o usuário feche a janela
@@ -141,11 +128,8 @@ int main(int argc, char *argv[]) {
         auto frameTime = (float) glfwGetTime();
         float delta = frameTime - prevFrameTime;
 
-        // Handle player inputs
-        HandleCameraMovement(&camera, delta);
-
         // Render Scene
-        RenderScene(&camera, frameTime, delta);
+        scene.Render(frameTime, delta);
 
 		// O framebuffer onde OpenGL executa as operações de renderização não
 		// é o mesmo que está sendo mostrado para o usuário, caso contrário

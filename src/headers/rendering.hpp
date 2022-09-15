@@ -5,8 +5,8 @@
 #ifndef PENGUINCAFE_RENDERING_SRC_HEADERS
 #define PENGUINCAFE_RENDERING_SRC_HEADERS
 
-#include "rendering/camera.hpp"
 #include "rendering/object.hpp"
+#include "rendering/camera.hpp"
 #include "rendering/scene.hpp"
 #include "rendering/shader.hpp"
 #include "rendering/text.hpp"

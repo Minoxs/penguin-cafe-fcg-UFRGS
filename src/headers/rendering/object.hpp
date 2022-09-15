@@ -19,14 +19,14 @@ struct ObjectInstance {
     std::string name;
 
     glm::vec4 position{};
-    glm::vec3 rotation{};
+    glm::vec4 rotation{};
 
     ObjectTriangles* triangles{};
 
     // Copy constructor ClassName(ClassName const &copyFrom)
     ObjectInstance(ObjectInstance const &object);
     // Creates an instance of a scene object
-    explicit ObjectInstance(const char* name, glm::vec4 position, glm::vec3 rotation, ObjectTriangles* triangles);
+    explicit ObjectInstance(const char* name, glm::vec4 position, glm::vec4 rotation, ObjectTriangles* triangles);
 
     virtual void Proc(float time, float delta);
 

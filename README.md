@@ -55,7 +55,7 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
   - [ ] Dois objetos 
 - [ ] Curva de Bézier
   - [ ] Um objeto cujo caminho é definido por curva de Bézier
-- [ ] Animação de Movimento baseada no tempo
+- [X] Animação de Movimento baseada no tempo
   - [X] Todas as movimentações de objetos (incluindo da câmera) devem ser computadas baseado no tempo.
 
 # Compilação

@@ -5,6 +5,7 @@
 #ifndef PENGUINCAFE_LOADING_SRC_HEADERS
 #define PENGUINCAFE_LOADING_SRC_HEADERS
 
-#include "loading/object.hpp"
+#include "loading/shader.hpp"
+#include "loading/model.hpp"
 
 #endif //PENGUINCAFE_LOADING_SRC_HEADERS

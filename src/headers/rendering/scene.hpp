@@ -8,8 +8,25 @@
 
 #include "rendering.hpp"
 #include "glad/glad.h"
+#include "player.hpp"
+
+struct SceneObject {
+    std::map<std::string, ObjectInstance*> virtualScene;
+    Camera freeCamera;
+    Camera lookAtCamera;
+    PlayerObject player;
+
+    SceneObject(SceneObject const &scene);
+
+    explicit SceneObject(Camera freeCamera, Camera lookAtCamera, PlayerObject player);
+
+    void addToScene(ObjectInstance* object);
+
+    void RenderScene(Camera *camera, float time, float delta);
+};
+
+
 
 void InitializeScene(char* files[], int length);
-void RenderScene(Camera *camera, float time, float delta);
 
 #endif //PENGUINCAFE_SCENE_SRC_HEADERS_RENDERING

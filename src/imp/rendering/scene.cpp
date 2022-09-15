@@ -9,8 +9,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include <global.hpp>
 
-#include <player.hpp>
 #include <loading.hpp>
+#include <utility>
 
 #define SPHERE 0
 #define BUNNY  1
@@ -21,54 +21,26 @@
 // (map).  Veja dentro da função BuildTrianglesAndAddToVirtualScene() como que são incluídos
 // objetos dentro da variável g_VirtualScene, e veja na função main() como
 // estes são acessados.
-std::map<std::string, ObjectInstance*> g_VirtualScene;
 
-void addToScene(ObjectInstance* object) {
-	g_VirtualScene[object->name] = object;
+SceneObject::SceneObject(const SceneObject &scene) {
+    virtualScene = scene.virtualScene;
+    freeCamera = scene.freeCamera;
+    lookAtCamera = scene.lookAtCamera;
+    player = scene.player;
 }
 
-void InitializeScene(char* files[], int length) {
-    // Carregamos os shaders de vértices e de fragmentos que serão utilizados
-    // para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
-    //
-    LoadShadersFromFiles();
-
-    // Carregamos duas imagens para serem utilizadas como textura
-    LoadTextureImage("data/tc-earth_daymap_surface.jpg");      // TextureImage0
-    LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
-
-    // Construímos a representação de objetos geométricos através de malhas de triângulos
-	auto sphere = new ObjectTriangles("data/sphere.obj", SPHERE);
-
-	ObjectInstance sphere1("planeta1",
-						   glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f),
-						   glm::vec3(0.2f, 0.0f, 0.6f),
-						   sphere);
-
-	ObjectInstance sphere2("planeta2",
-						   glm::vec4(-2.0f, 5.0f, 3.0f, 1.0f),
-						   glm::vec3(0.2f, 0.0f, 0.6f),
-						   sphere);
-
-	addToScene(new RotatingObject(sphere2));
-	addToScene(new RotatingObject(sphere1));
-
-    auto bunny = new ObjectTriangles("data/bunny.obj", BUNNY);
-
-    const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, 1.0f, 2.0f, 1.0f);
-
-	auto bunny1 = ObjectInstance("bunny1", glm::vec4(2.0f, 1.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), bunny);
-    auto bunny2 = ObjectInstance("player", playerInitialPosition, glm::vec3(0.0f, 0.0f, 0.0f), bunny);
-
-    addToScene(new PlayerObject(bunny2));
-
-    auto planemodel = new ObjectTriangles("data/plane.obj", PLANE);
-	auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), planemodel);
-
-	addToScene(new ObjectInstance(planemodel1));
+SceneObject::SceneObject(Camera freeCamera, Camera lookAtCamera, ObjectInstance player) {
+    this->virtualScene = std::map<std::string, ObjectInstance*>();
+    this->freeCamera = freeCamera;
+    this->lookAtCamera = lookAtCamera;
+    this->player = new PlayerObject(player);
 }
 
-void RenderScene(Camera *camera, float time, float delta) {
+void SceneObject::addToScene(ObjectInstance* object) {
+    virtualScene[object->name] = object;
+}
+
+void SceneObject::RenderScene(Camera *camera, float time, float delta) {
     // Aqui executamos as operações de renderização
 
     // Definimos a cor do "fundo" do framebuffer como branco.  Tal cor é
@@ -122,9 +94,50 @@ void RenderScene(Camera *camera, float time, float delta) {
     glUniformMatrix4fv(p_view_uniform, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(p_projection_uniform, 1, GL_FALSE, glm::value_ptr(projection));
 
-	for (const std::pair<const std::string, ObjectInstance*> &instance: g_VirtualScene) {
-		instance.second->Proc(time, delta);
-		instance.second->Draw();
-	}
+    for (const std::pair<const std::string, ObjectInstance*> &instance: virtualScene) {
+        instance.second->Proc(time, delta);
+        instance.second->Draw();
+    }
+}
+
+void InitializeScene(char* files[], int length) {
+    // Carregamos os shaders de vértices e de fragmentos que serão utilizados
+    // para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
+    //
+    LoadShadersFromFiles();
+
+    // Carregamos duas imagens para serem utilizadas como textura
+    LoadTextureImage("data/tc-earth_daymap_surface.jpg");      // TextureImage0
+    LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
+
+    // Construímos a representação de objetos geométricos através de malhas de triângulos
+	auto sphere = new ObjectTriangles("data/sphere.obj", SPHERE);
+
+	ObjectInstance sphere1("planeta1",
+						   glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f),
+						   glm::vec3(0.2f, 0.0f, 0.6f),
+						   sphere);
+
+	ObjectInstance sphere2("planeta2",
+						   glm::vec4(-2.0f, 5.0f, 3.0f, 1.0f),
+						   glm::vec3(0.2f, 0.0f, 0.6f),
+						   sphere);
+
+	addToScene(new RotatingObject(sphere2));
+	addToScene(new RotatingObject(sphere1));
+
+    auto bunny = new ObjectTriangles("data/bunny.obj", BUNNY);
+
+    const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, 1.0f, 2.0f, 1.0f);
+
+	auto bunny1 = ObjectInstance("bunny1", glm::vec4(2.0f, 1.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), bunny);
+    auto bunny2 = ObjectInstance("player", playerInitialPosition, glm::vec3(0.0f, 0.0f, 0.0f), bunny);
+
+    addToScene(new PlayerObject(bunny2));
+
+    auto planemodel = new ObjectTriangles("data/plane.obj", PLANE);
+	auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), planemodel);
+
+	addToScene(new ObjectInstance(planemodel1));
 }
 

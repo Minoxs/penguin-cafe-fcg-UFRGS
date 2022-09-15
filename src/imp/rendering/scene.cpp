@@ -22,9 +22,9 @@
 // (map).  Veja dentro da função BuildTrianglesAndAddToVirtualScene() como que são incluídos
 // objetos dentro da variável g_VirtualScene, e veja na função main() como
 // estes são acessados.
-std::map<std::string, SceneObject*> g_VirtualScene;
+std::map<std::string, ObjectInstance*> g_VirtualScene;
 
-void addToScene(SceneObject* object) {
+void addToScene(ObjectInstance* object) {
 	g_VirtualScene[object->name] = object;
 }
 
@@ -39,31 +39,31 @@ void InitializeScene(char* files[], int length) {
     LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-	auto sphere = new RenderObject("data/sphere.obj", SPHERE);
+	auto sphere = new ObjectTriangles("data/sphere.obj", SPHERE);
 
-	SceneObject sphere1("planeta1",
-						glm::vec3(-1.0f, 0.0f, 0.0f),
-						glm::vec3(0.2f, 0.0f, 0.6f),
-						sphere);
+	ObjectInstance sphere1("planeta1",
+						   glm::vec3(-1.0f, 0.0f, 0.0f),
+						   glm::vec3(0.2f, 0.0f, 0.6f),
+						   sphere);
 
-	SceneObject sphere2("planeta2",
-						glm::vec3(-2.0f, 5.0f, 3.0f),
-						glm::vec3(0.2f, 0.0f, 0.6f),
-						sphere);
+	ObjectInstance sphere2("planeta2",
+						   glm::vec3(-2.0f, 5.0f, 3.0f),
+						   glm::vec3(0.2f, 0.0f, 0.6f),
+						   sphere);
 
 	addToScene(new RotatingObject(sphere2));
-	addToScene(new SceneObject(sphere1));
+	addToScene(new RotatingObject(sphere1));
 
-    auto bunny = new RenderObject("data/bunny.obj", BUNNY);
+    auto bunny = new ObjectTriangles("data/bunny.obj", BUNNY);
 
-	auto bunny1 = SceneObject("bunny1", glm::vec3(), glm::vec3(), bunny);
+	auto bunny1 = ObjectInstance("bunny1", glm::vec3(), glm::vec3(), bunny);
 
 	addToScene(new RotatingObject(bunny1));
 
-    auto planemodel = new RenderObject("data/plane.obj", PLANE);
-	auto planemodel1 = SceneObject("planemodel1", glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(), planemodel);
+    auto planemodel = new ObjectTriangles("data/plane.obj", PLANE);
+	auto planemodel1 = ObjectInstance("planemodel1", glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(), planemodel);
 
-	addToScene(new SceneObject(planemodel1));
+	addToScene(new ObjectInstance(planemodel1));
 
 }
 
@@ -121,7 +121,7 @@ void RenderScene(Camera *camera, float time, float delta) {
     glUniformMatrix4fv(p_view_uniform, 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(p_projection_uniform, 1, GL_FALSE, glm::value_ptr(projection));
 
-	for (const std::pair<const std::string, SceneObject*> &instance: g_VirtualScene) {
+	for (const std::pair<const std::string, ObjectInstance*> &instance: g_VirtualScene) {
 		instance.second->Proc(time, delta);
 		DrawSceneObject(instance.second);
 	}

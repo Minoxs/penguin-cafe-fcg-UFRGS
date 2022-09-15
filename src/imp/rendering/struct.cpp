@@ -19,25 +19,25 @@ ObjectModel::ObjectModel(const char *filename, const char *basepath, bool triang
 	printf("OK.\n");
 }
 
-SceneObject::SceneObject(const SceneObject &object) {
+ObjectInstance::ObjectInstance(const ObjectInstance &object) {
 	name = object.name;
 	position = object.position;
 	rotation = object.rotation;
 	triangles = object.triangles;
 }
 
-SceneObject::SceneObject(const char* name, glm::vec3 position, glm::vec3 rotation, RenderObject* triangles) {
+ObjectInstance::ObjectInstance(const char* name, glm::vec3 position, glm::vec3 rotation, ObjectTriangles* triangles) {
 	this->name = name;
 	this->position = position;
 	this->rotation = rotation;
 	this->triangles = triangles;
 }
 
-void SceneObject::Proc(float time, float delta) {
+void ObjectInstance::Proc(float time, float delta) {
 
 }
 
-RotatingObject::RotatingObject(const SceneObject &object) : SceneObject(object) {
+RotatingObject::RotatingObject(const ObjectInstance &object) : ObjectInstance(object) {
 
 }
 
@@ -46,7 +46,7 @@ void RotatingObject::Proc(float time, float delta) {
 	rotation.y += delta;
 }
 
-RenderObject::RenderObject(const char *filepath, int ID) {
+ObjectTriangles::ObjectTriangles(const char *filepath, int ID) {
 	ObjectModel model(filepath);
 	ComputeNormals(&model);
 	BuildTriangles(&model, this);

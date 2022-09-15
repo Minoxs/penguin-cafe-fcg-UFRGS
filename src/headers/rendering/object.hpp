@@ -7,9 +7,9 @@
 #include "rendering.hpp"
 
 void ComputeNormals(ObjectModel* model); 		 // Computa normais de um ObjModel, caso não existam.
-void BuildTriangles(ObjectModel *model, RenderObject* object); // Constrói representação de um ObjModel como malha de triângulos para renderização
+void BuildTriangles(ObjectModel *model, ObjectTriangles* object); // Constrói representação de um ObjModel como malha de triângulos para renderização
 
-void DrawSceneObject(SceneObject* object);
+void DrawSceneObject(ObjectInstance* object);
 void PrintObjModelInfo(ObjectModel* model); // Função para debugging
 
 #endif //PENGUINCAFE_OBJECT_SRC_RENDERING

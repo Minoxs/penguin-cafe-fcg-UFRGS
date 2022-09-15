@@ -68,7 +68,7 @@ void ComputeNormals(ObjectModel* model) {
 }
 
 // Constrói triângulos para futura renderização a partir de um ObjModel.
-void BuildTriangles(ObjectModel *model, RenderObject* object) {
+void BuildTriangles(ObjectModel *model, ObjectTriangles* object) {
 	GLuint vertex_array_object_id;
 	glGenVertexArrays(1, &vertex_array_object_id);
 	glBindVertexArray(vertex_array_object_id);
@@ -205,7 +205,7 @@ void BuildTriangles(ObjectModel *model, RenderObject* object) {
 
 // Função que desenha um objeto armazenado em g_VirtualScene. Veja definição
 // dos objetos na função BuildTrianglesAndAddToVirtualScene().
-void DrawSceneObject(SceneObject* object) {
+void DrawSceneObject(ObjectInstance* object) {
 	// Calcular a Model matrix
 	glm::mat4 model = Matrix_Translate(object->position.x, object->position.y, object->position.z)
 						* Matrix_Rotate_Z(object->rotation.z)

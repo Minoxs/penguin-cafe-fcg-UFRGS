@@ -27,8 +27,8 @@ struct ObjectModel {
 };
 
 // Estrutura que guarda os triangulos computados do object model
-struct RenderObject {
-	int ID;
+struct ObjectTriangles {
+	int ID{};
 	size_t first_index{}; 			// Índice do primeiro vértice dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
 	size_t num_indices{}; 			// Número de índices do objeto dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
 	GLenum rendering_mode{}; 			// Modo de rasterização (GL_TRIANGLES, GL_TRIANGLE_STRIP, etc.)
@@ -36,31 +36,31 @@ struct RenderObject {
 	glm::vec3 bbox_min{}; 			// Ponto (0, 0, 0) da bounding box
 	glm::vec3 bbox_max{};				// Ponto (1, 1, 1) da bounding box
 
-	RenderObject() = default;
-	RenderObject(const char* filepath, int ID);
+	ObjectTriangles() = default;
+	ObjectTriangles(const char* filepath, int ID);
 };
 
 // Guarda os dados de uma instância de um objeto da cena
 // Pode-se utilizar o mesmo objeto múltiplas vezes
-struct SceneObject {
+struct ObjectInstance {
 	std::string name;
 
 	glm::vec3 position{};
 	glm::vec3 rotation{};
 
-	RenderObject* triangles{};
+	ObjectTriangles* triangles{};
 
 	// Copy constructor ClassName(ClassName const &copyFrom)
-	SceneObject(SceneObject const &object);
+	ObjectInstance(ObjectInstance const &object);
 	// Creates an instance of a scene object
-	explicit SceneObject(const char* name, glm::vec3 position, glm::vec3 rotation, RenderObject* triangles);
+	explicit ObjectInstance(const char* name, glm::vec3 position, glm::vec3 rotation, ObjectTriangles* triangles);
 
 	virtual void Proc(float time, float delta);
 };
 
-struct RotatingObject : public SceneObject {
+struct RotatingObject : public ObjectInstance {
 	// Constructor from parent from
-	explicit RotatingObject(const SceneObject &object);
+	explicit RotatingObject(const ObjectInstance &object);
 
 	void Proc(float time, float delta) override;
 };

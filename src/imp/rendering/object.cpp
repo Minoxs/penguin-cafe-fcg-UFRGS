@@ -11,6 +11,24 @@
 
 #include "global.hpp"
 
+ObjectInstance::ObjectInstance(const ObjectInstance &object) {
+    name = object.name;
+    position = object.position;
+    rotation = object.rotation;
+    triangles = object.triangles;
+}
+
+ObjectInstance::ObjectInstance(const char* name, glm::vec3 position, glm::vec3 rotation, ObjectTriangles* triangles) {
+    this->name = name;
+    this->position = position;
+    this->rotation = rotation;
+    this->triangles = triangles;
+}
+
+void ObjectInstance::Proc(float time, float delta) {
+
+}
+
 // Função que desenha um objeto armazenado em g_VirtualScene. Veja definição
 // dos objetos na função BuildTrianglesAndAddToVirtualScene().
 void ObjectInstance::Draw() {
@@ -51,6 +69,15 @@ void ObjectInstance::Draw() {
 	// "Desligamos" o VAO, evitando assim que operações posteriores venham a
 	// alterar o mesmo. Isso evita bugs.
 	glBindVertexArray(0);
+}
+
+RotatingObject::RotatingObject(const ObjectInstance &object) : ObjectInstance(object) {
+
+}
+
+void RotatingObject::Proc(float time, float delta) {
+    if (rotation.y > 360.0f) rotation.y -= 360.0f;
+    rotation.y += delta;
 }
 
 // Função para debugging: imprime no terminal todas informações de um modelo

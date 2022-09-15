@@ -10,6 +10,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "global.hpp"
+#include "player.hpp"
 
 ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     name = object.name;
@@ -18,7 +19,7 @@ ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     triangles = object.triangles;
 }
 
-ObjectInstance::ObjectInstance(const char* name, glm::vec3 position, glm::vec3 rotation, ObjectTriangles* triangles) {
+ObjectInstance::ObjectInstance(const char* name, glm::vec4 position, glm::vec3 rotation, ObjectTriangles* triangles) {
     this->name = name;
     this->position = position;
     this->rotation = rotation;
@@ -78,6 +79,35 @@ RotatingObject::RotatingObject(const ObjectInstance &object) : ObjectInstance(ob
 void RotatingObject::Proc(float time, float delta) {
     if (rotation.y > 360.0f) rotation.y -= 360.0f;
     rotation.y += delta;
+}
+
+PlayerObject::PlayerObject(const ObjectInstance &object) : ObjectInstance(object) {
+
+}
+
+void PlayerObject::Proc(float time, float delta) {
+    if (!g_UseFreeCamera) {
+        const float speed = 1.0f;
+
+        glm::vec4 d = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+
+        if (g_isWPressed) d.z += 1.0f;
+        if (g_isSPressed) d.z -= 1.0f;
+        if (g_isAPressed) d.x -= 1.0f;
+        if (g_isDPressed) d.x += 1.0f;
+
+        float dNorma = norm(d);
+        if (dNorma == 0.0f) return;
+
+        d *= speed * delta;
+        if (d.z != 0.0f) {
+            position.z += d.z;
+        }
+
+        if (d.x != 0.0f) {
+            position.x += d.x;
+        }
+    }
 }
 
 // Função para debugging: imprime no terminal todas informações de um modelo

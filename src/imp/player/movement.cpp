@@ -43,6 +43,7 @@ void HandleCameraMovement(Camera* camera, float delta) {
     const float speed = 5.0f;
 
     if (g_UseFreeCamera) {
+        camera->position = camera->lookAtPoint;
         cameraTranslate(camera, delta, speed);
         cameraPan(camera);
     } else {

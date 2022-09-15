@@ -6,17 +6,16 @@
 #include "rendering.hpp"
 
 #include <matrices.h>
-#include "glad/glad.h"
 #include "glm/gtc/type_ptr.hpp"
 #include <global.hpp>
 
 #include <player.hpp>
-#include <rendering.hpp>
 #include <loading.hpp>
 
 #define SPHERE 0
 #define BUNNY  1
 #define PLANE  2
+#define PENGUIN 3
 
 // A cena virtual é uma lista de objetos nomeados, guardados em um dicionário
 // (map).  Veja dentro da função BuildTrianglesAndAddToVirtualScene() como que são incluídos
@@ -42,12 +41,12 @@ void InitializeScene(char* files[], int length) {
 	auto sphere = new ObjectTriangles("data/sphere.obj", SPHERE);
 
 	ObjectInstance sphere1("planeta1",
-						   glm::vec3(-1.0f, 0.0f, 0.0f),
+						   glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f),
 						   glm::vec3(0.2f, 0.0f, 0.6f),
 						   sphere);
 
 	ObjectInstance sphere2("planeta2",
-						   glm::vec3(-2.0f, 5.0f, 3.0f),
+						   glm::vec4(-2.0f, 5.0f, 3.0f, 1.0f),
 						   glm::vec3(0.2f, 0.0f, 0.6f),
 						   sphere);
 
@@ -56,15 +55,17 @@ void InitializeScene(char* files[], int length) {
 
     auto bunny = new ObjectTriangles("data/bunny.obj", BUNNY);
 
-	auto bunny1 = ObjectInstance("bunny1", glm::vec3(), glm::vec3(), bunny);
+    const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, 1.0f, 2.0f, 1.0f);
 
-	addToScene(new RotatingObject(bunny1));
+	auto bunny1 = ObjectInstance("bunny1", glm::vec4(2.0f, 1.0f, 4.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), bunny);
+    auto bunny2 = ObjectInstance("player", playerInitialPosition, glm::vec3(0.0f, 0.0f, 0.0f), bunny);
+
+    addToScene(new PlayerObject(bunny2));
 
     auto planemodel = new ObjectTriangles("data/plane.obj", PLANE);
-	auto planemodel1 = ObjectInstance("planemodel1", glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(), planemodel);
+	auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 0.0f), planemodel);
 
 	addToScene(new ObjectInstance(planemodel1));
-
 }
 
 void RenderScene(Camera *camera, float time, float delta) {

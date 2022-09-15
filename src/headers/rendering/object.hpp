@@ -18,7 +18,7 @@
 struct ObjectInstance {
     std::string name;
 
-    glm::vec3 position{};
+    glm::vec4 position{};
     glm::vec3 rotation{};
 
     ObjectTriangles* triangles{};
@@ -26,7 +26,7 @@ struct ObjectInstance {
     // Copy constructor ClassName(ClassName const &copyFrom)
     ObjectInstance(ObjectInstance const &object);
     // Creates an instance of a scene object
-    explicit ObjectInstance(const char* name, glm::vec3 position, glm::vec3 rotation, ObjectTriangles* triangles);
+    explicit ObjectInstance(const char* name, glm::vec4 position, glm::vec3 rotation, ObjectTriangles* triangles);
 
     virtual void Proc(float time, float delta);
 
@@ -36,6 +36,12 @@ struct ObjectInstance {
 struct RotatingObject : public ObjectInstance {
     // Constructor from parent from
     explicit RotatingObject(const ObjectInstance &object);
+
+    void Proc(float time, float delta) override;
+};
+
+struct PlayerObject : public ObjectInstance {
+    explicit PlayerObject(const ObjectInstance &object);
 
     void Proc(float time, float delta) override;
 };

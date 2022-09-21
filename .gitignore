@@ -30,3 +30,6 @@
 # IDE
 .idea
 cmake-*
+
+# DEBUG STUFF
+CubePosition.txt

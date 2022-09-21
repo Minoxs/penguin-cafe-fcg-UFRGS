@@ -34,6 +34,18 @@ bool g_isWPressed = false;
 bool g_isSPressed = false;
 bool g_isAPressed = false;
 bool g_isDPressed = false;
+bool g_isKPressed = false;
+
+bool g_is0Pressed = false;
+bool g_is1Pressed = false;
+bool g_is2Pressed = false;
+bool g_is3Pressed = false;
+bool g_is4Pressed = false;
+bool g_is5Pressed = false;
+bool g_is6Pressed = false;
+bool g_is7Pressed = false;
+bool g_is8Pressed = false;
+bool g_is9Pressed = false;
 
 // Função callback chamada sempre que o usuário aperta algum dos botões do mouse
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods) {
@@ -210,6 +222,50 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mod)
 
         case GLFW_KEY_C:
             if (action == GLFW_PRESS) g_UseFreeCamera = !g_UseFreeCamera;
+            return;
+
+		case GLFW_KEY_K:
+			g_isKPressed = (action != GLFW_RELEASE);
+			return;
+
+        case GLFW_KEY_KP_0:
+            g_is0Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_1:
+            g_is1Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_2:
+            g_is2Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_3:
+            g_is3Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_4:
+            g_is4Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_5:
+            g_is5Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_6:
+            g_is6Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_7:
+            g_is7Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_8:
+            g_is8Pressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_KP_9:
+            g_is9Pressed = (action != GLFW_RELEASE);
             return;
 
 		default:

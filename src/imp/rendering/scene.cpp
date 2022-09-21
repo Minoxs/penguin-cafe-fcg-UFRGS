@@ -48,6 +48,12 @@ Scene::Scene() {
 
     addToScene(new ObjectInstance(planemodel1));
 
+    #ifndef NDEBUG
+    auto debugTriangles = new ObjectTriangles("data/cube.obj", BUNNY);
+    ObjectInstance debugObject("debug_object", debugTriangles);
+    addToScene(new DebugObject(debugObject, "CubePosition.txt"));
+    #endif
+
     auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
     player = new Player(bunny1);
     addToScene(player);

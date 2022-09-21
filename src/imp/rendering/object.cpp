@@ -253,3 +253,63 @@ void PrintObjModelInfo(ObjectModel *model) {
 		printf("\n");
 	}
 }
+
+#ifndef NDEBUG
+#include <fstream>
+DebugObject::DebugObject(const ObjectInstance &object, const char* name) : ObjectInstance(object) {
+    this->name = name;
+    this->positionIndex = 0;
+    std::ofstream file(name, std::ios::trunc);
+    file.close();
+}
+
+void DebugObject::writePosition() {
+    std::ofstream file(name, std::ios::app);
+
+    file << "Position " << std::to_string(positionIndex) << std::endl;
+    file << "X: " << std::to_string(position.x) << std::endl;
+    file << "Y: " << std::to_string(position.y) << std::endl;
+    file << "Z: " << std::to_string(position.z) << std::endl;
+
+    file << "Rotation " << std::to_string(positionIndex) << std::endl;
+    file << "X: " << std::to_string(rotation.x) << std::endl;
+    file << "Y: " << std::to_string(rotation.y) << std::endl;
+    file << "Z: " << std::to_string(rotation.z) << std::endl;
+
+    file << std::endl;
+
+    positionIndex++;
+
+    file.close();
+}
+
+void DebugObject::Proc(float time, float delta) {
+    const float speed = 3.0f;
+
+    if (g_is7Pressed) position.x += speed * delta;
+    if (g_is4Pressed) position.x -= speed * delta;
+
+    if (g_is8Pressed) position.y += speed * delta;
+    if (g_is5Pressed) position.y -= speed * delta;
+
+    if (g_is9Pressed) position.z += speed * delta;
+    if (g_is6Pressed) position.z -= speed * delta;
+
+    if (g_is1Pressed) rotation.x += speed * delta;
+    if (g_is2Pressed) rotation.y += speed * delta;
+    if (g_is3Pressed) rotation.z += speed * delta;
+
+    if (g_is0Pressed) {
+        rotation.x = 0.0f;
+        rotation.y = 0.0f;
+        rotation.z = 0.0f;
+    }
+
+    if (g_isKPressed) {
+        if (!writing) writePosition();
+        writing = true;
+    } else {
+        writing = false;
+    }
+}
+#endif

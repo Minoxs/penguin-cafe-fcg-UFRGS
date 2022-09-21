@@ -49,6 +49,18 @@ extern bool g_isWPressed;
 extern bool g_isSPressed;
 extern bool g_isAPressed;
 extern bool g_isDPressed;
+extern bool g_isKPressed;
+
+extern bool g_is0Pressed;
+extern bool g_is1Pressed;
+extern bool g_is2Pressed;
+extern bool g_is3Pressed;
+extern bool g_is4Pressed;
+extern bool g_is5Pressed;
+extern bool g_is6Pressed;
+extern bool g_is7Pressed;
+extern bool g_is8Pressed;
+extern bool g_is9Pressed;
 
 void MouseButtonCallback(GLFWwindow *window, int button, int action, int mods);
 void ErrorCallback(int error, const char *description);

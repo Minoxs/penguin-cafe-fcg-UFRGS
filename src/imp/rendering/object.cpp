@@ -19,6 +19,11 @@ ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     triangles = object.triangles;
 }
 
+ObjectInstance::ObjectInstance(const char* name, ObjectTriangles* triangles) {
+    this->name = name;
+    this->triangles = triangles;
+}
+
 ObjectInstance::ObjectInstance(const char* name, glm::vec4 position, glm::vec4 rotation, ObjectTriangles* triangles) {
     this->name = name;
     this->position = position;
@@ -27,7 +32,7 @@ ObjectInstance::ObjectInstance(const char* name, glm::vec4 position, glm::vec4 r
 }
 
 void ObjectInstance::Proc(float time, float delta) {
-
+    // Base object is static
 }
 
 // Função que desenha um objeto armazenado em g_VirtualScene. Veja definição

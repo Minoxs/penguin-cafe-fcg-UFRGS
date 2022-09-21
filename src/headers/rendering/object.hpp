@@ -40,12 +40,6 @@ struct RotatingObject : public ObjectInstance {
     void Proc(float time, float delta) override;
 };
 
-struct PlayerObject : public ObjectInstance {
-    explicit PlayerObject(const ObjectInstance &object);
-
-    void Proc(float time, float delta) override;
-};
-
 void PrintObjModelInfo(ObjectModel* model); // Função para debugging
 
 #endif //PENGUINCAFE_OBJECT_SRC_RENDERING

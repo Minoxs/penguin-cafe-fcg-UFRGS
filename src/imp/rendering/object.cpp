@@ -81,35 +81,6 @@ void RotatingObject::Proc(float time, float delta) {
     rotation.y += delta;
 }
 
-PlayerObject::PlayerObject(const ObjectInstance &object) : ObjectInstance(object) {
-
-}
-
-void PlayerObject::Proc(float time, float delta) {
-    if (!g_UseFreeCamera) {
-        const float speed = 1.0f;
-
-        glm::vec4 d = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
-
-        if (g_isWPressed) d.z += 1.0f;
-        if (g_isSPressed) d.z -= 1.0f;
-        if (g_isAPressed) d.x -= 1.0f;
-        if (g_isDPressed) d.x += 1.0f;
-
-        float dNorma = norm(d);
-        if (dNorma == 0.0f) return;
-
-        d *= speed * delta;
-        if (d.z != 0.0f) {
-            position.z += d.z;
-        }
-
-        if (d.x != 0.0f) {
-            position.x += d.x;
-        }
-    }
-}
-
 // Função para debugging: imprime no terminal todas informações de um modelo
 // geométrico carregado de um arquivo ".obj".
 // Veja: https://github.com/syoyo/tinyobjloader/blob/22883def8db9ef1f3ffb9b404318e7dd25fdbb51/loader_example.cc#L98

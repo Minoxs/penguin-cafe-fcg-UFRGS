@@ -214,7 +214,7 @@ ObjectModel::ObjectModel(const char *filename, const char *basepath, bool triang
 }
 
 ObjectTriangles::ObjectTriangles(const char *filepath, int ID) {
-    ObjectModel model(filepath);
+    ObjectModel model(filepath, "data/");
     computeNormals(&model);
     buildTriangles(&model, this);
 

@@ -74,11 +74,30 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 	- [X] Player Movement
 	- [X] Apenas código do GLFW na main
 - [X] Mapear funcionalidades
+- [ ] Descobrir como enviar dados de objetos uma vez só para a GPU - Incluindo dados do material
+- [ ] Descobrir como ter várias texturas em um shader só
+  - [ ] Utilizar um ID para selecionar qual textura está sendo utilizada
+  - [ ] Utilizar textura definida no material
+- [ ] Implementar primeira pessoa
+  - [ ] Talvez precise de um shader específico 
+- [ ] Suportar especularidade
+- [ ] Definir escopo do jogo
+- [ ] Implementar lógica de jogo
+- [ ] Implementar colisão
+- [ ] Criar cena que será utilizada no jogo
+- [ ] Definir quais objetos vamos utilizar
+  - [ ] "Limpar" objetos 
+  - [ ] Linkar referências dos objetos/texturas
+  - [ ] Não esquecer de um modelo altamente complexo
 
 # Referências
 
 Por enquanto, somente coisas utilizadas durante a cadeira.
 
 ## Código
+
+- Coisas dos labs
+- Tudo original 😎
+- Polimorfismo 🪿
 
 ## Modelos/Texturas

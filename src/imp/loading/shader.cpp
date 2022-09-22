@@ -126,8 +126,8 @@ void LoadShadersFromFiles() {
 	//       |
 	//       o-- shader_fragment.glsl
 	//
-	p_vertex_shader_id = LoadShader_Vertex("./shaders/shader_vertex.glsl");
-	p_fragment_shader_id = LoadShader_Fragment("./shaders/shader_fragment.glsl");
+	p_vertex_shader_id = LoadShader_Vertex("./shaders/generic.vert");
+	p_fragment_shader_id = LoadShader_Fragment("./shaders/generic.frag");
 
 	// Deletamos o programa de GPU anterior, caso ele exista.
 	if (p_program_id != 0)

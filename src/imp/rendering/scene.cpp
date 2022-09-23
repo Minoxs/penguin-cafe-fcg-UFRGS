@@ -21,10 +21,12 @@ Scene::Scene() {
     LoadGenericShaders();
 
     // Carregamos duas imagens para serem utilizadas como textura
-    GLint earthTexture = LoadTexture("data/earth_texture.jpg");
+    GLint earthTexture = LoadTexture("data/textures/earth_texture.jpg");
+    GLint woodTexture = LoadTexture("data/textures/wood.jpg");
+    GLint furTexture = LoadTexture("data/textures/rabbit_fur.jpg");
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-    auto sphere = new ObjectTriangles("data/sphere.obj");
+    auto sphere = new ObjectTriangles("data/objects/sphere.obj");
 
     ObjectInstance sphere1("planeta1",
                            glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f),
@@ -34,24 +36,24 @@ Scene::Scene() {
 
     addToScene(new RotatingObject(sphere1));
 
-    auto bunny = new ObjectTriangles("data/bunny.obj");
+    auto bunny = new ObjectTriangles("data/objects/bunny.obj");
 
     const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, 1.0f, 2.0f, 1.0f);
 
-    auto planemodel = new ObjectTriangles("data/plane.obj");
+    auto planemodel = new ObjectTriangles("data/objects/plane.obj");
     auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), planemodel);
 
     addToScene(new ObjectInstance(planemodel1));
 
     #ifndef NDEBUG
-    auto debugTriangles = new ObjectTriangles("data/cube.obj");
+    auto debugTriangles = new ObjectTriangles("data/objects/cube.obj");
     ObjectInstance debugObject("debug_object", debugTriangles);
-    debugObject.DiffuseTextureID = earthTexture;
+    debugObject.DiffuseTextureID = woodTexture;
     addToScene(new DebugObject(debugObject, "CubePosition.txt"));
     #endif
 
     auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
-    bunny1.DiffuseTextureID = earthTexture;
+    bunny1.DiffuseTextureID = furTexture;
     player = new Player(bunny1);
     addToScene(player);
 

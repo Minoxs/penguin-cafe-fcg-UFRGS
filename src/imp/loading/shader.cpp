@@ -125,8 +125,8 @@ void LoadGenericShaders() {
 	//       |
 	//       o-- shader_fragment.glsl
 	//
-	p_vertex_shader_id = loadVertexShader("./shaders/generic.vert");
-	p_fragment_shader_id = loadFragmentShader("./shaders/uvmapping.frag");
+	p_vertex_shader_id = loadVertexShader("./data/shaders/generic.vert");
+	p_fragment_shader_id = loadFragmentShader("./data/shaders/uvmapping.frag");
 
 	// Deletamos o programa de GPU anterior, caso ele exista.
 	if (p_program_id != 0)

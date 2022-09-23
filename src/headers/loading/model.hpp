@@ -24,7 +24,6 @@ struct ObjectModel {
 
 // Estrutura que guarda os triangulos computados do object model
 struct ObjectTriangles {
-    int ID{};
     size_t first_index{}; 			// Índice do primeiro vértice dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
     size_t num_indices{}; 			// Número de índices do objeto dentro do vetor indices[] definido em BuildTrianglesAndAddToVirtualScene()
     GLenum rendering_mode{}; 			// Modo de rasterização (GL_TRIANGLES, GL_TRIANGLE_STRIP, etc.)
@@ -33,7 +32,7 @@ struct ObjectTriangles {
     glm::vec3 bbox_max{};				// Ponto (1, 1, 1) da bounding box
 
     ObjectTriangles() = default;
-    ObjectTriangles(const char* filepath, int ID);
+    explicit ObjectTriangles(const char *filepath);
 };
 
 #endif //PENGUINCAFE_MODEL_SRC_HEADERS_LOADING

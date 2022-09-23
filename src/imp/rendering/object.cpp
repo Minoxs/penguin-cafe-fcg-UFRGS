@@ -4,19 +4,19 @@
 
 #include <stdexcept>
 #include "rendering.hpp"
+#include "global.hpp"
+#include "player.hpp"
 
 #include "glad/glad.h"
 #include "matrices.h"
 #include "glm/gtc/type_ptr.hpp"
-
-#include "global.hpp"
-#include "player.hpp"
 
 ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     name = object.name;
     position = object.position;
     rotation = object.rotation;
     triangles = object.triangles;
+    DiffuseTextureID = object.DiffuseTextureID;
 }
 
 ObjectInstance::ObjectInstance(const char* name, ObjectTriangles* triangles) {
@@ -44,9 +44,11 @@ void ObjectInstance::Draw() {
 						* Matrix_Rotate_X(rotation.x)
 						* Matrix_Rotate_Y(rotation.y);
 
-	// Enviar para GPU
+	// Send model matrix
 	glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
-	glUniform1i(p_object_id_uniform, triangles->ID);
+
+    // Send diffuse texture ID
+	glUniform1i(gpu_TextureDiffuseUniform, DiffuseTextureID);
 
 	// "Ligamos" o VAO. Informamos que queremos utilizar os atributos de
 	// vértices apontados pelo VAO criado pela função BuildTrianglesAndAddToVirtualScene(). Veja

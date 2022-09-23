@@ -21,19 +21,19 @@ bool g_UseFreeCamera = true;
 // Variável que controla se o texto informativo será mostrado na tela.
 bool g_ShowInfoText = true;
 
-// Número de texturas carregadas pela função LoadTextureImage()
+// Número de texturas carregadas pela função LoadTexture()
 GLuint g_NumLoadedTextures = 0;
 
-// Variáveis que definem um programa de GPU (shaders). Veja função LoadShadersFromFiles().
+// Variáveis que definem um programa de GPU (shaders). Veja função LoadGenericShaders().
 GLuint p_vertex_shader_id;
 GLuint p_fragment_shader_id;
 GLuint p_program_id = 0;
 GLint p_model_uniform;
 GLint p_view_uniform;
 GLint p_projection_uniform;
-GLint p_object_id_uniform;
 GLint p_bbox_min_uniform;
 GLint p_bbox_max_uniform;
+GLint gpu_TextureDiffuseUniform;
 
 // Função que pega a matriz M e guarda a mesma no topo da pilha
 void PushMatrix(glm::mat4 M) {

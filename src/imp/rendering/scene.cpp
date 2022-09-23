@@ -12,49 +12,46 @@
 #include <loading.hpp>
 #include <utility>
 
-#define SPHERE 0
-#define BUNNY  1
-#define PLANE  2
-#define PENGUIN 3
-
 Scene::Scene() {
     // Template
     // auto triangle = new ObjectTriangles("model_path", ID);
     // ObjectInstance instance("name", position, rotation, triangles);
     // addToScene(new ObjectInstance(instance));
 
-    LoadShadersFromFiles();
+    LoadGenericShaders();
 
     // Carregamos duas imagens para serem utilizadas como textura
-    LoadTextureImage("data/tc-earth_daymap_surface.jpg");      // TextureImage0
-    LoadTextureImage("data/tc-earth_nightmap_citylights.gif"); // TextureImage1
+    GLint earthTexture = LoadTexture("data/earth_texture.jpg");
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-    auto sphere = new ObjectTriangles("data/sphere.obj", SPHERE);
+    auto sphere = new ObjectTriangles("data/sphere.obj");
 
     ObjectInstance sphere1("planeta1",
                            glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f),
                            glm::vec4(0.2f, 0.0f, 0.6f, 0.0f),
                            sphere);
+    sphere1.DiffuseTextureID = earthTexture;
 
     addToScene(new RotatingObject(sphere1));
 
-    auto bunny = new ObjectTriangles("data/bunny.obj", BUNNY);
+    auto bunny = new ObjectTriangles("data/bunny.obj");
 
     const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, 1.0f, 2.0f, 1.0f);
 
-    auto planemodel = new ObjectTriangles("data/plane.obj", PLANE);
+    auto planemodel = new ObjectTriangles("data/plane.obj");
     auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), planemodel);
 
     addToScene(new ObjectInstance(planemodel1));
 
     #ifndef NDEBUG
-    auto debugTriangles = new ObjectTriangles("data/cube.obj", BUNNY);
+    auto debugTriangles = new ObjectTriangles("data/cube.obj");
     ObjectInstance debugObject("debug_object", debugTriangles);
+    debugObject.DiffuseTextureID = earthTexture;
     addToScene(new DebugObject(debugObject, "CubePosition.txt"));
     #endif
 
     auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
+    bunny1.DiffuseTextureID = earthTexture;
     player = new Player(bunny1);
     addToScene(player);
 

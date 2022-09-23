@@ -189,7 +189,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mod)
 
 		case GLFW_KEY_R:
 			if (action == GLFW_PRESS) {
-				LoadShadersFromFiles();
+                LoadGenericShaders();
 				fprintf(stdout, "Shaders recarregados!\n");
 				fflush(stdout);
 			}

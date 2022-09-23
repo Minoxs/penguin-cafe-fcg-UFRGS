@@ -15,7 +15,7 @@
 
 // Função auxilar, utilizada pelas duas funções acima. Carrega código de GPU de
 // um arquivo GLSL e faz sua compilação.
-void LoadShader(const char *filename, GLuint shader_id) {
+void loadShader(const char *filename, GLuint shader_id) {
 	// Lemos o arquivo de texto indicado pela variável "filename"
 	// e colocamos seu conteúdo em memória, apontado pela variável
 	// "shader_string".
@@ -78,27 +78,27 @@ void LoadShader(const char *filename, GLuint shader_id) {
 	delete[] log;
 }
 
-// Carrega um Vertex Shader de um arquivo GLSL. Veja definição de LoadShader() abaixo.
-GLuint LoadShader_Vertex(const char *filename) {
+// Carrega um Vertex Shader de um arquivo GLSL. Veja definição de loadShader() abaixo.
+GLuint loadVertexShader(const char *filename) {
 	// Criamos um identificador (ID) para este shader, informando que o mesmo
 	// será aplicado nos vértices.
 	GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
 
 	// Carregamos e compilamos o shader
-	LoadShader(filename, vertexShaderId);
+    loadShader(filename, vertexShaderId);
 
 	// Retorna o ID gerado acima
 	return vertexShaderId;
 }
 
-// Carrega um Fragment Shader de um arquivo GLSL . Veja definição de LoadShader() abaixo.
-GLuint LoadShader_Fragment(const char *filename) {
+// Carrega um Fragment Shader de um arquivo GLSL . Veja definição de loadShader() abaixo.
+GLuint loadFragmentShader(const char *filename) {
 	// Criamos um identificador (ID) para este shader, informando que o mesmo
 	// será aplicado nos fragmentos.
 	GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Carregamos e compilamos o shader
-	LoadShader(filename, fragmentShaderId);
+    loadShader(filename, fragmentShaderId);
 
 	// Retorna o ID gerado acima
 	return fragmentShaderId;
@@ -106,8 +106,7 @@ GLuint LoadShader_Fragment(const char *filename) {
 
 // Função que carrega os shaders de vértices e de fragmentos que serão
 // utilizados para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
-//
-void LoadShadersFromFiles() {
+void LoadGenericShaders() {
 	// Note que o caminho para os arquivos "shader_vertex.glsl" e
 	// "shader_fragment.glsl" estão fixados, sendo que assumimos a existência
 	// da seguinte estrutura no sistema de arquivos:
@@ -126,8 +125,8 @@ void LoadShadersFromFiles() {
 	//       |
 	//       o-- shader_fragment.glsl
 	//
-	p_vertex_shader_id = LoadShader_Vertex("./shaders/generic.vert");
-	p_fragment_shader_id = LoadShader_Fragment("./shaders/generic.frag");
+	p_vertex_shader_id = loadVertexShader("./shaders/generic.vert");
+	p_fragment_shader_id = loadFragmentShader("./shaders/uvmapping.frag");
 
 	// Deletamos o programa de GPU anterior, caso ele exista.
 	if (p_program_id != 0)
@@ -142,20 +141,18 @@ void LoadShadersFromFiles() {
 	p_model_uniform = glGetUniformLocation(p_program_id, "model"); // Variável da matriz "model"
 	p_view_uniform = glGetUniformLocation(p_program_id, "view"); // Variável da matriz "view" em shader_vertex.glsl
 	p_projection_uniform = glGetUniformLocation(p_program_id, "projection"); // Variável da matriz "projection" em shader_vertex.glsl
-	p_object_id_uniform = glGetUniformLocation(p_program_id, "object_id"); // Variável "object_id" em shader_fragment.glsl
 	p_bbox_min_uniform = glGetUniformLocation(p_program_id, "bbox_min");
 	p_bbox_max_uniform = glGetUniformLocation(p_program_id, "bbox_max");
+    gpu_TextureDiffuseUniform = glGetUniformLocation(p_program_id, "TextureDiffuse");
 
 	// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura
 	glUseProgram(p_program_id);
-	glUniform1i(glGetUniformLocation(p_program_id, "TextureImage0"), 0);
-	glUniform1i(glGetUniformLocation(p_program_id, "TextureImage1"), 1);
-	glUniform1i(glGetUniformLocation(p_program_id, "TextureImage2"), 2);
 	glUseProgram(0);
 }
 
-// Função que carrega uma imagem para ser utilizada como textura
-void LoadTextureImage(const char *filename) {
+// Reads texture from disk and sends to GPU
+// @return Texture ID in the GPU
+GLint LoadTexture(const char *filename) {
 	printf("Carregando imagem \"%s\"... ", filename);
 
 	// Primeiro fazemos a leitura da imagem do disco
@@ -202,4 +199,6 @@ void LoadTextureImage(const char *filename) {
 	stbi_image_free(data);
 
 	g_NumLoadedTextures += 1;
+
+    return (GLint) textureunit;
 }

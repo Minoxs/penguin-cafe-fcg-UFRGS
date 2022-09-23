@@ -22,6 +22,7 @@ struct ObjectInstance {
     glm::vec4 rotation{};
 
     ObjectTriangles* triangles;
+    GLint DiffuseTextureID = -1;
 
     // Copy constructor ClassName(ClassName const &copyFrom)
     ObjectInstance(ObjectInstance const &object);

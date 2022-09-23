@@ -213,10 +213,8 @@ ObjectModel::ObjectModel(const char *filename, const char *basepath, bool triang
     printf("OK.\n");
 }
 
-ObjectTriangles::ObjectTriangles(const char *filepath, int ID) {
+ObjectTriangles::ObjectTriangles(const char *filepath) {
     ObjectModel model(filepath, "data/");
     computeNormals(&model);
     buildTriangles(&model, this);
-
-    this->ID = ID;
 }

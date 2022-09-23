@@ -8,10 +8,7 @@
 #include "loading.hpp"
 #include "glad/glad.h"
 
-void LoadShader(const char *filename, GLuint shader_id);
-GLuint LoadShader_Vertex(const char *filename);
-GLuint LoadShader_Fragment(const char *filename);
-void LoadShadersFromFiles();
-void LoadTextureImage(const char *filename);
+void LoadGenericShaders();
+GLint LoadTexture(const char *filename);
 
 #endif //PENGUINCAFE_SHADER_HEADERS_LOADING

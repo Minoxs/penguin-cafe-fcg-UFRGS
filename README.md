@@ -51,8 +51,8 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
   - Interpolação de Iluminação
     - [ ] Gouraud
     - [ ] Phong
-- [ ] Mapeamento de Texturas
-  - [ ] Dois objetos 
+- [X] Mapeamento de Texturas
+  - [X] Dois objetos 
 - [ ] Curva de Bézier
   - [ ] Um objeto cujo caminho é definido por curva de Bézier
 - [X] Animação de Movimento baseada no tempo
@@ -74,13 +74,14 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 	- [X] Player Movement
 	- [X] Apenas código do GLFW na main
 - [X] Mapear funcionalidades
-- [ ] Descobrir como enviar dados de objetos uma vez só para a GPU - Incluindo dados do material
-- [ ] Descobrir como ter várias texturas em um shader só
-  - [ ] Utilizar um ID para selecionar qual textura está sendo utilizada
-  - [ ] Utilizar textura definida no material
+- [X] Descobrir como enviar dados de objetos uma vez só para a GPU (Vamos suportar apenas UV mapping)
+- [X] Descobrir como ter várias texturas em um shader só
+  - [X] Utilizar um ID para selecionar qual textura está sendo utilizada
+  - [X] Utilizar textura definida no material (No Need)
 - [ ] Implementar primeira pessoa
   - [ ] Talvez precise de um shader específico 
 - [ ] Suportar especularidade
+  - [ ] Implementar modelos de iluminação 
 - [ ] Definir escopo do jogo
 - [ ] Implementar lógica de jogo
 - [ ] Implementar colisão
@@ -88,7 +89,7 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 - [ ] Definir quais objetos vamos utilizar
   - [ ] "Limpar" objetos 
   - [ ] Linkar referências dos objetos/texturas
-  - [ ] Não esquecer de um modelo altamente complexo
+  - [X] Não esquecer de um modelo altamente complexo
 
 # Referências
 

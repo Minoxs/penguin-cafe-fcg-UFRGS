@@ -6,6 +6,7 @@
 #ifndef PENGUINCAFE_COLLISIONS_SRC_HEADERS_PHYSICS
 #define PENGUINCAFE_COLLISIONS_SRC_HEADERS_PHYSICS
 
+#include "physics.hpp"
 #include <list>
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
@@ -23,11 +24,26 @@ namespace Physics {
         Z
     };
 
+    // TODO RENAME TO COLLIDER
     struct CollisionTrigger {
+        // Uniquely identifies trigger (used to ignore "self-collision")
         unsigned int ID;
+        // Layer where collisions will happen
+        Engine* layer;
+        // Point associated with collider
         glm::vec4* center;
 
         explicit CollisionTrigger(glm::vec4* center);
+
+        // Moves object if there are no collisions
+        // Returns wheter it moved or not
+        virtual bool TryMove(glm::vec4 direction, float speed, float delta);
+
+        // Functions to check collisions
+        // Always returns false in the base class
+        virtual bool Collide(CollisionPlane* B);
+        virtual bool Collide(CollisionBox* B);
+        virtual bool Collide(CollisionSphere* B);
     };
 
     struct CollisionPlane : CollisionTrigger {
@@ -42,6 +58,7 @@ namespace Physics {
         float radius;
 
         CollisionSphere(glm::vec4* center, float radius);
+        bool TryMove(glm::vec4 direction, float speed, float delta) override;
     };
 
     struct CollisionBox : CollisionTrigger {
@@ -66,38 +83,9 @@ namespace Physics {
         void AddSphere(CollisionSphere* sphere);
         void AddPlane(CollisionPlane* plane);
 
-        // Default is to not collide
-        template <class T, class U> bool Collide(T*, U*) {
-            return false;
-        };
-
-        // Box-Box
-        template <> bool Collide(CollisionBox* A, CollisionBox* B);
-
-        // Box-Plane
-        template <> bool Collide(CollisionBox* A, CollisionPlane* B);
-        template <> bool Collide(CollisionPlane* B, CollisionBox* A) {
-            return Collide(A, B);
-        };
-
-        // Sphere-Sphere
-        template <> bool Collide(CollisionSphere* A, CollisionSphere* B);
-
-        // Sphere-Plane
-        template <> bool Collide(CollisionSphere* A, CollisionPlane* B);
-        template <> bool Collide(CollisionPlane* B, CollisionSphere* A) {
-            return Collide(A, B);
-        };
-
-        // Sphere-Box
-        template <> bool Collide(CollisionBox* A, CollisionSphere* B);
-        template <> bool Collide(CollisionSphere* B, CollisionBox* A) {
-            return Collide(A, B);
-        };
-
-        // Function will try to move the collider's position
-        // Returns wheter it moved or not
-        template<class T> bool TryMove(T* collision, glm::vec4 direction, float speed, float delta);
+        // Checks if given object collides with other
+        // tracked objects in the engine
+        bool CheckCollision(CollisionTrigger* check);
     };
 }
 

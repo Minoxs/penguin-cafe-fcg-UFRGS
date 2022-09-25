@@ -44,7 +44,8 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
   - [ ] Três tipos de teste de intersecção
     - Teste Cubo-Cubo
     - Teste Cubo-Plano
-    - Teste Ponto-Esfera
+    - Teste Esfera-Plano
+    - Teste Esfera-Cubo
   - [ ] Arquivo nomeado collisions.cpp
 - [ ] Modelos de iluminação
   - [ ] Lambert **E** Blinn-Phong
@@ -69,10 +70,10 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 # Tarefas
 
 - [X] Organizar código atual em diferentes pacotes
-	- [X] File Handling
-	- [X] Rendering
-	- [X] Player Movement
-	- [X] Apenas código do GLFW na main
+  - [X] File Handling
+  - [X] Rendering
+  - [X] Player Movement
+  - [X] Apenas código do GLFW na main
 - [X] Mapear funcionalidades
 - [X] Descobrir como enviar dados de objetos uma vez só para a GPU (Vamos suportar apenas UV mapping)
 - [X] Descobrir como ter várias texturas em um shader só

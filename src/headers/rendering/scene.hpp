@@ -9,11 +9,13 @@
 #include "rendering.hpp"
 #include "glad/glad.h"
 #include "player.hpp"
+#include "physics/collisions.hpp"
 
 struct Scene {
     std::map<std::string, ObjectInstance*> virtualScene {};
     Camera* mainCamera;
 
+    Physics::Engine* engine;
 
     Player* player;
     LookAtCamera* lookAtCamera;

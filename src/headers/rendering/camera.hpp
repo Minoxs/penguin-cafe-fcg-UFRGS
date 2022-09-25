@@ -32,6 +32,8 @@ struct Player : Camera {
 
     explicit Player(const ObjectInstance &object);
 
+    Physics::CollisionBox* collider = nullptr;
+
     void cameraTranslate(float delta);
     void cameraPan();
     void Proc(float time, float delta) override;

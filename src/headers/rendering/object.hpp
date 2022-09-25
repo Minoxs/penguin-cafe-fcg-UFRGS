@@ -12,6 +12,7 @@
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
 #include "glm/ext/matrix_float4x4.hpp"
+#include "physics/collisions.hpp"
 
 // Guarda os dados de uma instância de um objeto da cena
 // Pode-se utilizar o mesmo objeto múltiplas vezes
@@ -36,6 +37,8 @@ struct ObjectInstance {
 };
 
 struct RotatingObject : public ObjectInstance {
+    Physics::CollisionSphere* collider = nullptr;
+
     // Constructor from parent from
     explicit RotatingObject(const ObjectInstance &object);
 

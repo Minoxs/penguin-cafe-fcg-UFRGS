@@ -48,14 +48,18 @@ void Player::cameraTranslate(float delta) {
     d /= dNorma;
     d *= speed * delta;
 
-    if (d.z != 0.0f) {
-        position += d.z * rotation;
-    }
+    // TODO CONVERT DIRECTION INTO CAMERA COORDINATE SYSTEM
 
-    if (d.x != 0.0f) {
-        glm::vec4 sideVector = crossproduct(rotation, upVector);
-        position += d.x * (sideVector/norm(sideVector));
-    }
+
+
+//    if (d.z != 0.0f) {
+//        position += d.z * rotation;
+//    }
+//
+//    if (d.x != 0.0f) {
+//        glm::vec4 sideVector = crossproduct(rotation, upVector);
+//        position += d.x * (sideVector/norm(sideVector));
+//    }
 }
 
 void Player::cameraPan() {
@@ -80,7 +84,3 @@ void Player::Draw() {
         ObjectInstance::Draw();
     }
 }
-
-
-
-

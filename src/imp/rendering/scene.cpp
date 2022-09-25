@@ -17,8 +17,8 @@ Scene::Scene() {
     // auto triangle = new ObjectTriangles("model_path", ID);
     // ObjectInstance instance("name", position, rotation, triangles);
     // addToScene(new ObjectInstance(instance));
-
     LoadGenericShaders();
+    engine = new Physics::Engine();
 
     // Carregamos duas imagens para serem utilizadas como textura
     GLint earthTexture = LoadTexture("data/textures/earth_texture.jpg");
@@ -34,7 +34,14 @@ Scene::Scene() {
                            sphere);
     sphere1.DiffuseTextureID = earthTexture;
 
-    addToScene(new RotatingObject(sphere1));
+    // Create specific instance
+    auto planet = new RotatingObject(sphere1);
+    // Add collision
+    planet->collider = new Physics::CollisionSphere(&planet->position, 1.0f);
+
+    // Add to scene and physics engine
+    addToScene(planet);
+    engine->AddSphere(planet->collider);
 
     auto bunny = new ObjectTriangles("data/objects/bunny.obj");
 
@@ -54,8 +61,14 @@ Scene::Scene() {
 
     auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
     bunny1.DiffuseTextureID = furTexture;
+
+    // Create specific instance
     player = new Player(bunny1);
+    // Add collider
+    player->collider = new Physics::CollisionBox(&player->position, player->triangles->bbox_min, player->triangles->bbox_max);
+    // Add to the scene and physics engine
     addToScene(player);
+    engine->AddBox(player->collider);
 
     ObjectInstance camera("camera", glm::vec4(0.0f, 3.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
     lookAtCamera = new LookAtCamera(camera, &player->position);

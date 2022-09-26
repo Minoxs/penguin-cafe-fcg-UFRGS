@@ -15,8 +15,8 @@ set(SOURCE_FILES
     lib/imp/stb_image.cpp
     lib/imp/tiny_obj_loader.cpp
     lib/imp/matrices.cpp
-        src/imp/global/variable.cpp
-        src/imp/loading/shader.cpp
+    src/imp/global/variable.cpp
+    src/imp/loading/shader.cpp
     src/imp/player/input.cpp
     src/imp/rendering/object.cpp
     src/imp/rendering/shader.cpp
@@ -25,7 +25,9 @@ set(SOURCE_FILES
     src/imp/rendering/camera.cpp
     src/imp/player/movement.cpp
     src/imp/rendering/scene.cpp
-        src/imp/loading/model.cpp)
+    src/imp/loading/model.cpp
+    src/imp/physics/collisions.cpp
+)
 
 # Executable with static libraries
 add_executable(PenguinCafe src/main.cpp ${SOURCE_FILES})

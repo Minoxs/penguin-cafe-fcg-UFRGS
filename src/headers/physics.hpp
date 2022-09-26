@@ -9,10 +9,10 @@
 // Forward declaration of classes in this package
 namespace Physics {
     struct Engine;
-    struct CollisionTrigger;
-    struct CollisionBox;
-    struct CollisionSphere;
-    struct CollisionPlane;
+    struct Collider;
+    struct ColliderBox;
+    struct ColliderSphere;
+    struct ColliderPlane;
 }
 
 #include "physics/collisions.hpp"

@@ -24,16 +24,15 @@ namespace Physics {
         Z
     };
 
-    // TODO RENAME TO COLLIDER
-    struct CollisionTrigger {
+    struct Collider {
         // Uniquely identifies trigger (used to ignore "self-collision")
         unsigned int ID;
         // Layer where collisions will happen
-        Engine* layer;
+        Engine* layer = nullptr;
         // Point associated with collider
         glm::vec4* center;
 
-        explicit CollisionTrigger(glm::vec4* center);
+        explicit Collider(glm::vec4* center);
 
         // Moves object if there are no collisions
         // Returns wheter it moved or not
@@ -41,51 +40,55 @@ namespace Physics {
 
         // Functions to check collisions
         // Always returns false in the base class
-        virtual bool Collide(CollisionPlane* B);
-        virtual bool Collide(CollisionBox* B);
-        virtual bool Collide(CollisionSphere* B);
+        virtual bool Collide(ColliderPlane* B);
+        virtual bool Collide(ColliderBox* B);
+        virtual bool Collide(ColliderSphere* B);
     };
 
-    struct CollisionPlane : CollisionTrigger {
+    struct ColliderPlane : Collider {
         Alignment align;
         float length;
         float height;
 
-        CollisionPlane(glm::vec4* center, Alignment align, float length, float height);
+        ColliderPlane(glm::vec4* center, Alignment align, float length, float height);
     };
 
-    struct CollisionSphere : CollisionTrigger {
+    struct ColliderSphere : Collider {
         float radius;
 
-        CollisionSphere(glm::vec4* center, float radius);
-        bool TryMove(glm::vec4 direction, float speed, float delta) override;
+        ColliderSphere(glm::vec4* center, float radius);
+        bool Collide(ColliderBox* B) override;
+        bool Collide(ColliderSphere* B) override;
     };
 
-    struct CollisionBox : CollisionTrigger {
-        float lengthX;
-        float lengthY;
-        float lengthZ;
+    struct ColliderBox : Collider {
+        glm::vec3 bboxMin {};
+        glm::vec3 bboxMax {};
 
-        CollisionBox(glm::vec4* center, float lengthX, float lengthY, float lengthZ);
-        CollisionBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax);
+        ColliderBox(glm::vec4* center, float lengthX, float lengthY, float lengthZ);
+        ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax);
+
+        bool TryMove(glm::vec4 direction, float speed, float delta) override;
+        bool Collide(ColliderBox* B) override;
+        bool Collide(ColliderSphere* B) override;
     };
 
     struct Engine {
         Engine() = default;
 
         // This is probably a dumb idea
-        std::list<CollisionBox*> boxes;
-        std::list<CollisionSphere*> spheres;
-        std::list<CollisionPlane*> planes;
+        std::list<ColliderBox*> boxes;
+        std::list<ColliderSphere*> spheres;
+        std::list<ColliderPlane*> planes;
 
         // Add objects to the list
-        void AddBox(CollisionBox* box);
-        void AddSphere(CollisionSphere* sphere);
-        void AddPlane(CollisionPlane* plane);
+        void Add(ColliderBox* box);
+        void Add(ColliderSphere* sphere);
+        void Add(ColliderPlane* plane);
 
         // Checks if given object collides with other
         // tracked objects in the engine
-        bool CheckCollision(CollisionTrigger* check);
+        bool CheckCollision(Collider* check);
     };
 }
 

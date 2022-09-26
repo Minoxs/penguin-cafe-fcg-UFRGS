@@ -37,7 +37,7 @@ struct ObjectInstance {
 };
 
 struct RotatingObject : public ObjectInstance {
-    Physics::CollisionSphere* collider = nullptr;
+    Physics::ColliderSphere* collider = nullptr;
 
     // Constructor from parent from
     explicit RotatingObject(const ObjectInstance &object);

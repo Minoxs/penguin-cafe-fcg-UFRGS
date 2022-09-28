@@ -288,14 +288,26 @@ void DebugObject::writePosition() {
 void DebugObject::Proc(float time, float delta) {
     const float speed = 3.0f;
 
-    if (g_is7Pressed) position.x += speed * delta;
-    if (g_is4Pressed) position.x -= speed * delta;
+    glm::vec4 move = {};
 
-    if (g_is8Pressed) position.y += speed * delta;
-    if (g_is5Pressed) position.y -= speed * delta;
+    if (g_is7Pressed) move.x += speed * delta;
+    if (g_is4Pressed) move.x -= speed * delta;
 
-    if (g_is9Pressed) position.z += speed * delta;
-    if (g_is6Pressed) position.z -= speed * delta;
+    if (g_is8Pressed) move.y += speed * delta;
+    if (g_is5Pressed) move.y -= speed * delta;
+
+    if (g_is9Pressed) move.z += speed * delta;
+    if (g_is6Pressed) move.z -= speed * delta;
+
+    position += move;
+
+    // Manually moving bbox since this object will ignore collision
+    collider->bboxMin.x += move.x;
+    collider->bboxMin.y += move.y;
+    collider->bboxMin.z += move.z;
+    collider->bboxMax.x += move.x;
+    collider->bboxMax.y += move.y;
+    collider->bboxMax.z += move.z;
 
     if (g_is1Pressed) rotation.x += speed * delta;
     if (g_is2Pressed) rotation.y += speed * delta;

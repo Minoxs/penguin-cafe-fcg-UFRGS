@@ -50,6 +50,7 @@ struct DebugObject : public ObjectInstance {
     const char* name;
     int positionIndex;
     bool writing = false;
+    Physics::ColliderBox* collider;
 
     explicit DebugObject(const ObjectInstance &object, const char* name);
 

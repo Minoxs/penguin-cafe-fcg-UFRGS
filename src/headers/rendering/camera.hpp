@@ -28,7 +28,7 @@ struct LookAtCamera : Camera {
 };
 
 struct Player : Camera {
-    inline static const float speed {1.0f};
+    inline static const float speed {2.0f};
 
     explicit Player(const ObjectInstance &object);
 

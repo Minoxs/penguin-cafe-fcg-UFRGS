@@ -40,13 +40,12 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
   - [X] Câmera Look-At
   - [X] Câmera Livre
 - [X] Diversas instâncias do mesmo objeto, com diferentes matrizes de modelo
-- [ ] Testes de intersecção entre objetos virtuais
-  - [ ] Três tipos de teste de intersecção
+- [X] Testes de intersecção entre objetos virtuais
+  - [X] Três tipos de teste de intersecção
     - Teste Cubo-Cubo
-    - Teste Cubo-Plano
-    - Teste Esfera-Plano
+    - Teste Esfera-Esfera
     - Teste Esfera-Cubo
-  - [ ] Arquivo nomeado collisions.cpp
+  - [X] Arquivo nomeado collisions.cpp
 - [ ] Modelos de iluminação
   - [ ] Lambert **E** Blinn-Phong
   - Interpolação de Iluminação

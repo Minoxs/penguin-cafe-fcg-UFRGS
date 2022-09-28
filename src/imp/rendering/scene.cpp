@@ -37,7 +37,7 @@ Scene::Scene() {
     // Create specific instance
     auto planet = new RotatingObject(sphere1);
     // Add collision
-    planet->collider = new Physics::ColliderSphere(&planet->position, 1.0f);
+    planet->collider = new Physics::ColliderSphere(&planet->position, 0.40f);
 
     // Add to scene and physics engine
     addToScene(planet);
@@ -45,18 +45,22 @@ Scene::Scene() {
 
     auto bunny = new ObjectTriangles("data/objects/bunny.obj");
 
-    const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, 1.0f, 2.0f, 1.0f);
+    const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, -3.0f, 2.0f, 1.0f);
 
     auto planemodel = new ObjectTriangles("data/objects/plane.obj");
     auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), planemodel);
+    planemodel1.DiffuseTextureID = earthTexture;
 
     addToScene(new ObjectInstance(planemodel1));
 
     #ifndef NDEBUG
     auto debugTriangles = new ObjectTriangles("data/objects/cube.obj");
-    ObjectInstance debugObject("debug_object", debugTriangles);
-    debugObject.DiffuseTextureID = woodTexture;
-    addToScene(new DebugObject(debugObject, "CubePosition.txt"));
+    ObjectInstance debugObjectInstance("debug_object", debugTriangles);
+    debugObjectInstance.DiffuseTextureID = woodTexture;
+    auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
+    debugObject->collider = new Physics::ColliderBox(&debugObject->position, 1.0f, 1.0f, 1.0f);
+    addToScene(debugObject);
+    engine->Add(debugObject->collider);
     #endif
 
     auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);

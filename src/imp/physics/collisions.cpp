@@ -11,12 +11,13 @@
 int triggersNum = 0;
 
 namespace Physics {
-    bool collide(ColliderSphere* S, ColliderBox* B) {
+    // Internal functions
+    bool collideSphereBox(ColliderSphere* S, ColliderBox* B) {
         glm::vec4 closestPoint = glm::vec4(
-                std::max(B->bboxMin.x, std::min(S->center->x, B->bboxMax.x)),
-                std::max(B->bboxMin.y, std::min(S->center->y, B->bboxMax.y)),
-                std::max(B->bboxMin.z, std::min(S->center->z, B->bboxMax.z)),
-                1.0f
+	        std::max(B->bboxMin.x, std::min(S->center->x, B->bboxMax.x)),
+	        std::max(B->bboxMin.y, std::min(S->center->y, B->bboxMax.y)),
+	        std::max(B->bboxMin.z, std::min(S->center->z, B->bboxMax.z)),
+	        1.0f
         );
 
         float distance = norm(closestPoint - *S->center);
@@ -24,6 +25,7 @@ namespace Physics {
         return distance < S->radius;
     }
 
+    // Struct Implementations
     Collider::Collider(glm::vec4* center) {
         this->ID = triggersNum;
         this->center = center;
@@ -31,9 +33,17 @@ namespace Physics {
         triggersNum += 1;
     }
 
-    // TODO: BABYYY
     bool Collider::TryMove(glm::vec4 direction, float speed, float delta) {
-        return false;
+        glm::vec4 startPosition = *center;
+
+        *center += direction * speed * delta;
+
+        if (layer->CheckCollision(this)) {
+            *center = startPosition;
+            return false;
+        }
+
+        return true;
     }
 
     bool Collider::Collide(ColliderPlane *B) {
@@ -65,7 +75,7 @@ namespace Physics {
 
     // Esfera com Cubo
     bool ColliderSphere::Collide(ColliderBox* B) {
-        return collide(this, B);
+        return collideSphereBox(this, B);
     }
 
     ColliderBox::ColliderBox(glm::vec4* center, float lengthX, float lengthY, float lengthZ) : Collider(center) {
@@ -83,28 +93,38 @@ namespace Physics {
         this->bboxMax = origin + bboxMax;
     }
 
-
-
     // Cubo com Cubo
     bool ColliderBox::Collide(ColliderBox* B) {
         return (
-                (this->bboxMin.x <= B->bboxMax.x) &&
-                (this->bboxMax.x >= B->bboxMin.x) &&
-                (this->bboxMin.y <= B->bboxMax.y) &&
-                (this->bboxMax.y >= B->bboxMin.y) &&
-                (this->bboxMin.z <= B->bboxMax.z) &&
-                (this->bboxMax.z >= B->bboxMin.z)
+            (this->bboxMin.x <= B->bboxMax.x) &&
+            (this->bboxMax.x >= B->bboxMin.x) &&
+            (this->bboxMin.y <= B->bboxMax.y) &&
+            (this->bboxMax.y >= B->bboxMin.y) &&
+            (this->bboxMin.z <= B->bboxMax.z) &&
+            (this->bboxMax.z >= B->bboxMin.z)
         );
     }
 
     // Cubo com Esfera
     bool ColliderBox::Collide(ColliderSphere* S) {
-        return collide(S, this);
+        return collideSphereBox(S, this);
     }
 
-    // TODO BABY TOO
     bool ColliderBox::TryMove(glm::vec4 direction, float speed, float delta) {
-        return Collider::TryMove(direction, speed, delta);
+        glm::vec3 bboxMinBackup = bboxMin;
+        glm::vec3 bboxMaxBackup = bboxMax;
+        glm::vec3 move = glm::vec3(direction.x, direction.y, direction.z) * speed * delta;
+
+        bboxMin += move;
+        bboxMax += move;
+
+        if (!Collider::TryMove(direction, speed, delta)) {
+            bboxMin = bboxMinBackup;
+            bboxMax = bboxMaxBackup;
+            return false;
+        }
+
+        return true;
     }
 
     void Engine::Add(ColliderBox* box) {
@@ -124,19 +144,19 @@ namespace Physics {
 
     bool Engine::CheckCollision(Collider* check) {
         for (ColliderBox* box : this->boxes) {
-            if (check->Collide(box)) {
+            if ( (check->ID != box->ID) && check->Collide(box) ) {
                 return true;
             }
         }
 
         for (ColliderSphere* sphere : this->spheres) {
-            if (check->Collide(sphere)) {
+            if ( (check->ID != sphere->ID) && check->Collide(sphere) ) {
                 return true;
             }
         }
 
         for (ColliderPlane* plane : this->planes) {
-            if (check->Collide(plane)) {
+            if ( (check->ID != plane->ID) && check->Collide(plane) ) {
                 return true;
             }
         }

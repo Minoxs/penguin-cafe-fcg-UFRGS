@@ -46,20 +46,21 @@ void Player::cameraTranslate(float delta) {
     if (dNorma == 0.0f) return;
 
     d /= dNorma;
-    d *= speed * delta;
 
-    // TODO CONVERT DIRECTION INTO CAMERA COORDINATE SYSTEM
+    glm::vec4 offset = {};
 
+    if (d.z != 0.0f) {
+        offset += d.z * rotation;
+    }
 
+    if (d.x != 0.0f) {
+        glm::vec4 sideVector = crossproduct(rotation, upVector);
+        offset += d.x * (sideVector/norm(sideVector));
+    }
 
-//    if (d.z != 0.0f) {
-//        position += d.z * rotation;
-//    }
-//
-//    if (d.x != 0.0f) {
-//        glm::vec4 sideVector = crossproduct(rotation, upVector);
-//        position += d.x * (sideVector/norm(sideVector));
-//    }
+    offset /= norm(offset);
+
+    collider->TryMove(offset, speed, delta);
 }
 
 void Player::cameraPan() {

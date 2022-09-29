@@ -82,12 +82,13 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
   - [ ] Talvez precise de um shader específico 
 - [ ] Suportar especularidade
   - [ ] Implementar modelos de iluminação 
-- [ ] Definir escopo do jogo
+- [X] Definir escopo do jogo
 - [ ] Implementar lógica de jogo
 - [X] Implementar colisão
 - [ ] Criar cena que será utilizada no jogo
-- [ ] Definir quais objetos vamos utilizar
-  - [ ] "Limpar" objetos 
+- [X] Definir quais objetos vamos utilizar
+  - [X] "Limpar" objetos
+  - [ ] Diminuir resolução das imagens
   - [ ] Linkar referências dos objetos/texturas
   - [X] Não esquecer de um modelo altamente complexo
 

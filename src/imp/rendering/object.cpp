@@ -15,6 +15,7 @@ ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     name = object.name;
     position = object.position;
     rotation = object.rotation;
+    scale = object.scale;
     triangles = object.triangles;
     DiffuseTextureID = object.DiffuseTextureID;
 }
@@ -42,7 +43,8 @@ void ObjectInstance::Draw() {
 	glm::mat4 model = Matrix_Translate(position.x, position.y, position.z)
 						* Matrix_Rotate_Z(rotation.z)
 						* Matrix_Rotate_X(rotation.x)
-						* Matrix_Rotate_Y(rotation.y);
+						* Matrix_Rotate_Y(rotation.y)
+                        * Matrix_Scale(scale.x, scale.y, scale.z);
 
 	// Send model matrix
 	glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));

@@ -33,6 +33,7 @@ Scene::Scene() {
                            glm::vec4(0.2f, 0.0f, 0.6f, 0.0f),
                            sphere);
     sphere1.DiffuseTextureID = earthTexture;
+    sphere1.scale = glm::vec3(2.0f, 5.0f, 1.0f);
 
     // Create specific instance
     auto planet = new RotatingObject(sphere1);
@@ -65,6 +66,7 @@ Scene::Scene() {
 
     auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
     bunny1.DiffuseTextureID = furTexture;
+    bunny1.scale = glm::vec3(1.0f, 1.0f, 2.0f);
 
     // Create specific instance
     player = new Player(bunny1);

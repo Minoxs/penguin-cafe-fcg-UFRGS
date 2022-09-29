@@ -21,6 +21,7 @@ struct ObjectInstance {
 
     glm::vec4 position{};
     glm::vec4 rotation{};
+    glm::vec3 scale{1.0f, 1.0f, 1.0f};
 
     ObjectTriangles* triangles;
     GLint DiffuseTextureID = -1;

@@ -84,7 +84,7 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
   - [ ] Implementar modelos de iluminação 
 - [ ] Definir escopo do jogo
 - [ ] Implementar lógica de jogo
-- [ ] Implementar colisão
+- [X] Implementar colisão
 - [ ] Criar cena que será utilizada no jogo
 - [ ] Definir quais objetos vamos utilizar
   - [ ] "Limpar" objetos 

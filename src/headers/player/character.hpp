@@ -1,0 +1,25 @@
+//
+// Guilherme Wagner Correa
+// Cartão: 00303992
+//
+#pragma once
+#ifndef PENGUINCAFE_CHARACTER_HEADERS_PLAYER
+#define PENGUINCAFE_CHARACTER_HEADERS_PLAYER
+
+#include "player.hpp"
+#include "rendering.hpp"
+
+struct Player : Camera {
+    inline static const float speed {2.0f};
+
+    explicit Player(const ObjectInstance &object);
+
+    Physics::ColliderBox* collider = nullptr;
+
+    void cameraTranslate(float delta);
+    void cameraPan();
+    void Proc(float time, float delta) override;
+    void Draw() override;
+};
+
+#endif //PENGUINCAFE_CHARACTER_HEADERS_PLAYER

@@ -6,10 +6,10 @@
 #ifndef PENGUINCAFE_SCENE_SRC_HEADERS_RENDERING
 #define PENGUINCAFE_SCENE_SRC_HEADERS_RENDERING
 
-#include "rendering.hpp"
 #include "glad/glad.h"
+#include "rendering.hpp"
 #include "player.hpp"
-#include "physics/collisions.hpp"
+#include "physics.hpp"
 
 struct Scene {
     std::map<std::string, ObjectInstance*> virtualScene {};

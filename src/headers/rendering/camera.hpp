@@ -27,17 +27,4 @@ struct LookAtCamera : Camera {
     void Proc(float time, float delta) override;
 };
 
-struct Player : Camera {
-    inline static const float speed {2.0f};
-
-    explicit Player(const ObjectInstance &object);
-
-    Physics::ColliderBox* collider = nullptr;
-
-    void cameraTranslate(float delta);
-    void cameraPan();
-    void Proc(float time, float delta) override;
-    void Draw() override;
-};
-
 #endif //PENGUINCAFE_CAMERA_SRC_IMP_PLAYER

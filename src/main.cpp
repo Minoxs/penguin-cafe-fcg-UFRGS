@@ -21,7 +21,6 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
-#include <rendering/scene.hpp>
 
 // Headers das bibliotecas OpenGL
 #include "glad/glad.h"   // Criação de contexto OpenGL 3.3
@@ -30,11 +29,7 @@
 #include "stb_image.h"
 
 // Headers locais, definidos na pasta "include/"
-#include "matrices.h"
-#include "global.hpp"
-#include "loading.hpp"
-#include "rendering.hpp"
-#include "player.hpp"
+#include "game.hpp"
 
 int main(int argc, char *argv[]) {
 	// Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
@@ -119,7 +114,7 @@ int main(int argc, char *argv[]) {
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
-    auto scene = Scene();
+    auto game = new Game();
     auto prevFrameTime = (float) glfwGetTime();
 
 	// Ficamos em loop, renderizando, até que o usuário feche a janela
@@ -128,8 +123,10 @@ int main(int argc, char *argv[]) {
         auto frameTime = (float) glfwGetTime();
         float delta = frameTime - prevFrameTime;
 
+        // Run a game step
+        game->Step();
         // Render Scene
-        scene.Render(frameTime, delta);
+        game->scene->Render(frameTime, delta);
 
 		// O framebuffer onde OpenGL executa as operações de renderização não
 		// é o mesmo que está sendo mostrado para o usuário, caso contrário

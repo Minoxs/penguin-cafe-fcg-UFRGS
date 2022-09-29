@@ -33,12 +33,12 @@ namespace Physics {
         triggersNum += 1;
     }
 
-    bool Collider::TryMove(glm::vec4 direction, float speed, float delta) {
+    bool Collider::TryMove(glm::vec4 offset, bool checkCollision) {
         glm::vec4 startPosition = *center;
 
-        *center += direction * speed * delta;
+        *center += offset;
 
-        if (layer->CheckCollision(this)) {
+        if (checkCollision && layer->CheckCollision(this)) {
             *center = startPosition;
             return false;
         }
@@ -110,15 +110,15 @@ namespace Physics {
         return collideSphereBox(S, this);
     }
 
-    bool ColliderBox::TryMove(glm::vec4 direction, float speed, float delta) {
+    bool ColliderBox::TryMove(glm::vec4 offset, bool checkCollision) {
         glm::vec3 bboxMinBackup = bboxMin;
         glm::vec3 bboxMaxBackup = bboxMax;
-        glm::vec3 move = glm::vec3(direction.x, direction.y, direction.z) * speed * delta;
+        glm::vec3 move = glm::vec3(offset.x, offset.y, offset.z);
 
         bboxMin += move;
         bboxMax += move;
 
-        if (!Collider::TryMove(direction, speed, delta)) {
+        if (!Collider::TryMove(offset, checkCollision)) {
             bboxMin = bboxMinBackup;
             bboxMax = bboxMaxBackup;
             return false;

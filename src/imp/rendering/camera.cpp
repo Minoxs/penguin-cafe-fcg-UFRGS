@@ -60,7 +60,7 @@ void Player::cameraTranslate(float delta) {
 
     offset /= norm(offset);
 
-    collider->TryMove(offset, speed, delta);
+    collider->TryMove(offset * speed * delta, true);
 }
 
 void Player::cameraPan() {

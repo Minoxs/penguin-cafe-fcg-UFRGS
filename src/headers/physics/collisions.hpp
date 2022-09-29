@@ -36,7 +36,7 @@ namespace Physics {
 
         // Moves object if there are no collisions
         // Returns wheter it moved or not
-        virtual bool TryMove(glm::vec4 direction, float speed, float delta);
+        virtual bool TryMove(glm::vec4 offset, bool checkCollision);
 
         // Functions to check collisions
         // Always returns false in the base class
@@ -68,7 +68,7 @@ namespace Physics {
         ColliderBox(glm::vec4* center, float lengthX, float lengthY, float lengthZ);
         ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax);
 
-        bool TryMove(glm::vec4 direction, float speed, float delta) override;
+        bool TryMove(glm::vec4 offset, bool checkCollision) override;
         bool Collide(ColliderBox* B) override;
         bool Collide(ColliderSphere* B) override;
     };

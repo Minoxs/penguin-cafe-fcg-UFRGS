@@ -26,47 +26,52 @@ Scene::Scene() {
     GLint furTexture = LoadTexture("data/textures/rabbit_fur.jpg");
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-    auto sphere = new ObjectTriangles("data/objects/sphere.obj");
 
-    ObjectInstance sphere1("planeta1",
-                           glm::vec4(-1.0f, 0.0f, 0.0f, 1.0f),
-                           glm::vec4(0.2f, 0.0f, 0.6f, 0.0f),
-                           sphere);
-    sphere1.DiffuseTextureID = earthTexture;
-    sphere1.scale = glm::vec3(2.0f, 5.0f, 1.0f);
+    auto cubeTriangles = new ObjectTriangles("data/objects/cube.obj");
 
-    // Create specific instance
-    auto planet = new RotatingObject(sphere1);
-    // Add collision
-    planet->collider = new Physics::ColliderSphere(&planet->position, 0.40f);
+    const float conversion = 3.1415f/180.0f;
+    ObjectInstance baseCube("", cubeTriangles);
+    baseCube.DiffuseTextureID = woodTexture;
 
-    // Add to scene and physics engine
-    addToScene(planet);
-    engine->Add(planet->collider);
+    auto ceiling = new ObjectInstance(baseCube);
+    ceiling->name = "ceiling";
+    ceiling->position = glm::vec4(-0.51f, 11.0f, -2.82f, 1.0f);
+    ceiling->rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    ceiling->scale = glm::vec4(38.5f, 0.7f, 38.5f, 0.0f);
+    addToScene(ceiling);
+
+    auto floor = new ObjectInstance(baseCube);
+    floor->name = "floor";
+    floor->position = glm::vec4(-0.51f, -0.7f, -2.82f, 1.0f);
+    floor->rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    floor->scale = glm::vec4(38.5f, 0.7f, 38.5f, 0.0f);
+    addToScene(floor);
+
+    baseCube.name = "wall01";
+    baseCube.position = glm::vec4(-4.01f, 4.5f, 34.27, 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -10.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.0f, 0.7f, 7.0f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall-base";
+    baseCube.position = glm::vec4(0.0f, 0.5f, 0.0f, 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(1.0f, 1.0f, 1.0f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+
+//    #ifndef NDEBUG
+//    ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
+//    debugObjectInstance.DiffuseTextureID = woodTexture;
+//    auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
+//    debugObject->collider = new Physics::ColliderBox(&debugObject->position, 1.0f, 1.0f, 1.0f);
+//    addToScene(debugObject);
+//    engine->Add(debugObject->collider);
+//    #endif
 
     auto bunny = new ObjectTriangles("data/objects/bunny.obj");
-
-    const glm::vec4 playerInitialPosition = glm::vec4(-2.0f, -3.0f, 2.0f, 1.0f);
-
-    auto planemodel = new ObjectTriangles("data/objects/plane.obj");
-    auto planemodel1 = ObjectInstance("planemodel1", glm::vec4(0.0f, -1.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.0f), planemodel);
-    planemodel1.DiffuseTextureID = earthTexture;
-
-    addToScene(new ObjectInstance(planemodel1));
-
-    #ifndef NDEBUG
-    auto debugTriangles = new ObjectTriangles("data/objects/cube.obj");
-    ObjectInstance debugObjectInstance("debug_object", debugTriangles);
-    debugObjectInstance.DiffuseTextureID = woodTexture;
-    auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
-    debugObject->collider = new Physics::ColliderBox(&debugObject->position, 1.0f, 1.0f, 1.0f);
-    addToScene(debugObject);
-    engine->Add(debugObject->collider);
-    #endif
-
-    auto bunny1 = ObjectInstance("bunny1", playerInitialPosition, glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
+    auto bunny1 = ObjectInstance("bunny1", glm::vec4(-1.0f, 0.5f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
     bunny1.DiffuseTextureID = furTexture;
-    bunny1.scale = glm::vec3(1.0f, 1.0f, 2.0f);
 
     // Create specific instance
     player = new Player(bunny1);
@@ -117,7 +122,7 @@ void Scene::Render(float time, float delta) {
     // Note que, no sistema de coordenadas da câmera, os planos near e far
     // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
     float nearplane = -0.1f;  // Posição do "near plane"
-    float farplane = -10.0f; // Posição do "far plane"
+    float farplane = -20.0f; // Posição do "far plane"
 
     if (g_UsePerspectiveProjection) {
         // Projeção Perspectiva.

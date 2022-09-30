@@ -24,7 +24,7 @@ struct ObjectInstance {
     glm::vec3 scale{1.0f, 1.0f, 1.0f};
 
     ObjectTriangles* triangles;
-    GLint DiffuseTextureID = -1;
+    GLint DiffuseTextureID = 0;
 
     // Copy constructor ClassName(ClassName const &copyFrom)
     ObjectInstance(ObjectInstance const &object);

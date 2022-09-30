@@ -1,6 +1,6 @@
 # Blender v3.2.2 OBJ File: 'wooden_table_02_4k.blend'
 # www.blender.org
-mtllib wooden_table_02_4k.mtl
+mtllib table.mtl
 o wooden_table_02_Cube.003
 v 0.567208 0.736872 0.347106
 v 0.561302 0.736872 0.353012

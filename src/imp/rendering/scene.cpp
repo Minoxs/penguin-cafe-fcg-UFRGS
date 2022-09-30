@@ -13,6 +13,7 @@
 #include <utility>
 
 Scene::Scene() {
+    const float conversion = 3.14159265359f/180.0f;
     // Template
     // auto triangle = new ObjectTriangles("model_path", ID);
     // ObjectInstance instance("name", position, rotation, triangles);
@@ -24,15 +25,28 @@ Scene::Scene() {
     GLint earthTexture = LoadTexture("data/textures/earth_texture.jpg");
     GLint woodTexture = LoadTexture("data/textures/wood.jpg");
     GLint furTexture = LoadTexture("data/textures/rabbit_fur.jpg");
+    GLint outsideScenario = LoadTexture("data/textures/outside.jpg");
+    GLint playerTexture = LoadTexture("data/textures/penguin_player.png");
+    GLint chefTexture = LoadTexture("data/textures/penguin_chef.png");
+    GLint whiteTexture = LoadTexture("data/textures/white.png");
+    GLint blueTexture = LoadTexture("data/textures/blue.png");
+    GLint cashRegister = LoadTexture("data/textures/cash_register.jpg");
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
-
     auto cubeTriangles = new ObjectTriangles("data/objects/cube.obj");
-
-    const float conversion = 3.14159265359f/180.0f;
     ObjectInstance baseCube("", cubeTriangles);
-    baseCube.DiffuseTextureID = woodTexture;
 
+    // Outside
+    baseCube.name = "outside";
+    baseCube.position = glm::vec4(7.42f, 3.11f, 27.39f, 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 14.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
+    baseCube.DiffuseTextureID = outsideScenario;    // TODO Ajeitar a imagem aqui
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.DiffuseTextureID = blueTexture;
+
+    // Iglu
     auto ceiling = new ObjectInstance(baseCube);
     ceiling->name = "ceiling";
     ceiling->position = glm::vec4(-0.16f, 7.0f, -2.28f, 1.0f);
@@ -131,6 +145,13 @@ Scene::Scene() {
     baseCube.scale = glm::vec4(1.0f, 1.0f, 1.0f, 0.0f);
     addToScene(new ObjectInstance(baseCube));
 
+    // Kitchen
+    baseCube.name = "counter-top";
+    baseCube.position = glm::vec4(13.44f, -0.58f, 0.6f, 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -92.7f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(20.71f, 2.0f, 1.8f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
 //    #ifndef NDEBUG
 //    ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
 //    debugObjectInstance.DiffuseTextureID = woodTexture;
@@ -140,21 +161,58 @@ Scene::Scene() {
 //    engine->Add(debugObject->collider);
 //    #endif
 
-    auto bunny = new ObjectTriangles("data/objects/bunny.obj");
-    auto bunny1 = ObjectInstance("bunny1", glm::vec4(-1.0f, 0.5f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), bunny);
-    bunny1.DiffuseTextureID = furTexture;
+    auto penguinTriangles = new ObjectTriangles("data/objects/penguin.obj");
+    ObjectInstance basePenguin("", penguinTriangles);
+    //playerPosition = glm::vec4(3.28f, 1.8, -2.04f, 1.0f);
 
-    // Create specific instance
-    player = new Player(bunny1);
+    // Player/Main Penguin
+    basePenguin.name = "player-penguin";
+    basePenguin.position = glm::vec4(3.28f, 2.8f, -2.04f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 1.0f * conversion, 0.0f);
+    basePenguin.DiffuseTextureID = playerTexture;
+
+    player = new Player(ObjectInstance(basePenguin));
     // Add collider
     player->collider = new Physics::ColliderBox(&player->position, player->triangles->bbox_min, player->triangles->bbox_max);
     // Add to the scene and physics engine
     addToScene(player);
     engine->Add(player->collider);
 
+    // Penguin Chef Mustache
+    basePenguin.name = "chef-penguin";
+    basePenguin.position = glm::vec4(17.73f, 1.8f, 6.52f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 167.0f * conversion, 0.0f * conversion, 0.0f);
+    basePenguin.DiffuseTextureID = chefTexture;
+    addToScene(new ObjectInstance(basePenguin));
+
+
+    // Cash Register
+    auto cashRegisterPt1Triangles = new ObjectTriangles("data/objects/cash_register_only.obj");
+    ObjectInstance cashRegister01("cash-register",
+                                  glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                                  glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                                  cashRegisterPt1Triangles);
+
+    cashRegister01.DiffuseTextureID = cashRegister;
+
+    auto cashRegisterPt2Triangles = new ObjectTriangles("data/objects/cash_register_part.obj");
+    ObjectInstance cashRegister02("cash-register-part",
+                                  glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                                  glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
+                                  cashRegisterPt2Triangles);
+
+    cashRegister02.DiffuseTextureID = cashRegister;
+
+    addToScene(new ObjectInstance(cashRegister01));
+    addToScene(new ObjectInstance(cashRegister02));
+
+
+    // TODO Mover a camera look-at para o ponto certo, um ponto interessante em cima
     ObjectInstance camera("camera", glm::vec4(0.0f, 3.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
     lookAtCamera = new LookAtCamera(camera, &player->position);
     addToScene(lookAtCamera);
+
+    // TODO Mover a luz para outro ponto interessante
 
     mainCamera = player;
 }
@@ -193,7 +251,7 @@ void Scene::Render(float time, float delta) {
     // Note que, no sistema de coordenadas da câmera, os planos near e far
     // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
     float nearplane = -0.1f;  // Posição do "near plane"
-    float farplane = -45.0f; // Posição do "far plane"
+    float farplane = -60.0f; // Posição do "far plane"
 
     if (g_UsePerspectiveProjection) {
         // Projeção Perspectiva.

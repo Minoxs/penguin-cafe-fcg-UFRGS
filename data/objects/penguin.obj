@@ -1,6 +1,6 @@
 # Blender 3.3.0
 # www.blender.org
-mtllib main_penguin.mtl
+mtllib penguin.mtl
 o penguin
 v 0.481880 -1.780979 -0.529891
 v 0.739290 -0.508079 -0.745818

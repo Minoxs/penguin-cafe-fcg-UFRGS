@@ -10,7 +10,7 @@
 #include "rendering.hpp"
 
 struct Player : Camera {
-    inline static const float speed {2.0f};
+    inline static const float speed {10.0f};
 
     explicit Player(const ObjectInstance &object);
 

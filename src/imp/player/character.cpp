@@ -35,6 +35,8 @@ void Player::cameraTranslate(float delta) {
         offset += d.x * (sideVector/norm(sideVector));
     }
 
+    offset.y = 0.0f;
+
     offset /= norm(offset);
 
     collider->TryMove(offset * speed * delta, true);

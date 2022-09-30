@@ -29,28 +29,100 @@ Scene::Scene() {
 
     auto cubeTriangles = new ObjectTriangles("data/objects/cube.obj");
 
-    const float conversion = 3.1415f/180.0f;
+    const float conversion = 3.14159265359f/180.0f;
     ObjectInstance baseCube("", cubeTriangles);
     baseCube.DiffuseTextureID = woodTexture;
 
     auto ceiling = new ObjectInstance(baseCube);
     ceiling->name = "ceiling";
-    ceiling->position = glm::vec4(-0.51f, 11.0f, -2.82f, 1.0f);
+    ceiling->position = glm::vec4(-0.16f, 7.0f, -2.28f, 1.0f);
     ceiling->rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
-    ceiling->scale = glm::vec4(38.5f, 0.7f, 38.5f, 0.0f);
+    ceiling->scale = glm::vec4(27.72f, 0.49f, 27.72f, 0.0f);
     addToScene(ceiling);
 
     auto floor = new ObjectInstance(baseCube);
     floor->name = "floor";
-    floor->position = glm::vec4(-0.51f, -0.7f, -2.82f, 1.0f);
+    floor->position = glm::vec4(-0.16f, -1.0f, -2.28f, 1.0f);
     floor->rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
-    floor->scale = glm::vec4(38.5f, 0.7f, 38.5f, 0.0f);
+    floor->scale = glm::vec4(27.72f, 0.49f, 27.72f, 0.0f);
     addToScene(floor);
 
+    baseCube.name = "wall00";
+    baseCube.position = glm::vec4(6.47f, 6.92f, 22.35f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 14.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(4.53f, 1.02f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
     baseCube.name = "wall01";
-    baseCube.position = glm::vec4(-4.01f, 4.5f, 34.27, 1.0f);
-    baseCube.rotation = glm::vec4(0.0f * conversion, -10.0f * conversion, 0.0f * conversion, 0.0f);
-    baseCube.scale = glm::vec4(7.0f, 0.7f, 7.0f, 0.0f);
+    baseCube.position = glm::vec4(-2.68f, 3.04f, 24.42f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 10.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(5.04f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall02";
+    baseCube.position = glm::vec4(-14.27f, 3.04f, 21.9f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -30.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall03";
+    baseCube.position = glm::vec4(-24.35f, 3.04f, 11.82f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -60.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall04";
+    baseCube.position = glm::vec4(-27.88f, 3.04f, -2.29f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -90.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall05";
+    baseCube.position = glm::vec4(-24.35f, 3.04f, -16.40f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 60.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall06";
+    baseCube.position = glm::vec4(-14.27f, 3.04f, -26.73f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 30.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall07";
+    baseCube.position = glm::vec4(-0.17f, 3.04f, -30.89f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall08";
+    baseCube.position = glm::vec4(13.94f, 3.04f, -26.73f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -30.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall09";
+    baseCube.position = glm::vec4(24.02f, 3.04f, -16.40f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -60.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall10";
+    baseCube.position = glm::vec4(27.55f, 3.04f, -2.29f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, -90.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall11";
+    baseCube.position = glm::vec4(24.02f, 3.04f, 11.82f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 60.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
+    addToScene(new ObjectInstance(baseCube));
+
+    baseCube.name = "wall12";
+    baseCube.position = glm::vec4(15.45f, 3.04f, 19.88f , 1.0f);
+    baseCube.rotation = glm::vec4(0.0f * conversion, 16.0f * conversion, 0.0f * conversion, 0.0f);
+    baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
     addToScene(new ObjectInstance(baseCube));
 
     baseCube.name = "wall-base";
@@ -121,7 +193,7 @@ void Scene::Render(float time, float delta) {
     // Note que, no sistema de coordenadas da câmera, os planos near e far
     // estão no sentido negativo! Veja slides 176-204 do documento Aula_09_Projecoes.pdf.
     float nearplane = -0.1f;  // Posição do "near plane"
-    float farplane = -20.0f; // Posição do "far plane"
+    float farplane = -45.0f; // Posição do "far plane"
 
     if (g_UsePerspectiveProjection) {
         // Projeção Perspectiva.

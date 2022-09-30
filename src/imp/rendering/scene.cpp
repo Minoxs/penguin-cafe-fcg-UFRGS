@@ -30,7 +30,15 @@ Scene::Scene() {
     GLint chefTexture = LoadTexture("data/textures/penguin_chef.png");
     GLint whiteTexture = LoadTexture("data/textures/white.png");
     GLint blueTexture = LoadTexture("data/textures/blue.png");
-    GLint cashRegister = LoadTexture("data/textures/cash_register.jpg");
+    GLint cashRegisterTexture = LoadTexture("data/textures/cash_register.jpg");
+    GLint sofaTexture = LoadTexture("data/textures/sofa.jpg");
+    GLint tableTexture = LoadTexture("data/textures/table_wood.jpg");
+    GLint wetFloorSignTexture = LoadTexture("data/textures/wet_floor_sign.jpg");
+    GLint appleTexture = LoadTexture("data/textures/apple.jpg");
+    GLint cakeTexture = LoadTexture("data/textures/carrot_cake.jpg");
+    GLint croissantTexture = LoadTexture("data/textures/croissant.jpg");
+    GLint barrelTexture = LoadTexture("data/textures/barrel.jpg");
+    GLint teaTexture = LoadTexture("data/textures/jug.jpg");
 
     // Construímos a representação de objetos geométricos através de malhas de triângulos
     auto cubeTriangles = new ObjectTriangles("data/objects/cube.obj");
@@ -193,7 +201,7 @@ Scene::Scene() {
                                   glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
                                   cashRegisterPt1Triangles);
 
-    cashRegister01.DiffuseTextureID = cashRegister;
+    cashRegister01.DiffuseTextureID = cashRegisterTexture;
 
     auto cashRegisterPt2Triangles = new ObjectTriangles("data/objects/cash_register_part.obj");
     ObjectInstance cashRegister02("cash-register-part",
@@ -201,11 +209,233 @@ Scene::Scene() {
                                   glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
                                   cashRegisterPt2Triangles);
 
-    cashRegister02.DiffuseTextureID = cashRegister;
+    cashRegister02.DiffuseTextureID = cashRegisterTexture;
 
     addToScene(new ObjectInstance(cashRegister01));
     addToScene(new ObjectInstance(cashRegister02));
 
+    // Sofas
+    auto sofaTriangles = new ObjectTriangles("data/objects/sofa.obj");
+    ObjectInstance baseSofa("", sofaTriangles);
+    baseSofa.DiffuseTextureID = sofaTexture;
+
+    baseSofa.name = "sofa01";
+    baseSofa.position = glm::vec4(-25.35f, -0.4f, 1.34f , 1.0f);
+    baseSofa.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    baseSofa.scale = glm::vec4(4.0f, 4.0f, 4.0f, 0.0f);
+    addToScene(new ObjectInstance(baseSofa));
+
+    baseSofa.name = "sofa02";
+    baseSofa.position = glm::vec4(-25.35f, -0.4f, -6.31 , 1.0f);
+    baseSofa.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    baseSofa.scale = glm::vec4(4.0f, 4.0f, 4.0f, 0.0f);
+    addToScene(new ObjectInstance(baseSofa));
+
+    // Tables and NPCs
+    auto tableTriangles = new ObjectTriangles("data/objects/table.obj");
+    ObjectInstance baseTable("", tableTriangles);
+    baseTable.DiffuseTextureID = tableTexture;
+
+    basePenguin.DiffuseTextureID = playerTexture;
+
+    baseTable.name = "table01";
+    baseTable.position = glm::vec4(-15.0f, -0.4f, 14.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc01";
+    basePenguin.position = glm::vec4(-15.0, 1.8f, 16.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table02";
+    baseTable.position = glm::vec4(-15.0f, -0.4f, 6.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc02";
+    basePenguin.position = glm::vec4(-15.0, 1.8f, 8.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    basePenguin.name = "npc03";
+    basePenguin.position = glm::vec4(-15.0, 1.8f, 4.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table03";
+    baseTable.position = glm::vec4(-15.0f, -0.4f, -1.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc04";
+    basePenguin.position = glm::vec4(-15.0, 1.8f, -3.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table04";
+    baseTable.position = glm::vec4(-15.0f, -0.4f, -8.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc05";
+    basePenguin.position = glm::vec4(-15.0, 1.8f, -6.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table05";
+    baseTable.position = glm::vec4(-15.0f, -0.4f, -16.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc06";
+    basePenguin.position = glm::vec4(-15.0, 1.8f, -18.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table06";
+    baseTable.position = glm::vec4(-3.0f, -0.4f, 14.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc07";
+    basePenguin.position = glm::vec4(-3.0, 1.8f, 16.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table07";
+    baseTable.position = glm::vec4(-3.0f, -0.4f, 5.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc08";
+    basePenguin.position = glm::vec4(-3.0, 1.8f, 7.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    basePenguin.name = "npc09";
+    basePenguin.position = glm::vec4(-3.0, 1.8f, 3.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table08";
+    baseTable.position = glm::vec4(-3.0f, -0.4f, -3.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc10";
+    basePenguin.position = glm::vec4(-3.0, 1.8f, -5.0f, -1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table09";
+    baseTable.position = glm::vec4(-3.0f, -0.4f, -11.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc11";
+    basePenguin.position = glm::vec4(-3.0, 1.8f, -9.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    basePenguin.name = "npc12";
+    basePenguin.position = glm::vec4(-3.0, 1.8f, -13.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    baseTable.name = "table10";
+    baseTable.position = glm::vec4(-3.0f, -0.4f, -21.0f , 1.0f);
+    baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
+    baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTable));
+
+    basePenguin.name = "npc12";
+    basePenguin.position = glm::vec4(-3.0f, 1.8f, -23.0f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
+    addToScene(new ObjectInstance(basePenguin));
+
+    // Wet Floot Sign
+    auto signTriangles = new ObjectTriangles("data/objects/wet_floor_sign.obj");
+    ObjectInstance floorSign("wet-floor-sign", signTriangles);
+    floorSign.position = glm::vec4(5.0f, 0.0f, -18.0f, 1.0f);
+    floorSign.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    floorSign.scale = glm::vec4(4.0f, 4.0f, 4.0f, 0.0f);
+    floorSign.DiffuseTextureID = wetFloorSignTexture;
+    addToScene(new ObjectInstance(floorSign));
+
+    // Barrel
+    auto barrelTriangles = new ObjectTriangles("data/objects/barrel.obj");
+    ObjectInstance barrel("barrel", barrelTriangles);
+    barrel.DiffuseTextureID = barrelTexture;
+    addToScene(new ObjectInstance(barrel));
+
+    auto barrelPartTriangles = new ObjectTriangles("data/objects/barrel_part.obj");
+    ObjectInstance barrelPart("barrel-part", barrelPartTriangles);
+    barrelPart.DiffuseTextureID = barrelTexture;
+    addToScene(new ObjectInstance(barrelPart));
+
+    // Comidas - Base
+    auto appleTriangles = new ObjectTriangles("data/objects/apple.obj");
+    ObjectInstance baseApple("", appleTriangles);
+    baseApple.DiffuseTextureID = appleTexture;
+
+    auto croissantTriangles = new ObjectTriangles("data/objects/croissant.obj");
+    ObjectInstance baseCroissant("", croissantTriangles);
+    baseCroissant.DiffuseTextureID = croissantTexture;
+
+    auto cakeTriangles = new ObjectTriangles("data/objects/carrot_cake.obj");
+    ObjectInstance baseCake("", cakeTriangles);
+    baseCake.DiffuseTextureID = cakeTexture;
+
+    auto teaTriangles = new ObjectTriangles("data/objects/jug.obj");
+    ObjectInstance baseTea("", teaTriangles);
+    baseTea.DiffuseTextureID = teaTexture;
+
+    /* TODO: Posição para quando as comidas forem servidas
+     * table 01: glm::vec4(-15.0f, 2.1f, 14.0f, 1.0f)
+     * table 02: glm::vec4(-15.0f, 2.1f, 6.0f, 1.0f)
+     * table 03: glm::vec4(-15.0f, 2.1f, -1.0f, 1.0f)
+     * table 04: glm::vec4(-15.0f, 2.1f, -8.0f, 1.0f)
+     * table 05: glm::vec4(-15.0f, 2.1f, -16.0f, 1.0f)
+     * table 06: glm::vec4(-3.0f, 2.1f, 14.0f, 1.0f)
+     * table 07: glm::vec4(-3.0f, 2.1f, 5.0f, 1.0f)
+     * table 08: glm::vec4(-3.0f, 2.1f, -3.0f, 1.0f)
+     * table 09: glm::vec4(-3.0f, 2.1f, -11.0f, 1.0f)
+     * table 10: glm::vec4(-3.0f, 2.1f, -21.0f, 1.0f)
+    */
+
+    baseApple.name = "exemplar-apple";
+    baseApple.position = glm::vec4(13.42f, 1.4f, -2.0f, 1.0f);
+    baseApple.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    baseApple.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
+    addToScene(new ObjectInstance(baseApple));
+
+    baseCroissant.name = "exemplar-croissant";
+    baseCroissant.position = glm::vec4(13.85f, 1.4f, 3.0f, 1.0f);
+    baseCroissant.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    baseCroissant.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
+    addToScene(new ObjectInstance(baseCroissant));
+
+    baseCake.name = "exemplar-cake";
+    baseCake.position = glm::vec4(14.0f, 1.4f, -7.0f, 1.0f);
+    baseCake.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    baseCake.scale = glm::vec4(10.0f, 10.0f, 10.0f, 0.0f);
+    addToScene(new ObjectInstance(baseCake));
+
+    baseTea.name = "exemplar-tea";
+    baseTea.position = glm::vec4(13.42f, 1.4f, 8.0f, 1.0f);
+    baseTea.rotation = glm::vec4(0.0f, 90.0f * conversion, 0.0f, 0.0f);
+    baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
+    addToScene(new ObjectInstance(baseTea));
 
     // TODO Mover a camera look-at para o ponto certo, um ponto interessante em cima
     ObjectInstance camera("camera", glm::vec4(0.0f, 3.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
@@ -213,7 +443,6 @@ Scene::Scene() {
     addToScene(lookAtCamera);
 
     // TODO Mover a luz para outro ponto interessante
-
     mainCamera = player;
 }
 

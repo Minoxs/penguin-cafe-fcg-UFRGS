@@ -144,6 +144,8 @@ void LoadGenericShaders() {
 	p_bbox_min_uniform = glGetUniformLocation(p_program_id, "bbox_min");
 	p_bbox_max_uniform = glGetUniformLocation(p_program_id, "bbox_max");
     gpu_TextureDiffuseUniform = glGetUniformLocation(p_program_id, "TextureDiffuse");
+    gpu_KsUniform = glGetUniformLocation(p_program_id, "Ks");
+    gpu_SpecularExponentUniform = glGetUniformLocation(p_program_id, "SpecularExponent");
 
 	// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura
 	glUseProgram(p_program_id);

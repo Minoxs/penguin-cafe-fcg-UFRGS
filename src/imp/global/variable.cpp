@@ -34,6 +34,8 @@ GLint p_projection_uniform;
 GLint p_bbox_min_uniform;
 GLint p_bbox_max_uniform;
 GLint gpu_TextureDiffuseUniform;
+GLint gpu_KsUniform;
+GLint gpu_SpecularExponentUniform;
 
 // Função que pega a matriz M e guarda a mesma no topo da pilha
 void PushMatrix(glm::mat4 M) {

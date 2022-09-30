@@ -47,10 +47,10 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
     - Teste Esfera-Cubo
   - [X] Arquivo nomeado collisions.cpp
 - [ ] Modelos de iluminação
-  - [ ] Lambert **E** Blinn-Phong
+  - [X] Lambert **E** Blinn-Phong
   - Interpolação de Iluminação
     - [ ] Gouraud
-    - [ ] Phong
+    - [X] Phong
 - [X] Mapeamento de Texturas
   - [X] Dois objetos 
 - [ ] Curva de Bézier

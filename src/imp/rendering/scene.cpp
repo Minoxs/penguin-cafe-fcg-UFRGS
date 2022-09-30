@@ -59,7 +59,6 @@ Scene::Scene() {
     baseCube.scale = glm::vec4(1.0f, 1.0f, 1.0f, 0.0f);
     addToScene(new ObjectInstance(baseCube));
 
-
 //    #ifndef NDEBUG
 //    ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
 //    debugObjectInstance.DiffuseTextureID = woodTexture;

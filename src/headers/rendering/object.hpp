@@ -25,6 +25,8 @@ struct ObjectInstance {
 
     ObjectTriangles* triangles;
     GLint DiffuseTextureID = 0;
+    glm::vec3 Ks{};
+    float SpecularExponent = 1.0f;
 
     // Copy constructor ClassName(ClassName const &copyFrom)
     ObjectInstance(ObjectInstance const &object);

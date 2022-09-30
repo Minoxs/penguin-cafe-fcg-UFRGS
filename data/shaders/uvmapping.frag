@@ -25,6 +25,10 @@ uniform vec4 bbox_max;
 // Variáveis para acesso das imagens de textura
 uniform sampler2D TextureDiffuse;
 
+// Variáveis para controlar como objeto reage com a luz
+uniform vec3 Ks;
+uniform float SpecularExponent;
+
 // O valor de saída ("out") de um Fragment Shader é a cor final do fragmento.
 out vec4 color;
 
@@ -47,7 +51,14 @@ void main()
     vec4 n = normalize(normal);
 
     // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
-    vec4 l = normalize(vec4(1.0,1.0,0.0,0.0));
+    // TODO CHECK IF POINT LIGHT OR "INFINITE LIGHT" LOOKS BETTER IN THE FINAL SCENE
+    // TODO CHECK IF LIGHT POSITION IS CORRECT
+    const vec3 I = vec3(1.0f, 1.0f, 1.0f);
+    const vec4 lightPosition = vec4(0.0, 3.0, 0.0, 1.0);
+    vec4 l = normalize(lightPosition - p); //
+
+    // Vetor que define o sentido da reflexão espetacular ideal
+    vec4 r = -normalize(reflect(l, n));
 
     // Vetor que define o sentido da câmera em relação ao ponto atual.
     vec4 v = normalize(camera_position - p);
@@ -60,10 +71,7 @@ void main()
     vec3 Kd0 = texture(TextureDiffuse, vec2(U, V)).rgb;
 
     // Equação de Iluminação
-    // TODO ADD PHONG SPECULAR THING
-    // TODO ADD AMBIENT LIGHT
-    float lambert = max(0,dot(n,l));
-    color.rgb = Kd0 * (lambert + 0.01);
+    color.rgb = Kd0 * max(0.02, dot(n,l)) + Ks * I * pow(max(0, dot(r, v)), SpecularExponent);
 
     // Transparency -- Must be 1
     color.a = 1;

@@ -18,6 +18,8 @@ ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     scale = object.scale;
     triangles = object.triangles;
     DiffuseTextureID = object.DiffuseTextureID;
+    Ks = object.Ks;
+    SpecularExponent = object.SpecularExponent;
 }
 
 ObjectInstance::ObjectInstance(const char* name, ObjectTriangles* triangles) {
@@ -51,6 +53,8 @@ void ObjectInstance::Draw() {
 
     // Send diffuse texture ID
 	glUniform1i(gpu_TextureDiffuseUniform, DiffuseTextureID);
+    glUniform3f(gpu_KsUniform, Ks.x, Ks.y, Ks.z);
+    glUniform1f(gpu_SpecularExponentUniform, SpecularExponent);
 
 	// "Ligamos" o VAO. Informamos que queremos utilizar os atributos de
 	// vértices apontados pelo VAO criado pela função BuildTrianglesAndAddToVirtualScene(). Veja

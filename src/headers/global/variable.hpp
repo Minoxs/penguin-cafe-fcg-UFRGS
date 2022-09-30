@@ -41,6 +41,8 @@ extern GLint p_bbox_max_uniform;
 
 // Textures in the GPU
 extern GLint gpu_TextureDiffuseUniform;
+extern GLint gpu_KsUniform;
+extern GLint gpu_SpecularExponentUniform;
 
 void PushMatrix(glm::mat4 M);
 void PopMatrix(glm::mat4 &M);

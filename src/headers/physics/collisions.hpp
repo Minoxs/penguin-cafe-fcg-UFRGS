@@ -11,14 +11,15 @@
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
 
-// This physics engine uses Axis-Aligned Bounding-Boxes (AAAB)
-// Basically, collision things only have position and no rotation
-// This might allow some clipping between models, but will be much faster to compute
-// Since this engine is highly unoptimized, speede is key
+// This engine supports:
+//  - Sphere
+//  - Bounding-Box
+// Bounding boxes may or may not have rotations applied to them
+// FONTE: https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
+// Essa fonte foi utilizado apenas como guia,
+// pois o código em só foi implementado com nossa engine em mente
 namespace Physics {
     struct Collider {
-        // Uniquely identifies trigger (used to ignore "self-collision")
-        unsigned int ID;
         // Layer where collisions will happen
         Engine* layer = nullptr;
         // Point associated with collider
@@ -65,6 +66,10 @@ namespace Physics {
         // Add objects to the list
         void Add(ColliderBox* box);
         void Add(ColliderSphere* sphere);
+
+        // Remove objects
+        void Remove(ColliderBox* box);
+        void Remove(ColliderSphere* sphere);
 
         // Checks if given object collides with other
         // tracked objects in the engine

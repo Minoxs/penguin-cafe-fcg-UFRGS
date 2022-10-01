@@ -8,8 +8,6 @@
 
 #include <cmath>
 
-int triggersNum = 0;
-
 namespace Physics {
     // Internal functions
     bool collideSphereBox(ColliderSphere* S, ColliderBox* B) {
@@ -27,10 +25,7 @@ namespace Physics {
 
     // Struct Implementations
     Collider::Collider(glm::vec4* center) {
-        this->ID = triggersNum;
         this->center = center;
-
-        triggersNum += 1;
     }
 
     bool Collider::TryMove(glm::vec4 offset, bool checkCollision) {
@@ -126,15 +121,23 @@ namespace Physics {
         this->spheres.push_back(sphere);
     }
 
+    void Engine::Remove(ColliderBox* box) {
+        boxes.remove(box);
+    }
+
+    void Engine::Remove(ColliderSphere* sphere) {
+        spheres.remove(sphere);
+    }
+
     bool Engine::CheckCollision(Collider* check) {
         for (ColliderBox* box : this->boxes) {
-            if ( (check->ID != box->ID) && check->Collide(box) ) {
+            if ( (check->center != box->center) && check->Collide(box) ) {
                 return true;
             }
         }
 
         for (ColliderSphere* sphere : this->spheres) {
-            if ( (check->ID != sphere->ID) && check->Collide(sphere) ) {
+            if ( (check->center != sphere->center) && check->Collide(sphere) ) {
                 return true;
             }
         }

@@ -435,12 +435,9 @@ Scene::Scene() {
     baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
     addToScene(new ObjectInstance(baseTea));
 
-    // TODO Mover a camera look-at para o ponto certo, um ponto interessante em cima
-    ObjectInstance camera("camera", glm::vec4(0.0f, 3.0f, 0.0f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
+    ObjectInstance camera("camera", glm::vec4(18.9f, 5.89f, -1.79f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
     lookAtCamera = new LookAtCamera(camera, &player->position);
     addToScene(lookAtCamera);
-
-    // TODO Mover a luz para outro ponto interessante
     mainCamera = player;
 }
 

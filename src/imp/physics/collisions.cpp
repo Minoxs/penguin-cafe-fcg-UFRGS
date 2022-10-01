@@ -68,20 +68,18 @@ namespace Physics {
         return collideSphereBox(this, B);
     }
 
-    ColliderBox::ColliderBox(glm::vec4* center, float lengthX, float lengthY, float lengthZ) : Collider(center) {
-        glm::vec3 offset = glm::vec3(lengthX/2, lengthY/2, lengthZ/2);
-        glm::vec3 origin = glm::vec3(center->x, center->y, center->z);
-
-        this->bboxMin = origin - offset;
-        this->bboxMax = origin + offset;
-    }
-
     ColliderBox::ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax, glm::vec4 scale) : Collider(center) {
         const glm::vec4 origin = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-        glm::vec3 offset = (*center - origin) * scale;
+        glm::vec4 offset = *center - origin;
 
-        this->bboxMin = offset + bboxMin;
-        this->bboxMax = offset + bboxMax;
+        auto auxBboxMin = glm::vec4(bboxMin, 1.0f);
+        auto auxBboxMax = glm::vec4(bboxMax, 1.0f);
+
+        auto matScale = Matrix_Scale(scale.x, scale.y, scale.z);
+        auto matTrans = Matrix_Translate(offset.x, offset.y, offset.z);
+
+        this->bboxMin = matTrans * matScale * auxBboxMin;
+        this->bboxMax = matTrans * matScale * auxBboxMax;
     }
 
     // Cubo com Cubo

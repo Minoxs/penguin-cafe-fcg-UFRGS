@@ -157,7 +157,7 @@ Scene::Scene() {
     #ifndef NDEBUG
     ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
     debugObjectInstance.DiffuseTextureID = woodTexture;
-    debugObjectInstance.scale = glm::vec4(1.5f, 3.0f, 1.0f, 0.0f);
+    debugObjectInstance.scale = glm::vec4(1.5f, 2.0f, 5.0f, 0.0f);
     auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
     addToScene(debugObject, true);
     #endif
@@ -173,7 +173,7 @@ Scene::Scene() {
     basePenguin.DiffuseTextureID = penguinTexture;
     player = new Player(ObjectInstance(basePenguin));
     // Add to the scene and physics engine
-    addToScene(player, true, 0.85f);
+    addToScene(player, true, 0.75f);
 
     // Penguin Chef Mustache
     basePenguin.name = "chef-penguin";
@@ -188,7 +188,7 @@ Scene::Scene() {
                                            );
 
     auto leChef = new BezierObject(basePenguin, chefWalkingPath);
-    addToScene(leChef, true, 0.75f);
+    addToScene(leChef, true, 0.85f);
 
     // Cash Register
     auto cashRegisterPt1Triangles = new ObjectTriangles("data/objects/cash_register_only.obj");

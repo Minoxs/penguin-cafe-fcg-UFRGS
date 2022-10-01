@@ -48,7 +48,6 @@ namespace Physics {
         glm::vec3 bboxMin {};
         glm::vec3 bboxMax {};
 
-        ColliderBox(glm::vec4* center, float lengthX, float lengthY, float lengthZ);
         ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax, glm::vec4 scale);
 
         bool TryMove(glm::vec4 offset, bool checkCollision) override;

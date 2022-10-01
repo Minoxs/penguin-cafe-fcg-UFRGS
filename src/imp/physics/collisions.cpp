@@ -76,11 +76,12 @@ namespace Physics {
         this->bboxMax = origin + offset;
     }
 
-    ColliderBox::ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax) : Collider(center) {
-        glm::vec3 origin = glm::vec3(center->x, center->y, center->z);
+    ColliderBox::ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax, glm::vec4 scale) : Collider(center) {
+        const glm::vec4 origin = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        glm::vec3 offset = (*center - origin) * scale;
 
-        this->bboxMin = origin + bboxMin;
-        this->bboxMax = origin + bboxMax;
+        this->bboxMin = offset + bboxMin;
+        this->bboxMax = offset + bboxMax;
     }
 
     // Cubo com Cubo

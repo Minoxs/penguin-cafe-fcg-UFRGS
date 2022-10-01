@@ -27,7 +27,7 @@ struct ObjectInstance {
     // Variables to control model matrix
     glm::vec4 position{};
     glm::vec4 rotation{};
-    glm::vec3 scale{1.0f, 1.0f, 1.0f};
+    glm::vec4 scale{1.0f, 1.0f, 1.0f, 0.0f};
 
     // Variables to control textures
     GLint DiffuseTextureID = 0;

@@ -155,8 +155,14 @@ Scene::Scene() {
     #ifndef NDEBUG
     ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
     debugObjectInstance.DiffuseTextureID = woodTexture;
+    debugObjectInstance.scale = glm::vec4(1.5f, 3.0f, 1.0f, 0.0f);
     auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
-    auto debugObjectCollider = new Physics::ColliderBox(&debugObject->position, 1.0f, 1.0f, 1.0f);
+    auto debugObjectCollider = new Physics::ColliderBox(
+            &debugObject->position,
+            debugObject->triangles->bbox_min,
+            debugObject->triangles->bbox_max,
+            debugObject->scale
+   );
     debugObject->collider = debugObjectCollider;
     addToScene(debugObject);
     engine->Add(debugObjectCollider);
@@ -173,7 +179,12 @@ Scene::Scene() {
     basePenguin.DiffuseTextureID = penguinTexture;
     player = new Player(ObjectInstance(basePenguin));
     // Create collider
-    auto playerCollider = new Physics::ColliderBox(&player->position, player->triangles->bbox_min, player->triangles->bbox_max);
+    auto playerCollider = new Physics::ColliderBox(
+            &player->position,
+            player->triangles->bbox_min,
+            player->triangles->bbox_max,
+            player->scale
+   );
     player->collider = playerCollider;
     // Add to the scene and physics engine
     addToScene(player);

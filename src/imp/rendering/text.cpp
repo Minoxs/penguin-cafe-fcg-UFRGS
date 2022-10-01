@@ -384,7 +384,7 @@ void TextRendering_ShowProjection(GLFWwindow *window) {
 // Escrevemos na tela o número de quadros renderizados por segundo (frames per
 // second).
 void TextRendering_ShowFramesPerSecond(GLFWwindow *window) {
-	if (!g_ShowInfoText) return;
+	//if (!g_ShowInfoText) return;
 
 	// Variáveis estáticas (static) mantém seus valores entre chamadas
 	// subsequentes da função!

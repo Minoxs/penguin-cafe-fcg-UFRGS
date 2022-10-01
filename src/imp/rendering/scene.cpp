@@ -465,12 +465,7 @@ void Scene::Render(float time, float delta) {
     }
     // Aqui executamos as operações de renderização
 
-    // Definimos a cor do "fundo" do framebuffer como branco.  Tal cor é
-    // definida como coeficientes RGBA: Red, Green, Blue, Alpha; isto é:
-    // Vermelho, Verde, Azul, Alpha (valor de transparência).
-    // Conversaremos sobre sistemas de cores nas aulas de Modelos de Iluminação.
-    //
-    //           R     G     B     A
+    // Define default framebuffer colour
     glClearColor(0.4f, 0.0f, 0.4f, 1.0f);
 
     // "Pintamos" todos os pixels do framebuffer com a cor definida acima,

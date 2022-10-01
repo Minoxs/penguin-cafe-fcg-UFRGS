@@ -10,6 +10,8 @@
 #include "glad/glad.h"
 #include "matrices.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "rendering/object.hpp"
+
 
 ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     name = object.name;
@@ -93,6 +95,8 @@ void RotatingObject::Proc(float time, float delta) {
     if (rotation.y > 360.0f) rotation.y -= 360.0f;
     rotation.y += delta;
 }
+
+
 
 // Função para debugging: imprime no terminal todas informações de um modelo
 // geométrico carregado de um arquivo ".obj".
@@ -333,3 +337,45 @@ void DebugObject::Proc(float time, float delta) {
     }
 }
 #endif
+
+BezierObject::BezierObject(const ObjectInstance &object, BezierCurve *curve) : ObjectInstance(object) {
+    this->curve = curve;
+}
+
+void BezierObject::Proc(float time, float delta) {
+    currentPosition += delta/4.0f;
+
+    if (currentPosition >= 1.0f) {
+        currentPosition -= 1.0f;
+        curve->reverse = !curve->reverse;
+    }
+    position = curve->calculate(currentPosition);
+}
+
+BezierCurve::BezierCurve(glm::vec4 p1, glm::vec4 p2, glm::vec4 p3, glm::vec4 p4) {
+    this->p1 = p1;
+    this->p2 = p2;
+    this->p3 = p3;
+    this->p4 = p4;
+}
+
+glm::vec4 lerp(glm::vec4 p1, glm::vec4 p2, float t) {
+    return p1 + t * (p2 - p1);
+}
+
+glm::vec4 BezierCurve::calculate(float t) const {
+    if (reverse) {
+        t = 1 - t;
+    }
+
+    glm::vec4 c_12 = lerp(p1, p2, t);
+    glm::vec4 c_23 = lerp(p2, p3, t);
+    glm::vec4 c_34 = lerp(p3, p4, t);
+
+    glm::vec4 c_123 = lerp(c_12, c_23, t);
+    glm::vec4 c_234 = lerp(c_23, c_34, t);
+
+    return lerp(c_123, c_234, t);
+}
+
+

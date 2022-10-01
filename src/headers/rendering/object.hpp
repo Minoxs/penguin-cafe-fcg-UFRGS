@@ -48,6 +48,29 @@ struct RotatingObject : public ObjectInstance {
     void Proc(float time, float delta) override;
 };
 
+struct BezierCurve {
+    glm::vec4 p1 {};
+    glm::vec4 p2 {};
+    glm::vec4 p3 {};
+    glm::vec4 p4 {};
+
+    bool reverse = false;
+
+    explicit BezierCurve(glm::vec4 p1, glm::vec4 p2, glm::vec4 p3, glm::vec4 p4);
+
+    glm::vec4 calculate(float t) const;
+};
+
+struct BezierObject : public ObjectInstance {
+    Physics::ColliderBox* collider = nullptr;
+    BezierCurve* curve;
+    float currentPosition = 0.0f;
+
+    explicit BezierObject(const ObjectInstance &object, BezierCurve* curve);
+
+    void Proc(float time, float delta) override;
+};
+
 #ifndef NDEBUG
 struct DebugObject : public ObjectInstance {
     const char* name;

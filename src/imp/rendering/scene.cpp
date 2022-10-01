@@ -188,11 +188,18 @@ Scene::Scene() {
 
     // Penguin Chef Mustache
     basePenguin.name = "chef-penguin";
-    basePenguin.position = glm::vec4(17.73f, 1.8f, 6.52f, 1.0f);
+    basePenguin.position = glm::vec4(17.73f, 1.8f, 10.37f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 167.0f * conversion, 0.0f * conversion, 0.0f);
     basePenguin.DiffuseTextureID = chefTexture;
-    addToScene(new ObjectInstance(basePenguin));
 
+
+    auto chefWalkingPath = new BezierCurve(glm::vec4(17.73f, 1.8f, 10.37f, 1.0f),
+                                           glm::vec4(30.78f, 1.8f, 20.50f, 1.0f),
+                                           glm::vec4(8.0f, 1.8f, -23.31f, 1.0f),
+                                           glm::vec4(24.27f, 1.8f, -11.22f, 1.0f)
+                                           );
+
+    addToScene(new BezierObject(basePenguin, chefWalkingPath));
 
     // Cash Register
     auto cashRegisterPt1Triangles = new ObjectTriangles("data/objects/cash_register_only.obj");

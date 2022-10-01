@@ -21,15 +21,13 @@ Scene::Scene() {
     LoadGenericShaders();
     engine = new Physics::Engine();
 
-    // Carregamos duas imagens para serem utilizadas como textura
-    GLint earthTexture = LoadTexture("data/textures/earth_texture.jpg");
-    GLint woodTexture = LoadTexture("data/textures/wood.jpg");
-    GLint furTexture = LoadTexture("data/textures/rabbit_fur.jpg");
-    GLint outsideScenario = LoadTexture("data/textures/outside.jpg");
-    GLint playerTexture = LoadTexture("data/textures/penguin_player.png");
-    GLint chefTexture = LoadTexture("data/textures/penguin_chef.png");
+    // Load all textures and sends to GPU once
     GLint whiteTexture = LoadTexture("data/textures/white.png");
     GLint blueTexture = LoadTexture("data/textures/blue.png");
+    GLint woodTexture = LoadTexture("data/textures/wood.jpg");
+    GLint outsideScenario = LoadTexture("data/textures/outside.jpg");
+    GLint penguinTexture = LoadTexture("data/textures/penguin_player.png");
+    GLint chefTexture = LoadTexture("data/textures/penguin_chef.png");
     GLint cashRegisterTexture = LoadTexture("data/textures/cash_register.jpg");
     GLint sofaTexture = LoadTexture("data/textures/sofa.jpg");
     GLint tableTexture = LoadTexture("data/textures/table_wood.jpg");
@@ -147,12 +145,6 @@ Scene::Scene() {
     baseCube.scale = glm::vec4(7.56f, 4.9f, 0.50f, 0.0f);
     addToScene(new ObjectInstance(baseCube));
 
-    baseCube.name = "wall-base";
-    baseCube.position = glm::vec4(0.0f, 0.5f, 0.0f, 1.0f);
-    baseCube.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
-    baseCube.scale = glm::vec4(1.0f, 1.0f, 1.0f, 0.0f);
-    addToScene(new ObjectInstance(baseCube));
-
     // Kitchen
     baseCube.name = "counter-top";
     baseCube.position = glm::vec4(13.44f, -0.58f, 0.6f, 1.0f);
@@ -160,14 +152,15 @@ Scene::Scene() {
     baseCube.scale = glm::vec4(20.71f, 2.0f, 1.8f, 0.0f);
     addToScene(new ObjectInstance(baseCube));
 
-//    #ifndef NDEBUG
-//    ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
-//    debugObjectInstance.DiffuseTextureID = woodTexture;
-//    auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
-//    debugObject->collider = new Physics::ColliderBox(&debugObject->position, 1.0f, 1.0f, 1.0f);
-//    addToScene(debugObject);
-//    engine->Add(debugObject->collider);
-//    #endif
+    #ifndef NDEBUG
+    ObjectInstance debugObjectInstance("debug_object", cubeTriangles);
+    debugObjectInstance.DiffuseTextureID = woodTexture;
+    auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
+    auto debugObjectCollider = new Physics::ColliderBox(&debugObject->position, 1.0f, 1.0f, 1.0f);
+    debugObject->collider = debugObjectCollider;
+    addToScene(debugObject);
+    engine->Add(debugObjectCollider);
+    #endif
 
     auto penguinTriangles = new ObjectTriangles("data/objects/penguin.obj");
     ObjectInstance basePenguin("", penguinTriangles);
@@ -177,21 +170,20 @@ Scene::Scene() {
     basePenguin.name = "player-penguin";
     basePenguin.position = glm::vec4(3.28f, 2.8f, -2.04f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 1.0f * conversion, 0.0f);
-    basePenguin.DiffuseTextureID = playerTexture;
-
+    basePenguin.DiffuseTextureID = penguinTexture;
     player = new Player(ObjectInstance(basePenguin));
-    // Add collider
-    player->collider = new Physics::ColliderBox(&player->position, player->triangles->bbox_min, player->triangles->bbox_max);
+    // Create collider
+    auto playerCollider = new Physics::ColliderBox(&player->position, player->triangles->bbox_min, player->triangles->bbox_max);
+    player->collider = playerCollider;
     // Add to the scene and physics engine
     addToScene(player);
-    engine->Add(player->collider);
+    engine->Add(playerCollider);
 
     // Penguin Chef Mustache
     basePenguin.name = "chef-penguin";
     basePenguin.position = glm::vec4(17.73f, 1.8f, 10.37f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 167.0f * conversion, 0.0f * conversion, 0.0f);
     basePenguin.DiffuseTextureID = chefTexture;
-
 
     auto chefWalkingPath = new BezierCurve(glm::vec4(17.73f, 1.8f, 10.37f, 1.0f),
                                            glm::vec4(30.78f, 1.8f, 20.50f, 1.0f),
@@ -239,11 +231,10 @@ Scene::Scene() {
     addToScene(new ObjectInstance(baseSofa));
 
     // Tables and NPCs
+    basePenguin.DiffuseTextureID = penguinTexture;
     auto tableTriangles = new ObjectTriangles("data/objects/table.obj");
     ObjectInstance baseTable("", tableTriangles);
     baseTable.DiffuseTextureID = tableTexture;
-
-    basePenguin.DiffuseTextureID = playerTexture;
 
     baseTable.name = "table01";
     baseTable.position = glm::vec4(-15.0f, -0.4f, 14.0f , 1.0f);

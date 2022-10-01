@@ -46,22 +46,12 @@ namespace Physics {
         return true;
     }
 
-    bool Collider::Collide(ColliderPlane *B) {
-        return false;
-    }
-
     bool Collider::Collide(ColliderBox *B) {
         return false;
     }
 
     bool Collider::Collide(ColliderSphere *B) {
         return false;
-    }
-
-    ColliderPlane::ColliderPlane(glm::vec4* center, Alignment align, float length, float height) : Collider(center) {
-        this->align = align;
-        this->length = length;
-        this->height = height;
     }
 
     ColliderSphere::ColliderSphere(glm::vec4* center, float radius) : Collider(center) {
@@ -137,11 +127,6 @@ namespace Physics {
         this->spheres.push_back(sphere);
     }
 
-    void Engine::Add(ColliderPlane* plane) {
-        plane->layer = this;
-        this->planes.push_back(plane);
-    }
-
     bool Engine::CheckCollision(Collider* check) {
         for (ColliderBox* box : this->boxes) {
             if ( (check->ID != box->ID) && check->Collide(box) ) {
@@ -151,12 +136,6 @@ namespace Physics {
 
         for (ColliderSphere* sphere : this->spheres) {
             if ( (check->ID != sphere->ID) && check->Collide(sphere) ) {
-                return true;
-            }
-        }
-
-        for (ColliderPlane* plane : this->planes) {
-            if ( (check->ID != plane->ID) && check->Collide(plane) ) {
                 return true;
             }
         }

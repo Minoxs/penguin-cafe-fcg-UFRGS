@@ -11,19 +11,11 @@
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
 
-// TODO IMPLEMENT FUNCTIONS
-
 // This physics engine uses Axis-Aligned Bounding-Boxes (AAAB)
 // Basically, collision things only have position and no rotation
 // This might allow some clipping between models, but will be much faster to compute
 // Since this engine is highly unoptimized, speede is key
 namespace Physics {
-    enum Alignment {
-        X,
-        Y,
-        Z
-    };
-
     struct Collider {
         // Uniquely identifies trigger (used to ignore "self-collision")
         unsigned int ID;
@@ -40,17 +32,8 @@ namespace Physics {
 
         // Functions to check collisions
         // Always returns false in the base class
-        virtual bool Collide(ColliderPlane* B);
         virtual bool Collide(ColliderBox* B);
         virtual bool Collide(ColliderSphere* B);
-    };
-
-    struct ColliderPlane : Collider {
-        Alignment align;
-        float length;
-        float height;
-
-        ColliderPlane(glm::vec4* center, Alignment align, float length, float height);
     };
 
     struct ColliderSphere : Collider {
@@ -79,12 +62,10 @@ namespace Physics {
         // This is probably a dumb idea
         std::list<ColliderBox*> boxes;
         std::list<ColliderSphere*> spheres;
-        std::list<ColliderPlane*> planes;
 
         // Add objects to the list
         void Add(ColliderBox* box);
         void Add(ColliderSphere* sphere);
-        void Add(ColliderPlane* plane);
 
         // Checks if given object collides with other
         // tracked objects in the engine

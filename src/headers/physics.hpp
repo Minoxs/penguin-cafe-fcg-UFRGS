@@ -12,7 +12,6 @@ namespace Physics {
     struct Collider;
     struct ColliderBox;
     struct ColliderSphere;
-    struct ColliderPlane;
 }
 
 #include "physics/collisions.hpp"

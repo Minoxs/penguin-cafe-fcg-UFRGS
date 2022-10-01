@@ -17,16 +17,25 @@
 // Guarda os dados de uma instância de um objeto da cena
 // Pode-se utilizar o mesmo objeto múltiplas vezes
 struct ObjectInstance {
+    // Name must be unique for each instance
     std::string name;
 
+    // Pointer to object's descriptor of triangles
+    // Can be shared between many instances
+    ObjectTriangles* triangles;
+
+    // Variables to control model matrix
     glm::vec4 position{};
     glm::vec4 rotation{};
     glm::vec3 scale{1.0f, 1.0f, 1.0f};
 
-    ObjectTriangles* triangles;
+    // Variables to control textures
     GLint DiffuseTextureID = 0;
     glm::vec3 Ks{};
     float SpecularExponent = 1.0f;
+
+    // Physics stuff
+    Physics::Collider* collider = nullptr;
 
     // Copy constructor ClassName(ClassName const &copyFrom)
     ObjectInstance(ObjectInstance const &object);
@@ -37,15 +46,6 @@ struct ObjectInstance {
     virtual void Proc(float time, float delta);
 
     virtual void Draw();
-};
-
-struct RotatingObject : public ObjectInstance {
-    Physics::ColliderSphere* collider = nullptr;
-
-    // Constructor from parent from
-    explicit RotatingObject(const ObjectInstance &object);
-
-    void Proc(float time, float delta) override;
 };
 
 struct BezierCurve {
@@ -62,7 +62,6 @@ struct BezierCurve {
 };
 
 struct BezierObject : public ObjectInstance {
-    Physics::ColliderBox* collider = nullptr;
     BezierCurve* curve;
     float currentPosition = 0.0f;
 
@@ -76,7 +75,6 @@ struct DebugObject : public ObjectInstance {
     const char* name;
     int positionIndex;
     bool writing = false;
-    Physics::ColliderBox* collider;
 
     explicit DebugObject(const ObjectInstance &object, const char* name);
 

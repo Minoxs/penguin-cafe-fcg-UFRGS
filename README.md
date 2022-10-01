@@ -53,8 +53,8 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
     - [X] Phong
 - [X] Mapeamento de Texturas
   - [X] Dois objetos 
-- [ ] Curva de Bézier
-  - [ ] Um objeto cujo caminho é definido por curva de Bézier
+- [X] Curva de Bézier
+  - [X] Um objeto cujo caminho é definido por curva de Bézier
 - [X] Animação de Movimento baseada no tempo
   - [X] Todas as movimentações de objetos (incluindo da câmera) devem ser computadas baseado no tempo.
 
@@ -80,26 +80,49 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
   - [X] Utilizar textura definida no material (No Need)
 - [ ] Implementar primeira pessoa
   - [ ] Talvez precise de um shader específico 
-- [ ] Suportar especularidade
+- [X] Suportar especularidade
   - [ ] Implementar modelos de iluminação 
 - [X] Definir escopo do jogo
 - [ ] Implementar lógica de jogo
 - [X] Implementar colisão
-- [ ] Criar cena que será utilizada no jogo
+- [X] Criar cena que será utilizada no jogo
 - [X] Definir quais objetos vamos utilizar
   - [X] "Limpar" objetos
-  - [ ] Diminuir resolução das imagens
-  - [ ] Linkar referências dos objetos/texturas
+  - [X] Diminuir resolução das imagens
+  - [X] Linkar referências dos objetos/texturas
   - [X] Não esquecer de um modelo altamente complexo
 
 # Referências
 
 Por enquanto, somente coisas utilizadas durante a cadeira.
 
-## Código
+## Modelos altamente complexo: 
+* Caixa registradora (parte principal):
+  * 800 Kb
+  * 5.500 vértices
+* Barril:
+  * 1 Mb
+  * 5.600 vértices
+* Bolo:
+  * 1,1 Mb
+  * 6.800 vértices
 
+### Referências de Modelos com Textura
+* https://polyhaven.com/a/carrot_cake
+* https://polyhaven.com/a/jug_01
+* https://polyhaven.com/a/food_apple_01
+* https://polyhaven.com/a/wooden_table_02
+* https://polyhaven.com/a/CashRegister_01
+* https://polyhaven.com/a/croissant
+* https://polyhaven.com/a/WetFloorSign_01
+* https://polyhaven.com/a/Sofa_01
+* https://polyhaven.com/a/wine_barrel_01
+* https://www.cgtrader.com/free-3d-models/animals/bird/cute-penguin-6e8b4599-73d5-4de6-b7a6-2a7e59339420
+
+## Código
 - Coisas dos labs
 - Tudo original 😎
-- Polimorfismo 🪿
+- Muito Polimorfismo 🪿
 
-## Modelos/Texturas
+
+

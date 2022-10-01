@@ -50,16 +50,6 @@ void main()
     // normais de cada vértice.
     vec4 n = normalize(normal);
 
-    // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
-    // TODO CHECK IF POINT LIGHT OR "INFINITE LIGHT" LOOKS BETTER IN THE FINAL SCENE
-    // TODO CHECK IF LIGHT POSITION IS CORRECT
-    const vec3 I = vec3(1.0f, 1.0f, 1.0f);
-    const vec4 lightPosition = vec4(0.0, 3.0, 0.0, 1.0);
-    vec4 l = normalize(lightPosition - p); //
-
-    // Vetor que define o sentido da reflexão espetacular ideal
-    vec4 r = -normalize(reflect(l, n));
-
     // Vetor que define o sentido da câmera em relação ao ponto atual.
     vec4 v = normalize(camera_position - p);
 
@@ -70,8 +60,28 @@ void main()
     // Obtemos a refletância difusa a partir da leitura da imagem TextureImage0
     vec3 Kd0 = texture(TextureDiffuse, vec2(U, V)).rgb;
 
-    // Equação de Iluminação
-    color.rgb = Kd0 * max(0.02, dot(n,l)) + Ks * I * pow(max(0, dot(r, v)), SpecularExponent);
+    // HARDCODED LIGHTS
+    const vec3 Ikitchen = vec3(1.0f, 1.0f, 1.0f);
+    const vec4 kitchenLightPos = vec4(5.3, 5.8, -2.3, 1.0);
+    const vec3 Ibalada = vec3(0.4, 0.0, 0.0);
+    const vec4 baladaLightPos = vec4(-19.65, 5.8, -11.50, 1.0);
+
+    // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
+    vec4 l = normalize(kitchenLightPos - p);
+    // Vetor que define o sentido da reflexão espetacular ideal
+    vec4 r = -normalize(reflect(l, n));
+
+    // Always using a little bit of Kd0 as if it was ambient light
+    vec3 firstLight = Kd0 * max(0.02, dot(n,l)) + Ks * pow(max(0, dot(r, v)), SpecularExponent);
+    firstLight *= Ikitchen;
+
+    l = normalize(baladaLightPos - p);
+    r = -normalize(reflect(l, n));
+    vec3 secondLight = Kd0 * max(0.02, dot(n,l)) + Ks * pow(max(0, dot(r, v)), SpecularExponent);
+    secondLight *= Ibalada;
+
+    // Taking the average of both lights to keep things a little dimmer
+    color.rgb = (firstLight + secondLight)/2;
 
     // Transparency -- Must be 1
     color.a = 1;

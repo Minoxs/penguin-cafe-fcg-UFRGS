@@ -18,10 +18,6 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
-// Parâmetros da axis-aligned bounding box (AABB) do modelo
-uniform vec4 bbox_min;
-uniform vec4 bbox_max;
-
 // Variáveis para acesso das imagens de textura
 uniform sampler2D TextureDiffuse;
 

@@ -141,8 +141,6 @@ void LoadGenericShaders() {
 	p_model_uniform = glGetUniformLocation(p_program_id, "model"); // Variável da matriz "model"
 	p_view_uniform = glGetUniformLocation(p_program_id, "view"); // Variável da matriz "view" em shader_vertex.glsl
 	p_projection_uniform = glGetUniformLocation(p_program_id, "projection"); // Variável da matriz "projection" em shader_vertex.glsl
-	p_bbox_min_uniform = glGetUniformLocation(p_program_id, "bbox_min");
-	p_bbox_max_uniform = glGetUniformLocation(p_program_id, "bbox_max");
     gpu_TextureDiffuseUniform = glGetUniformLocation(p_program_id, "TextureDiffuse");
     gpu_KsUniform = glGetUniformLocation(p_program_id, "Ks");
     gpu_SpecularExponentUniform = glGetUniformLocation(p_program_id, "SpecularExponent");

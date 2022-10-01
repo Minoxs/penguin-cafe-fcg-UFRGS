@@ -13,9 +13,6 @@
 #include "glad/glad.h"
 #include "glm/ext/matrix_float4x4.hpp"
 
-// Pilha que guardará as matrizes de modelagem.
-extern std::stack<glm::mat4> g_MatrixStack;
-
 // Razão de proporção da janela (largura/altura). Veja função FramebufferSizeCallback().
 extern float g_ScreenRatio;
 
@@ -36,15 +33,10 @@ extern GLuint p_program_id;
 extern GLint p_model_uniform;
 extern GLint p_view_uniform;
 extern GLint p_projection_uniform;
-extern GLint p_bbox_min_uniform;
-extern GLint p_bbox_max_uniform;
 
 // Textures in the GPU
 extern GLint gpu_TextureDiffuseUniform;
 extern GLint gpu_KsUniform;
 extern GLint gpu_SpecularExponentUniform;
-
-void PushMatrix(glm::mat4 M);
-void PopMatrix(glm::mat4 &M);
 
 #endif //PENGUINCAFE_VARIABLES_HEADERS_GLOBALS

@@ -5,11 +5,6 @@
 
 #include "global.hpp"
 
-#include "matrices.h"
-
-// Pilha que guardará as matrizes de modelagem.
-std::stack<glm::mat4> g_MatrixStack;
-
 // Razão de proporção da janela (largura/altura). Veja função FramebufferSizeCallback().
 float g_ScreenRatio = 1.0f;
 
@@ -31,23 +26,6 @@ GLuint p_program_id = 0;
 GLint p_model_uniform;
 GLint p_view_uniform;
 GLint p_projection_uniform;
-GLint p_bbox_min_uniform;
-GLint p_bbox_max_uniform;
 GLint gpu_TextureDiffuseUniform;
 GLint gpu_KsUniform;
 GLint gpu_SpecularExponentUniform;
-
-// Função que pega a matriz M e guarda a mesma no topo da pilha
-void PushMatrix(glm::mat4 M) {
-	g_MatrixStack.push(M);
-}
-
-// Função que remove a matriz atualmente no topo da pilha e armazena a mesma na variável M
-void PopMatrix(glm::mat4 &M) {
-	if (g_MatrixStack.empty()) {
-		M = Matrix_Identity();
-	} else {
-		M = g_MatrixStack.top();
-		g_MatrixStack.pop();
-	}
-}

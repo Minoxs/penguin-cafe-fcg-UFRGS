@@ -64,13 +64,6 @@ void ObjectInstance::Draw() {
 	// comentários detalhados dentro da definição de BuildTrianglesAndAddToVirtualScene().
 	glBindVertexArray(triangles->vertex_array_object_id);
 
-	// Setamos as variáveis "bbox_min" e "bbox_max" do fragment shader
-	// com os parâmetros da axis-aligned bounding box (AABB) do modelo.
-	glm::vec3 bbox_min = triangles->bbox_min;
-	glm::vec3 bbox_max = triangles->bbox_max;
-	glUniform4f(p_bbox_min_uniform, bbox_min.x, bbox_min.y, bbox_min.z, 1.0f);
-	glUniform4f(p_bbox_max_uniform, bbox_max.x, bbox_max.y, bbox_max.z, 1.0f);
-
 	// Pedimos para a GPU rasterizar os vértices dos eixos XYZ
 	// apontados pelo VAO como linhas. Veja a definição de
 	// g_VirtualScene[""] dentro da função BuildTrianglesAndAddToVirtualScene(), e veja

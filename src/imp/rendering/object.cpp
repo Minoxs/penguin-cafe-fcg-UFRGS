@@ -163,7 +163,20 @@ void BezierObject::Proc(float time, float delta) {
         currentPosition -= 1.0f;
         curve->reverse = !curve->reverse;
     }
-    position = curve->calculate(currentPosition);
+
+    auto nextPosition = curve->calculate(currentPosition);
+    auto moved = collider->TryMove(nextPosition - position, true);
+    if (!moved) {
+        currentPosition -= delta/4.0f;
+        timeStuck += delta;
+    } else {
+        timeStuck = 0.0f;
+    }
+
+    if (timeStuck > 1.0f) {
+        currentPosition = 1 - currentPosition;
+        curve->reverse = !curve->reverse;
+    }
 }
 
 BezierCurve::BezierCurve(glm::vec4 p1, glm::vec4 p2, glm::vec4 p3, glm::vec4 p4) {

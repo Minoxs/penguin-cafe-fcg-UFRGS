@@ -67,6 +67,8 @@ Scene::Scene() {
     floor->scale = glm::vec4(27.72f, 0.49f, 27.72f, 0.0f);
     addToScene(floor);
 
+    ObjectInstance* auxInstance;
+
     baseCube.name = "wall00";
     baseCube.position = glm::vec4(6.47f, 6.92f, 22.35f , 1.0f);
     baseCube.rotation = glm::vec4(0.0f * conversion, 14.0f * conversion, 0.0f * conversion, 0.0f);
@@ -157,15 +159,7 @@ Scene::Scene() {
     debugObjectInstance.DiffuseTextureID = woodTexture;
     debugObjectInstance.scale = glm::vec4(1.5f, 3.0f, 1.0f, 0.0f);
     auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
-    auto debugObjectCollider = new Physics::ColliderBox(
-            &debugObject->position,
-            debugObject->triangles->bbox_min,
-            debugObject->triangles->bbox_max,
-            debugObject->scale
-   );
-    debugObject->collider = debugObjectCollider;
-    addToScene(debugObject);
-    engine->Add(debugObjectCollider);
+    addToScene(debugObject, true);
     #endif
 
     auto penguinTriangles = new ObjectTriangles("data/objects/penguin.obj");
@@ -178,17 +172,8 @@ Scene::Scene() {
     basePenguin.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 1.0f * conversion, 0.0f);
     basePenguin.DiffuseTextureID = penguinTexture;
     player = new Player(ObjectInstance(basePenguin));
-    // Create collider
-    auto playerCollider = new Physics::ColliderBox(
-            &player->position,
-            player->triangles->bbox_min,
-            player->triangles->bbox_max,
-            player->scale
-   );
-    player->collider = playerCollider;
     // Add to the scene and physics engine
-    addToScene(player);
-    engine->Add(playerCollider);
+    addToScene(player, true, 0.85f);
 
     // Penguin Chef Mustache
     basePenguin.name = "chef-penguin";
@@ -202,7 +187,8 @@ Scene::Scene() {
                                            glm::vec4(24.27f, 1.8f, -11.22f, 1.0f)
                                            );
 
-    addToScene(new BezierObject(basePenguin, chefWalkingPath));
+    auto leChef = new BezierObject(basePenguin, chefWalkingPath);
+    addToScene(leChef, true, 0.75f);
 
     // Cash Register
     auto cashRegisterPt1Triangles = new ObjectTriangles("data/objects/cash_register_only.obj");
@@ -251,12 +237,12 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-15.0f, -0.4f, 14.0f , 1.0f);
     baseTable.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 0.0f * conversion, 0.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
-    addToScene(new ObjectInstance(baseTable));
+    addToScene(new ObjectInstance(baseTable), false); // TODO ADD BB TO MODEL
 
     basePenguin.name = "npc01";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 16.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table02";
     baseTable.position = glm::vec4(-15.0f, -0.4f, 6.0f , 1.0f);
@@ -267,12 +253,12 @@ Scene::Scene() {
     basePenguin.name = "npc02";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 8.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     basePenguin.name = "npc03";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 4.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table03";
     baseTable.position = glm::vec4(-15.0f, -0.4f, -1.0f , 1.0f);
@@ -283,7 +269,7 @@ Scene::Scene() {
     basePenguin.name = "npc04";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -3.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table04";
     baseTable.position = glm::vec4(-15.0f, -0.4f, -8.0f , 1.0f);
@@ -294,7 +280,7 @@ Scene::Scene() {
     basePenguin.name = "npc05";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -6.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table05";
     baseTable.position = glm::vec4(-15.0f, -0.4f, -16.0f , 1.0f);
@@ -305,7 +291,7 @@ Scene::Scene() {
     basePenguin.name = "npc06";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -18.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table06";
     baseTable.position = glm::vec4(-3.0f, -0.4f, 14.0f , 1.0f);
@@ -316,7 +302,7 @@ Scene::Scene() {
     basePenguin.name = "npc07";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 16.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table07";
     baseTable.position = glm::vec4(-3.0f, -0.4f, 5.0f , 1.0f);
@@ -327,12 +313,12 @@ Scene::Scene() {
     basePenguin.name = "npc08";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 7.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     basePenguin.name = "npc09";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 3.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table08";
     baseTable.position = glm::vec4(-3.0f, -0.4f, -3.0f , 1.0f);
@@ -343,7 +329,7 @@ Scene::Scene() {
     basePenguin.name = "npc10";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -5.0f, -1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table09";
     baseTable.position = glm::vec4(-3.0f, -0.4f, -11.0f , 1.0f);
@@ -354,12 +340,12 @@ Scene::Scene() {
     basePenguin.name = "npc11";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -9.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     basePenguin.name = "npc12";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -13.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     baseTable.name = "table10";
     baseTable.position = glm::vec4(-3.0f, -0.4f, -21.0f , 1.0f);
@@ -367,10 +353,10 @@ Scene::Scene() {
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     addToScene(new ObjectInstance(baseTable));
 
-    basePenguin.name = "npc12";
+    basePenguin.name = "npc13";
     basePenguin.position = glm::vec4(-3.0f, 1.8f, -23.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin));
+    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
 
     // Wet Floot Sign
     auto signTriangles = new ObjectTriangles("data/objects/wet_floor_sign.obj");
@@ -385,7 +371,7 @@ Scene::Scene() {
     auto barrelTriangles = new ObjectTriangles("data/objects/barrel.obj");
     ObjectInstance barrel("barrel", barrelTriangles);
     barrel.DiffuseTextureID = barrelTexture;
-    addToScene(new ObjectInstance(barrel));
+    addToScene(new ObjectInstance(barrel), true, 0.9f);
 
     auto barrelPartTriangles = new ObjectTriangles("data/objects/barrel_part.obj");
     ObjectInstance barrelPart("barrel-part", barrelPartTriangles);
@@ -452,7 +438,22 @@ Scene::Scene() {
     mainCamera = player;
 }
 
-void Scene::addToScene(ObjectInstance* object) {
+void Scene::addToScene(ObjectInstance* object, bool addBoxCollider, float boundingBoxScale) {
+    if (addBoxCollider) {
+        auto scalingFactor = 1.0f - boundingBoxScale;
+        auto scalingVector = (object->triangles->bbox_max - object->triangles->bbox_min);
+
+        auto collider = new Physics::ColliderBox(
+            &object->position,
+            object->triangles->bbox_min + scalingVector * +scalingFactor,
+            object->triangles->bbox_max + scalingVector * -scalingFactor,
+            object->scale
+        );
+
+        object->collider = collider;
+        engine->Add(collider);
+    }
+
     virtualScene[object->name] = object;
 }
 

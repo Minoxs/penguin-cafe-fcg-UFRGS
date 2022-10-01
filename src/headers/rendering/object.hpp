@@ -64,6 +64,7 @@ struct BezierCurve {
 struct BezierObject : public ObjectInstance {
     BezierCurve* curve;
     float currentPosition = 0.0f;
+    float timeStuck = 0.0f;
 
     explicit BezierObject(const ObjectInstance &object, BezierCurve* curve);
 

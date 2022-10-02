@@ -39,6 +39,7 @@ namespace Physics {
 
     struct ColliderSphere : Collider {
         float radius;
+        bool inverted = false;
 
         ColliderSphere(glm::vec4* center, float radius);
         bool Collide(ColliderBox* B) override;

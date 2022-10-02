@@ -20,7 +20,7 @@ namespace Physics {
 
         float distance = norm(closestPoint - *S->center);
 
-        return distance < S->radius;
+        return (distance < S->radius) != S->inverted;
     }
 
     // Struct Implementations
@@ -55,7 +55,7 @@ namespace Physics {
 
     // Esfera com Esfera
     bool ColliderSphere::Collide(ColliderSphere* B) {
-        return norm(*this->center - *B->center) <= (this->radius + B->radius);
+        return (norm(*this->center - *B->center) <= (this->radius + B->radius)) != inverted;
     }
 
     // Esfera com Cubo

@@ -49,6 +49,7 @@ extern bool g_isWPressed;
 extern bool g_isSPressed;
 extern bool g_isAPressed;
 extern bool g_isDPressed;
+extern bool g_isEPressed;
 extern bool g_isKPressed;
 
 extern bool g_is0Pressed;

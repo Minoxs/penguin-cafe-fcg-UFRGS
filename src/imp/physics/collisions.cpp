@@ -7,6 +7,7 @@
 #include "matrices.h"
 
 #include <cmath>
+#include <utility>
 
 namespace Physics {
     // Internal functions
@@ -111,6 +112,11 @@ namespace Physics {
         return true;
     }
 
+    InteractiveCollider::InteractiveCollider(std::string referenceName, InteractiveType type, glm::vec4* center, float radius) : ColliderSphere(center, radius)  {
+        this->referenceName = std::move(referenceName);
+        this->type = type;
+    }
+
     void Engine::Add(ColliderBox* box) {
         box->layer = this;
         this->boxes.push_back(box);
@@ -121,6 +127,11 @@ namespace Physics {
         this->spheres.push_back(sphere);
     }
 
+    void Engine::Add(InteractiveCollider *interact) {
+        interact->layer = this;
+        interactives.push_back(interact);
+    }
+
     void Engine::Remove(ColliderBox* box) {
         boxes.remove(box);
     }
@@ -129,19 +140,34 @@ namespace Physics {
         spheres.remove(sphere);
     }
 
+    void Engine::Remove(InteractiveCollider* interact) {
+        interactives.remove(interact);
+    }
+
     bool Engine::CheckCollision(Collider* check) {
         for (ColliderBox* box : this->boxes) {
-            if ( (check->center != box->center) && check->Collide(box) ) {
+            if ((check->center != box->center) && check->Collide(box)) {
                 return true;
             }
         }
 
         for (ColliderSphere* sphere : this->spheres) {
-            if ( (check->center != sphere->center) && check->Collide(sphere) ) {
+            if ((check->center != sphere->center) && check->Collide(sphere)) {
                 return true;
             }
         }
 
         return false;
     }
+
+    InteractiveCollider* Engine::Interacting(Collider *check) {
+        for (InteractiveCollider* interactive : this->interactives) {
+            if ((check->center != interactive->center) && check->Collide(interactive)) {
+                return interactive;
+            }
+        }
+
+        return nullptr;
+    }
+
 }

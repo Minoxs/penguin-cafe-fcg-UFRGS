@@ -232,7 +232,7 @@ Scene::Scene() {
     basePenguin.name = "npc01";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 16.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table01"), true, 0.85f);
 
     baseTable.name = "table02";
     baseTable.position = glm::vec4(-15.0f, -0.4f, 6.0f , 1.0f);
@@ -242,12 +242,12 @@ Scene::Scene() {
     basePenguin.name = "npc02";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 8.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table02"), true, 0.85f);
 
     basePenguin.name = "npc03";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 4.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table02"), true, 0.85f);
 
     baseTable.name = "table03";
     baseTable.position = glm::vec4(-15.0f, -0.4f, -1.0f , 1.0f);
@@ -257,7 +257,7 @@ Scene::Scene() {
     basePenguin.name = "npc04";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -3.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table03"), true, 0.85f);
 
     baseTable.name = "table04";
     baseTable.position = glm::vec4(-15.0f, -0.4f, -8.0f , 1.0f);
@@ -267,7 +267,7 @@ Scene::Scene() {
     basePenguin.name = "npc05";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -6.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table04"), true, 0.85f);
 
     baseTable.name = "table05";
     baseTable.position = glm::vec4(-15.0f, -0.4f, -16.0f , 1.0f);
@@ -277,7 +277,7 @@ Scene::Scene() {
     basePenguin.name = "npc06";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -18.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table05"), true, 0.85f);
 
     baseTable.name = "table06";
     baseTable.position = glm::vec4(-3.0f, -0.4f, 14.0f , 1.0f);
@@ -287,7 +287,7 @@ Scene::Scene() {
     basePenguin.name = "npc07";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 16.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table06"), true, 0.85f);
 
     baseTable.name = "table07";
     baseTable.position = glm::vec4(-3.0f, -0.4f, 5.0f , 1.0f);
@@ -297,12 +297,12 @@ Scene::Scene() {
     basePenguin.name = "npc08";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 7.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table07"), true, 0.85f);
 
     basePenguin.name = "npc09";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 3.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table07"), true, 0.85f);
 
     baseTable.name = "table08";
     baseTable.position = glm::vec4(-3.0f, -0.4f, -3.0f , 1.0f);
@@ -312,7 +312,7 @@ Scene::Scene() {
     basePenguin.name = "npc10";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -5.0f, -1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table08"), true, 0.85f);
 
     baseTable.name = "table09";
     baseTable.position = glm::vec4(-3.0f, -0.4f, -11.0f , 1.0f);
@@ -322,12 +322,12 @@ Scene::Scene() {
     basePenguin.name = "npc11";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -9.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 90.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table09"), true, 0.85f);
 
     basePenguin.name = "npc12";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -13.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table09"), true, 0.85f);
 
     baseTable.name = "table10";
     baseTable.position = glm::vec4(-3.0f, -0.4f, -21.0f , 1.0f);
@@ -337,7 +337,7 @@ Scene::Scene() {
     basePenguin.name = "npc13";
     basePenguin.position = glm::vec4(-3.0f, 1.8f, -23.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
-    addToScene(new ObjectInstance(basePenguin), true, 0.85f);
+    addToScene(new Customer(basePenguin, "table10"), true, 0.85f);
 
     // Wet Floot Sign
     auto signTriangles = new ObjectTriangles("data/objects/wet_floor_sign.obj");
@@ -392,25 +392,25 @@ Scene::Scene() {
     baseApple.position = glm::vec4(13.42f, 1.4f, -2.0f, 1.0f);
     baseApple.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseApple.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new ObjectInstance(baseApple), 1.0f);
+    addToScene(new Food(baseApple, 1.0f));
 
     baseCroissant.name = "exemplar-croissant";
     baseCroissant.position = glm::vec4(13.85f, 1.4f, 3.0f, 1.0f);
     baseCroissant.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCroissant.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new ObjectInstance(baseCroissant), 1.0f);
+    addToScene(new Food(baseCroissant, 1.0f));
 
     baseCake.name = "exemplar-cake";
     baseCake.position = glm::vec4(14.0f, 1.4f, -7.0f, 1.0f);
     baseCake.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCake.scale = glm::vec4(10.0f, 10.0f, 10.0f, 0.0f);
-    addToScene(new ObjectInstance(baseCake), 1.0f);
+    addToScene(new Food(baseCake, 1.0f));
 
     baseTea.name = "exemplar-tea";
     baseTea.position = glm::vec4(13.42f, 1.4f, 8.0f, 1.0f);
     baseTea.rotation = glm::vec4(0.0f, 90.0f * conversion, 0.0f, 0.0f);
     baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
-    addToScene(new ObjectInstance(baseTea), 1.0f);
+    addToScene(new Food(baseTea, 1.0f));
 
     // Player/Main Penguin
     basePenguin.name = "player";
@@ -428,6 +428,7 @@ Scene::Scene() {
     );
     // Add to the scene and physics engine
     addToScene(player, true, 0.85f);
+    engine->Add(player->hand);
 
     ObjectInstance camera("camera", glm::vec4(18.9f, 5.89f, -1.79f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
     lookAtCamera = new LookAtCamera(camera, &player->position);
@@ -453,14 +454,10 @@ void Scene::addToScene(ObjectInstance* object, bool addBoxCollider, float boundi
     virtualScene[object->name] = object;
 }
 
-void Scene::addToScene(ObjectInstance *object, float radius) {
-    auto collider = new Physics::ColliderSphere(
-            &object->position,
-            radius
-    );
-
-    engine->Add(collider);
-    addToScene(object);
+void Scene::addToScene(Food* food) {
+    engine->Add(food->interact);
+    engine->Add((Physics::ColliderSphere*) food->collider);
+    virtualScene[food->name] = food;
 }
 
 void Scene::Render(float time, float delta) {

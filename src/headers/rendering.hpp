@@ -6,6 +6,7 @@
 #define PENGUINCAFE_RENDERING_SRC_HEADERS
 
 #include "rendering/object.hpp"
+#include "rendering/game.hpp"
 #include "rendering/camera.hpp"
 #include "rendering/scene.hpp"
 #include "rendering/shader.hpp"

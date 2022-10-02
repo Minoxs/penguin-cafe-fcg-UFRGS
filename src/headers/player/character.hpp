@@ -13,6 +13,7 @@ struct Player : ObjectInstance {
     inline static const float speed {10.0f};
 
     Camera* view = nullptr;
+    Physics::InteractiveCollider* hand = nullptr;
 
     explicit Player(const ObjectInstance &object, Camera* view);
 

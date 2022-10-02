@@ -18,16 +18,17 @@ set(SOURCE_FILES
     src/imp/global/variable.cpp
     src/imp/loading/shader.cpp
     src/imp/player/input.cpp
+    src/imp/player/character.cpp
     src/imp/rendering/object.cpp
     src/imp/rendering/shader.cpp
     src/imp/rendering/text.cpp
     src/imp/rendering/window.cpp
     src/imp/rendering/camera.cpp
     src/imp/rendering/scene.cpp
+    src/imp/rendering/game.cpp
     src/imp/loading/model.cpp
     src/imp/physics/collisions.cpp
     src/imp/game/loop.cpp
-    src/imp/player/character.cpp
 )
 
 # Executable with static libraries

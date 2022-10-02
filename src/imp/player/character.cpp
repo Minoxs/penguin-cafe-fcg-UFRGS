@@ -9,6 +9,8 @@
 
 Player::Player(const ObjectInstance &object, Camera* view) : ObjectInstance(object) {
     this->view = view;
+    auto handPosition = new glm::vec4(this->position);
+    this->hand = new Physics::InteractiveCollider(this->name, Physics::HAND, handPosition, 2.0f);
 }
 
 void Player::cameraTranslate(float delta) {
@@ -42,6 +44,7 @@ void Player::cameraTranslate(float delta) {
     if (collider->TryMove(offset * speed * delta, true)) {
         view->position.x = position.x;
         view->position.z = position.z;
+        *hand->center += offset * speed * delta;
     }
 }
 
@@ -54,6 +57,7 @@ void Player::cameraPan() {
     view->rotation /= norm(view->rotation);
 
     rotation.y = g_CameraTheta + (-90.0f * 3.14159265359f / 180.0f);
+    *hand->center = view->position + view->rotation;
 }
 
 // TODO ATENDER PENGUIN APERTANDO E
@@ -63,6 +67,15 @@ void Player::cameraPan() {
 void Player::Proc(float time, float delta) {
     cameraTranslate(delta);
     cameraPan();
+
+    if (g_isEPressed) {
+        // Check if player is interacting with something
+        auto hold = hand->layer->Interacting(hand);
+        if (hold != nullptr) {
+            // TODO DO SOMETHING
+            printf("yes!\n");
+        }
+    }
 }
 
 void Player::Draw() {

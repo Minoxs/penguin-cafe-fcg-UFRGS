@@ -7,7 +7,10 @@
 #define PENGUINCAFE_COLLISIONS_SRC_HEADERS_PHYSICS
 
 #include "physics.hpp"
+
 #include <list>
+#include <string>
+
 #include "glm/vec3.hpp"
 #include "glm/vec4.hpp"
 
@@ -57,24 +60,44 @@ namespace Physics {
         bool Collide(ColliderSphere* B) override;
     };
 
+    enum InteractiveType {
+        INVALID,
+        HAND,
+        FOOD,
+        TABLE,
+        CUSTOMER
+    };
+
+    struct InteractiveCollider : ColliderSphere {
+       std::string referenceName;
+        InteractiveType type;
+        bool active = true;
+
+        explicit InteractiveCollider(std::string referenceName, InteractiveType type, glm::vec4* center, float radius);
+    };
+
     struct Engine {
         Engine() = default;
 
         // This is probably a dumb idea
         std::list<ColliderBox*> boxes;
         std::list<ColliderSphere*> spheres;
+        std::list<InteractiveCollider*> interactives;
 
         // Add objects to the list
         void Add(ColliderBox* box);
         void Add(ColliderSphere* sphere);
+        void Add(InteractiveCollider* interact);
 
         // Remove objects
         void Remove(ColliderBox* box);
         void Remove(ColliderSphere* sphere);
+        void Remove(InteractiveCollider* interact);
 
         // Checks if given object collides with other
         // tracked objects in the engine
         bool CheckCollision(Collider* check);
+        InteractiveCollider* Interacting(Collider* check);
     };
 }
 

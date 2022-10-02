@@ -402,25 +402,25 @@ Scene::Scene() {
     baseApple.position = glm::vec4(13.42f, 1.4f, -2.0f, 1.0f);
     baseApple.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseApple.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new ObjectInstance(baseApple));
+    addToScene(new ObjectInstance(baseApple), 1.0f);
 
     baseCroissant.name = "exemplar-croissant";
     baseCroissant.position = glm::vec4(13.85f, 1.4f, 3.0f, 1.0f);
     baseCroissant.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCroissant.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new ObjectInstance(baseCroissant));
+    addToScene(new ObjectInstance(baseCroissant), 1.0f);
 
     baseCake.name = "exemplar-cake";
     baseCake.position = glm::vec4(14.0f, 1.4f, -7.0f, 1.0f);
     baseCake.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCake.scale = glm::vec4(10.0f, 10.0f, 10.0f, 0.0f);
-    addToScene(new ObjectInstance(baseCake));
+    addToScene(new ObjectInstance(baseCake), 1.0f);
 
     baseTea.name = "exemplar-tea";
     baseTea.position = glm::vec4(13.42f, 1.4f, 8.0f, 1.0f);
     baseTea.rotation = glm::vec4(0.0f, 90.0f * conversion, 0.0f, 0.0f);
     baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
-    addToScene(new ObjectInstance(baseTea));
+    addToScene(new ObjectInstance(baseTea), 1.0f);
 
     ObjectInstance camera("camera", glm::vec4(18.9f, 5.89f, -1.79f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
     lookAtCamera = new LookAtCamera(camera, &player->position);
@@ -444,6 +444,16 @@ void Scene::addToScene(ObjectInstance* object, bool addBoxCollider, float boundi
     }
 
     virtualScene[object->name] = object;
+}
+
+void Scene::addToScene(ObjectInstance *object, float radius) {
+    auto collider = new Physics::ColliderSphere(
+            &object->position,
+            radius
+    );
+
+    engine->Add(collider);
+    addToScene(object);
 }
 
 void Scene::Render(float time, float delta) {

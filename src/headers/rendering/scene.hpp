@@ -23,6 +23,7 @@ struct Scene {
     explicit Scene();
 
     void addToScene(ObjectInstance* object, bool addBoxCollider = false, float boundingBoxScale = 1.0f);
+    void addToScene(ObjectInstance* object, float radius);
 
     void Render(float time, float delta);
 };

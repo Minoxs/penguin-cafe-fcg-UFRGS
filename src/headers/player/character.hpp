@@ -9,6 +9,7 @@
 #include "player.hpp"
 #include "rendering.hpp"
 
+// TODO SEPARATE MODEL AND CAMERA STUFF
 struct Player : Camera {
     inline static const float speed {10.0f};
 

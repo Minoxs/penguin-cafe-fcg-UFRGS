@@ -9,14 +9,16 @@
 #include "player.hpp"
 #include "rendering.hpp"
 
-// TODO SEPARATE MODEL AND CAMERA STUFF
-struct Player : Camera {
+struct Player : ObjectInstance {
     inline static const float speed {10.0f};
 
-    explicit Player(const ObjectInstance &object);
+    Camera* view = nullptr;
+
+    explicit Player(const ObjectInstance &object, Camera* view);
 
     void cameraTranslate(float delta);
     void cameraPan();
+
     void Proc(float time, float delta) override;
     void Draw() override;
 };

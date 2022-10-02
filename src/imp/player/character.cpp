@@ -7,8 +7,8 @@
 #include "global.hpp"
 #include "matrices.h"
 
-Player::Player(const ObjectInstance &object) : Camera(object) {
-
+Player::Player(const ObjectInstance &object, Camera* view) : ObjectInstance(object) {
+    this->view = view;
 }
 
 void Player::cameraTranslate(float delta) {
@@ -27,11 +27,11 @@ void Player::cameraTranslate(float delta) {
     glm::vec4 offset = {};
 
     if (d.z != 0.0f) {
-        offset += d.z * rotation;
+        offset += d.z * view->rotation;
     }
 
     if (d.x != 0.0f) {
-        glm::vec4 sideVector = crossproduct(rotation, upVector);
+        glm::vec4 sideVector = crossproduct(view->rotation, Camera::upVector);
         offset += d.x * (sideVector/norm(sideVector));
     }
 
@@ -39,7 +39,10 @@ void Player::cameraTranslate(float delta) {
 
     offset /= norm(offset);
 
-    collider->TryMove(offset * speed * delta, true);
+    if (collider->TryMove(offset * speed * delta, true)) {
+        view->position.x = position.x;
+        view->position.z = position.z;
+    }
 }
 
 void Player::cameraPan() {
@@ -47,8 +50,10 @@ void Player::cameraPan() {
     float y = std::sin(-g_CameraPhi);
     float z = std::cos(g_CameraPhi) * std::cos(g_CameraTheta);
 
-    rotation  = glm::vec4(x, y, z, 0.0f);
-    rotation /= norm(rotation);
+    view->rotation  = glm::vec4(x, y, z, 0.0f);
+    view->rotation /= norm(view->rotation);
+
+    rotation.y = g_CameraTheta + (-90.0f * 3.14159265359f / 180.0f);
 }
 
 // TODO ATENDER PENGUIN APERTANDO E

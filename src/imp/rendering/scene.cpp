@@ -167,16 +167,6 @@ Scene::Scene() {
 
     auto penguinTriangles = new ObjectTriangles("data/objects/penguin.obj");
     ObjectInstance basePenguin("", penguinTriangles);
-    //playerPosition = glm::vec4(3.28f, 1.8, -2.04f, 1.0f);
-
-    // Player/Main Penguin
-    basePenguin.name = "player-penguin";
-    basePenguin.position = glm::vec4(3.28f, 2.8f, -2.04f, 1.0f);
-    basePenguin.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 1.0f * conversion, 0.0f);
-    basePenguin.DiffuseTextureID = penguinTexture;
-    player = new Player(ObjectInstance(basePenguin));
-    // Add to the scene and physics engine
-    addToScene(player, true, 0.75f);
 
     // Penguin Chef Mustache
     basePenguin.name = "chef-penguin";
@@ -352,7 +342,7 @@ Scene::Scene() {
     // Wet Floot Sign
     auto signTriangles = new ObjectTriangles("data/objects/wet_floor_sign.obj");
     ObjectInstance floorSign("wet-floor-sign", signTriangles);
-    floorSign.position = glm::vec4(5.0f, 0.0f, -18.0f, 1.0f);
+    floorSign.position = glm::vec4(5.0f, -0.65f, -18.0f, 1.0f);
     floorSign.scale = glm::vec4(4.0f, 4.0f, 4.0f, 0.0f);
     floorSign.DiffuseTextureID = wetFloorSignTexture;
     addToScene(new ObjectInstance(floorSign), true);
@@ -422,10 +412,27 @@ Scene::Scene() {
     baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
     addToScene(new ObjectInstance(baseTea), 1.0f);
 
+    // Player/Main Penguin
+    basePenguin.name = "player";
+    basePenguin.position = glm::vec4(3.28f, 1.8, -2.04f, 1.0f);
+    basePenguin.rotation = glm::vec4(0.0f * conversion, -90.0f * conversion, 0.0f * conversion, 0.0f);
+    basePenguin.DiffuseTextureID = penguinTexture;
+
+    ObjectInstance playerView("player-camera", nullptr);
+    playerView.position = glm::vec4(3.28f, 2.8f, -2.04f, 1.0f);
+    playerView.rotation = glm::vec4(0.0f * conversion, 0.0f * conversion, 1.0f * conversion, 0.0f);
+
+    player = new Player(
+            basePenguin,
+            new Camera(playerView)
+    );
+    // Add to the scene and physics engine
+    addToScene(player, true, 0.85f);
+
     ObjectInstance camera("camera", glm::vec4(18.9f, 5.89f, -1.79f, 1.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.0f), nullptr);
     lookAtCamera = new LookAtCamera(camera, &player->position);
     addToScene(lookAtCamera);
-    mainCamera = player;
+    mainCamera = player->view;
 }
 
 void Scene::addToScene(ObjectInstance* object, bool addBoxCollider, float boundingBoxScale) {
@@ -458,7 +465,7 @@ void Scene::addToScene(ObjectInstance *object, float radius) {
 
 void Scene::Render(float time, float delta) {
     if (g_UseFreeCamera) {
-        mainCamera = player;
+        mainCamera = player->view;
     } else {
         mainCamera = lookAtCamera;
     }

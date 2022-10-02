@@ -17,7 +17,7 @@
 // Bounding boxes may or may not have rotations applied to them
 // FONTE: https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
 // Essa fonte foi utilizado apenas como guia,
-// pois o código em só foi implementado com nossa engine em mente
+// pois o código em sí foi implementado com nossa engine em mente
 namespace Physics {
     struct Collider {
         // Layer where collisions will happen

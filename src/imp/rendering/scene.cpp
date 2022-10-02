@@ -38,18 +38,16 @@ Scene::Scene() {
     GLint barrelTexture = LoadTexture("data/textures/barrel.jpg");
     GLint teaTexture = LoadTexture("data/textures/jug.jpg");
 
-    // Construímos a representação de objetos geométricos através de malhas de triângulos
+    // Outside
+    auto outsideTriangles = new ObjectTriangles("data/objects/outside.obj");
+    ObjectInstance outsideCube("outside", outsideTriangles);
+    outsideCube.position = glm::vec4(7.42f, 3.11f, 27.39f, 1.0f);
+    outsideCube.rotation = glm::vec4(0.0f * conversion, 14.0f * conversion, 0.0f * conversion, 0.0f);
+    outsideCube.DiffuseTextureID = outsideScenario;
+    addToScene(new ObjectInstance(outsideCube), true);
+
     auto cubeTriangles = new ObjectTriangles("data/objects/cube.obj");
     ObjectInstance baseCube("", cubeTriangles);
-
-    // Outside
-    baseCube.name = "outside";
-    baseCube.position = glm::vec4(7.42f, 3.11f, 27.39f, 1.0f);
-    baseCube.rotation = glm::vec4(0.0f * conversion, 14.0f * conversion, 0.0f * conversion, 0.0f);
-    baseCube.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
-    baseCube.DiffuseTextureID = outsideScenario;    // TODO Ajeitar a imagem aqui
-    addToScene(new ObjectInstance(baseCube), true);
-
     baseCube.DiffuseTextureID = blueTexture;
 
     // Iglu

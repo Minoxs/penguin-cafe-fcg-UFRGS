@@ -10,7 +10,7 @@
 Player::Player(const ObjectInstance &object, Camera* view) : ObjectInstance(object) {
     this->view = view;
     auto handPosition = new glm::vec4(this->position);
-    this->hand = new Physics::InteractiveCollider(this->name, Physics::HAND, handPosition, 2.0f);
+    this->hand = new Physics::InteractiveCollider(this->name, Physics::HAND, handPosition, 2.5f);
 }
 
 void Player::cameraTranslate(float delta) {
@@ -58,6 +58,20 @@ void Player::cameraPan() {
 
     rotation.y = g_CameraTheta + (-90.0f * 3.14159265359f / 180.0f);
     *hand->center = view->position + view->rotation;
+
+    if (holding != nullptr) {
+        auto holdingPosition = (position + 3.0f * view->rotation);
+        auto holdingOffset = holdingPosition - *holding->center;
+
+        // Move separately so object gets stuck less often
+        auto moveX = glm::vec4(holdingOffset.x, 0.0f, 0.0f, 0.0f);
+        auto moveY = glm::vec4(0.0f, holdingOffset.y, 0.0f, 0.0f);
+        auto moveZ = glm::vec4(0.0f, 0.0f, holdingOffset.z, 0.0f);
+
+        holding->TryMove(moveX, true);
+        holding->TryMove(moveZ, true);
+        holding->TryMove(moveY, true);
+    }
 }
 
 // TODO ATENDER PENGUIN APERTANDO E
@@ -68,12 +82,30 @@ void Player::Proc(float time, float delta) {
     cameraTranslate(delta);
     cameraPan();
 
-    if (g_isEPressed) {
-        // Check if player is interacting with something
-        auto hold = hand->layer->Interacting(hand);
-        if (hold != nullptr) {
-            // TODO DO SOMETHING
-            printf("yes!\n");
+    if (g_isEPressed && (time-grabTime) > 0.5f) {
+        if (holding == nullptr) {
+            // Check if player is interacting with something
+            auto hold = hand->layer->Interacting(hand);
+            if (hold != nullptr) {
+                #ifndef NDEBUG
+                printf("Interacted with: %s\n", hold->referenceName.c_str());
+                #endif
+
+                switch (hold->type) {
+                    case Physics::FOOD:
+                        hold->active = false;
+                        holding = hold;
+                        holding->center->y += holding->radius;
+                        grabTime = time;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } else {
+            holding->active = true;
+            holding = nullptr;
+            grabTime = time;
         }
     }
 }

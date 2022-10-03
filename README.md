@@ -123,6 +123,3 @@ Por enquanto, somente coisas utilizadas durante a cadeira.
 - Coisas dos labs
 - Tudo original 😎
 - Muito Polimorfismo 🪿
-
-
-

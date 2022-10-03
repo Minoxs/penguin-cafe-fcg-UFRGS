@@ -14,6 +14,8 @@ struct Player : ObjectInstance {
 
     Camera* view = nullptr;
     Physics::InteractiveCollider* hand = nullptr;
+    Physics::InteractiveCollider* holding = nullptr;
+    float grabTime = 0.0f;
 
     explicit Player(const ObjectInstance &object, Camera* view);
 

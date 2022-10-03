@@ -56,7 +56,7 @@ namespace Physics {
 
     // Esfera com Esfera
     bool ColliderSphere::Collide(ColliderSphere* B) {
-        return (norm(*this->center - *B->center) <= (this->radius + B->radius)) != inverted;
+        return (norm(*this->center - *B->center) <= (this->radius + B->radius)) != (inverted != B->inverted);
     }
 
     // Esfera com Cubo
@@ -162,7 +162,7 @@ namespace Physics {
 
     InteractiveCollider* Engine::Interacting(Collider *check) {
         for (InteractiveCollider* interactive : this->interactives) {
-            if ((check->center != interactive->center) && check->Collide(interactive)) {
+            if ((check->center != interactive->center) && interactive->active && check->Collide(interactive)) {
                 return interactive;
             }
         }

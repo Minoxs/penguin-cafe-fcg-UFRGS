@@ -37,15 +37,25 @@ void Player::cameraTranslate(float delta) {
         offset += d.x * (sideVector/norm(sideVector));
     }
 
+    // Remove Y component of movement
     offset.y = 0.0f;
-
     offset /= norm(offset);
 
-    if (collider->TryMove(offset * speed * delta, true)) {
-        view->position.x = position.x;
-        view->position.z = position.z;
-        *hand->center += offset * speed * delta;
+    // Make movement more fluid by separating move tries
+    auto move = offset * speed * delta;
+    auto moveX = glm::vec4(move.x, 0.0f, 0.0f, 0.0f);
+    auto moveZ = glm::vec4(0.0f, 0.0f, move.z, 0.0f);
+
+    if (collider->TryMove(moveX, true)) {
+        *hand->center += moveX;
     }
+
+    if (collider->TryMove(moveZ, true)) {
+        *hand->center += moveZ;
+    }
+
+    view->position.x = position.x;
+    view->position.z = position.z;
 }
 
 void Player::cameraPan() {

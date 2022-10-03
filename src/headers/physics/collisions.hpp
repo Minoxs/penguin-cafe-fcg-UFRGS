@@ -27,6 +27,7 @@ namespace Physics {
         Engine* layer = nullptr;
         // Point associated with collider
         glm::vec4* center;
+        bool active = true;
 
         explicit Collider(glm::vec4* center);
 
@@ -71,7 +72,6 @@ namespace Physics {
     struct InteractiveCollider : ColliderSphere {
        std::string referenceName;
         InteractiveType type;
-        bool active = true;
 
         explicit InteractiveCollider(std::string referenceName, InteractiveType type, glm::vec4* center, float radius);
     };

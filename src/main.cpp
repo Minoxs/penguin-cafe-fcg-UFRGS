@@ -21,6 +21,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <ctime>
 
 // Headers das bibliotecas OpenGL
 #include "glad/glad.h"   // Criação de contexto OpenGL 3.3
@@ -39,6 +40,8 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "ERROR: glfwInit() failed.\n");
 		std::exit(EXIT_FAILURE);
 	}
+
+    srand(time(0));
 
 	// Definimos o callback para impressão de erros da GLFW no terminal
 	glfwSetErrorCallback(ErrorCallback);

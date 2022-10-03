@@ -16,10 +16,12 @@ struct Table : ObjectInstance {
 
 struct Customer : ObjectInstance {
     const char* tableName;
+    float spawnTimer;
     bool isBuying = false;
 
     explicit Customer(ObjectInstance const &object, const char* tableName);
 
+    void Proc(float time, float delta) override;
     void Draw() override;
 };
 

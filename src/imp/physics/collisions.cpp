@@ -146,13 +146,13 @@ namespace Physics {
 
     bool Engine::CheckCollision(Collider* check) {
         for (ColliderBox* box : this->boxes) {
-            if ((check->center != box->center) && check->Collide(box)) {
+            if (box->active && (check->center != box->center) && check->Collide(box)) {
                 return true;
             }
         }
 
         for (ColliderSphere* sphere : this->spheres) {
-            if ((check->center != sphere->center) && check->Collide(sphere)) {
+            if (sphere->active && (check->center != sphere->center) && check->Collide(sphere)) {
                 return true;
             }
         }
@@ -161,8 +161,10 @@ namespace Physics {
     }
 
     InteractiveCollider* Engine::Interacting(Collider *check) {
+        if (!check->active) return nullptr;
+
         for (InteractiveCollider* interactive : this->interactives) {
-            if ((check->center != interactive->center) && interactive->active && check->Collide(interactive)) {
+            if (interactive->active && (check->center != interactive->center) && check->Collide(interactive)) {
                 return interactive;
             }
         }

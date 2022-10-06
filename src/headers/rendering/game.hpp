@@ -8,8 +8,14 @@
 
 #include "rendering.hpp"
 
+struct Food : ObjectInstance {
+    Physics::InteractiveCollider* interact;
+    explicit Food(ObjectInstance const &object, float radius);
+};
+
 struct Table : ObjectInstance {
     glm::vec4 foodPosition {};
+    Food* food = nullptr;
 
     explicit Table(ObjectInstance const &object, glm::vec4 foodPosition);
 };
@@ -25,9 +31,5 @@ struct Customer : ObjectInstance {
     void Draw() override;
 };
 
-struct Food : ObjectInstance {
-    Physics::InteractiveCollider* interact;
-    explicit Food(ObjectInstance const &object, float radius);
-};
 
 #endif //PENGUINCAFE_GAME_HEADERS_RENDERING

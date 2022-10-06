@@ -7,6 +7,7 @@
 #define PENGUINCAFE_COLLISIONS_SRC_HEADERS_PHYSICS
 
 #include "physics.hpp"
+#include "rendering.hpp"
 
 #include <list>
 #include <string>
@@ -71,9 +72,10 @@ namespace Physics {
 
     struct InteractiveCollider : ColliderSphere {
        std::string referenceName;
-        InteractiveType type;
+       ObjectInstance* referenceObject;
+       InteractiveType type;
 
-        explicit InteractiveCollider(std::string referenceName, InteractiveType type, glm::vec4* center, float radius);
+        explicit InteractiveCollider(std::string referenceName, ObjectInstance* referenceObject, InteractiveType type, glm::vec4* center, float radius);
     };
 
     struct Engine {

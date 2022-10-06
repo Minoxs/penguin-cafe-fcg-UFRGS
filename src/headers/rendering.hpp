@@ -5,6 +5,8 @@
 #ifndef PENGUINCAFE_RENDERING_SRC_HEADERS
 #define PENGUINCAFE_RENDERING_SRC_HEADERS
 
+struct ObjectInstance;
+
 #include "rendering/object.hpp"
 #include "rendering/game.hpp"
 #include "rendering/camera.hpp"

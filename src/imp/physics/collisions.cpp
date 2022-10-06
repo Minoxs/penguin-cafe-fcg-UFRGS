@@ -5,6 +5,7 @@
 #include "physics.hpp"
 #include "physics/collisions.hpp"
 #include "matrices.h"
+#include "rendering/object.hpp"
 
 #include <cmath>
 #include <utility>
@@ -112,8 +113,9 @@ namespace Physics {
         return true;
     }
 
-    InteractiveCollider::InteractiveCollider(std::string referenceName, InteractiveType type, glm::vec4* center, float radius) : ColliderSphere(center, radius)  {
+    InteractiveCollider::InteractiveCollider(std::string referenceName, ObjectInstance* referenceObject, InteractiveType type, glm::vec4* center, float radius) : ColliderSphere(center, radius)  {
         this->referenceName = std::move(referenceName);
+        this->referenceObject = referenceObject;
         this->type = type;
     }
 

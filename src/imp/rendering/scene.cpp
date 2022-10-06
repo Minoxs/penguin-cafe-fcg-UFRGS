@@ -389,28 +389,28 @@ Scene::Scene() {
     */
 
     baseApple.name = "exemplar-apple";
-    baseApple.position = glm::vec4(13.42f, 1.4f, -2.0f, 1.0f);
+    baseApple.position = glm::vec4(13.42f, 1.85f, -2.0f, 1.0f);
     baseApple.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseApple.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new Food(baseApple, 0.25f));
+    addToScene(new Food(baseApple, 0.21f));
 
     baseCroissant.name = "exemplar-croissant";
-    baseCroissant.position = glm::vec4(13.45f, 1.4f, 3.0f, 1.0f);
+    baseCroissant.position = glm::vec4(13.45f, 1.85f, 3.0f, 1.0f);
     baseCroissant.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCroissant.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new Food(baseCroissant, 0.25f));
+    addToScene(new Food(baseCroissant, 0.20f));
 
     baseCake.name = "exemplar-cake";
-    baseCake.position = glm::vec4(13.4f, 1.4f, -7.0f, 1.0f);
+    baseCake.position = glm::vec4(13.4f, 1.9f, -7.0f, 1.0f);
     baseCake.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCake.scale = glm::vec4(10.0f, 10.0f, 10.0f, 0.0f);
     addToScene(new Food(baseCake, 0.25f));
 
     baseTea.name = "exemplar-tea";
-    baseTea.position = glm::vec4(13.42f, 1.4f, 8.0f, 1.0f);
+    baseTea.position = glm::vec4(13.42f, 1.9f, 8.0f, 1.0f);
     baseTea.rotation = glm::vec4(0.0f, 90.0f * conversion, 0.0f, 0.0f);
     baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
-    addToScene(new Food(baseTea, 0.25f));
+    addToScene(new Food(baseTea, 0.45f));
 
     // Player/Main Penguin
     basePenguin.name = "player";

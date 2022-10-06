@@ -14,6 +14,7 @@ struct Food : ObjectInstance {
     Physics::InteractiveCollider* interact;
     explicit Food(ObjectInstance const &object, float radius);
     void TryPutInTable();
+    void Clean();
 };
 
 struct Table : ObjectInstance {
@@ -26,10 +27,12 @@ struct Table : ObjectInstance {
 };
 
 struct Customer : ObjectInstance {
+    inline static const float SpawnDelay = 5.0f;
+    float initialRotation;
+
     float spawnTimer;
     bool isBuying = false;
     float amountEaten = 0.0f;
-    float initialRotation;
 
     Table* tableReference;
 

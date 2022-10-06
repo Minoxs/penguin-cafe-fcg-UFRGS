@@ -65,6 +65,11 @@ namespace Physics {
         return collideSphereBox(this, B);
     }
 
+    void ColliderSphere::Delete() {
+        layer->Remove(this);
+        delete this;
+    }
+
     ColliderBox::ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax, glm::vec4 scale) : Collider(center) {
         const glm::vec4 origin = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
         glm::vec4 offset = *center - origin;
@@ -113,10 +118,20 @@ namespace Physics {
         return true;
     }
 
+    void ColliderBox::Delete() {
+        layer->Remove(this);
+        delete this;
+    }
+
     InteractiveCollider::InteractiveCollider(std::string referenceName, ObjectInstance* referenceObject, InteractiveType type, glm::vec4* center, float radius) : ColliderSphere(center, radius)  {
         this->referenceName = std::move(referenceName);
         this->referenceObject = referenceObject;
         this->type = type;
+    }
+
+    void InteractiveCollider::Delete() {
+        layer->Remove(this);
+        delete this;
     }
 
     void Engine::Add(ColliderBox* box) {
@@ -162,9 +177,14 @@ namespace Physics {
         return false;
     }
 
-    InteractiveCollider* Engine::Interacting(Collider *check) {
+    InteractiveCollider* Engine::Interacting(Collider *check, InteractiveType filter) {
         for (InteractiveCollider* interactive : this->interactives) {
-            if (interactive->active && (check->center != interactive->center) && check->Collide(interactive)) {
+            // Skip inactive interactives
+            if (!interactive->active) continue;
+            // Filter by type
+            if (filter != NONE && filter != interactive->type) continue;
+
+            if (check->center != interactive->center && check->Collide(interactive)) {
                 return interactive;
             }
         }

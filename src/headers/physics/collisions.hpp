@@ -40,6 +40,9 @@ namespace Physics {
         // Always returns false in the base class
         virtual bool Collide(ColliderBox* B);
         virtual bool Collide(ColliderSphere* B);
+
+        // Functions to delete object
+        virtual void Delete() = 0;
     };
 
     struct ColliderSphere : Collider {
@@ -49,6 +52,8 @@ namespace Physics {
         ColliderSphere(glm::vec4* center, float radius);
         bool Collide(ColliderBox* B) override;
         bool Collide(ColliderSphere* B) override;
+
+        void Delete() override;
     };
 
     struct ColliderBox : Collider {
@@ -60,10 +65,12 @@ namespace Physics {
         bool TryMove(glm::vec4 offset, bool checkCollision) override;
         bool Collide(ColliderBox* B) override;
         bool Collide(ColliderSphere* B) override;
+
+        void Delete() override;
     };
 
     enum InteractiveType {
-        INVALID,
+        NONE,
         HAND,
         FOOD,
         TABLE,
@@ -76,6 +83,8 @@ namespace Physics {
        InteractiveType type;
 
         explicit InteractiveCollider(std::string referenceName, ObjectInstance* referenceObject, InteractiveType type, glm::vec4* center, float radius);
+
+        void Delete() override;
     };
 
     struct Engine {
@@ -99,7 +108,7 @@ namespace Physics {
         // Checks if given object collides with other
         // tracked objects in the engine
         bool CheckCollision(Collider* check);
-        InteractiveCollider* Interacting(Collider* check);
+        InteractiveCollider* Interacting(Collider* check, InteractiveType filter = NONE);
     };
 }
 

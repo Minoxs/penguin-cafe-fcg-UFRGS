@@ -18,11 +18,18 @@ Food::Food(const ObjectInstance &object, float radius) : ObjectInstance(object) 
 }
 
 void Food::TryPutInTable() {
-    auto coll = interact->layer->Interacting(this->interact);
-    if (coll == nullptr || coll->type != Physics::TABLE) return;
+    auto coll = interact->layer->Interacting(this->interact, Physics::TABLE);
+    if (coll == nullptr) return;
 
     auto table = (Table*) coll->referenceObject;
     table->PutFood(this);
+}
+
+void Food::Clean() {
+    sceneReference->virtualScene.erase(name);
+    collider->Delete();
+    interact->Delete();
+    delete this;
 }
 
 Table::Table(ObjectInstance const &object) : ObjectInstance(object) {
@@ -57,8 +64,7 @@ void Table::PutFood(Food* food) {
 void Table::Proc(float time, float delta) {
     if (food != nullptr && food->remaining <= 0.0f) {
         interact->active = true;
-        sceneReference->virtualScene.erase(food->name);
-        delete food;
+        food->Clean();
         food = nullptr;
     }
 }
@@ -100,6 +106,7 @@ void Customer::Proc(float time, float delta) {
         // Done eating
         isBuying = false;
         // TODO ADD PAYMENT
-        // TODO ADD CUSTOMER RESET
+        spawnTimer = time + Customer::SpawnDelay + (float)(rand() % 30);
+        amountEaten = 0.0f;
     }
 }

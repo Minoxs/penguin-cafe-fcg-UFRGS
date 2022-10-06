@@ -96,22 +96,12 @@ void Player::Proc(float time, float delta) {
     if (g_isEPressed && (time-grabTime) > 0.5f) {
         if (food == nullptr) {
             // Check if player is interacting with something
-            auto hold = hand->layer->Interacting(hand);
+            auto hold = hand->layer->Interacting(hand, Physics::FOOD);
             if (hold != nullptr) {
-                #ifndef NDEBUG
-                printf("Interacted with: %s\n", hold->referenceName.c_str());
-                #endif
-
-                switch (hold->type) {
-                    case Physics::FOOD:
-                        hold->active = false;
-                        food = (Food*) hold->referenceObject;
-                        food->position.y += food->interact->radius * 1.5f;
-                        grabTime = time;
-                        break;
-                    default:
-                        break;
-                }
+                hold->active = false;
+                food = (Food*) hold->referenceObject;
+                food->position.y += food->interact->radius * 1.5f;
+                grabTime = time;
             }
         } else {
             food->interact->active = true;

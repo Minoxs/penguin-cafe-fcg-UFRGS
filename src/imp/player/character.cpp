@@ -11,6 +11,7 @@ Player::Player(const ObjectInstance &object, Camera* view) : ObjectInstance(obje
     this->view = view;
     auto handPosition = new glm::vec4(this->position);
     this->hand = new Physics::InteractiveCollider(this->name, this, Physics::HAND, handPosition, 2.5f);
+    this->hand->active = false;
 }
 
 void Player::cameraTranslate(float delta) {
@@ -114,6 +115,7 @@ void Player::Proc(float time, float delta) {
             }
         } else {
             food->interact->active = true;
+            food->TryPutInTable();
             food = nullptr;
             grabTime = time;
         }

@@ -163,8 +163,6 @@ namespace Physics {
     }
 
     InteractiveCollider* Engine::Interacting(Collider *check) {
-        if (!check->active) return nullptr;
-
         for (InteractiveCollider* interactive : this->interactives) {
             if (interactive->active && (check->center != interactive->center) && check->Collide(interactive)) {
                 return interactive;

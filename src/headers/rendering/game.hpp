@@ -11,13 +11,14 @@
 struct Food : ObjectInstance {
     Physics::InteractiveCollider* interact;
     explicit Food(ObjectInstance const &object, float radius);
+    void TryPutInTable();
 };
 
 struct Table : ObjectInstance {
-    glm::vec4 foodPosition {};
+    Physics::InteractiveCollider* interact;
     Food* food = nullptr;
-
-    explicit Table(ObjectInstance const &object, glm::vec4 foodPosition);
+    explicit Table(ObjectInstance const &object);
+    void PutFood(Food* food);
 };
 
 struct Customer : ObjectInstance {

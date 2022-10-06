@@ -49,11 +49,23 @@ void Table::PutFood(Food* food) {
     this->food = food;
     food->position = *interact->center;
     food->position.y += ((Physics::ColliderSphere*)food->collider)->radius * 2.0f;
+
+    food->interact->active = false;
+    interact->active = false;
+}
+
+void Table::Proc(float time, float delta) {
+    if (food != nullptr && food->remaining <= 0.0f) {
+        interact->active = true;
+        sceneReference->virtualScene.erase(food->name);
+        delete food;
+        food = nullptr;
+    }
 }
 
 Customer::Customer(const ObjectInstance &object, Table* tableReference) : ObjectInstance(object) {
     this->tableReference = tableReference;
-    this->spawnTimer = 5.0f + (float)(rand() % 30);
+    this->spawnTimer = 0.0f;//5.0f + (float)(rand() % 30);
     this->initialRotation = rotation.y;
 }
 
@@ -73,11 +85,21 @@ void Customer::Proc(float time, float delta) {
     if (collider != nullptr) {
         collider->active = isBuying;
     }
-    if (isBuying && tableReference->food != nullptr) {
+
+    if (!isBuying) return;
+
+    if (tableReference->food != nullptr) {
         // Eat food yum
         tableReference->food->remaining -= delta;
+        amountEaten += delta;
         // Be happy
         auto t = (float) fmod(time, 1.0f);
         rotation.y = initialRotation + lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);
+        return;
+    } else if (amountEaten > 0.0f) {
+        // Done eating
+        isBuying = false;
+        // TODO ADD PAYMENT
+        // TODO ADD CUSTOMER RESET
     }
 }

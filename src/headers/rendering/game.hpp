@@ -21,11 +21,14 @@ struct Table : ObjectInstance {
     Food* food = nullptr;
     explicit Table(ObjectInstance const &object);
     void PutFood(Food* food);
+
+    void Proc(float, float) override;
 };
 
 struct Customer : ObjectInstance {
     float spawnTimer;
     bool isBuying = false;
+    float amountEaten = 0.0f;
     float initialRotation;
 
     Table* tableReference;

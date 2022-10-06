@@ -455,6 +455,7 @@ void Scene::addToScene(ObjectInstance* object, bool addBoxCollider, float boundi
     }
 
     virtualScene[object->name] = object;
+    object->sceneReference = this;
 }
 
 void Scene::addToScene(Food* food) {

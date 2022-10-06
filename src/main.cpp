@@ -32,7 +32,7 @@
 // Headers locais, definidos na pasta "include/"
 #include "game.hpp"
 
-int main(int argc, char *argv[]) {
+int main() {
 	// Inicializamos a biblioteca GLFW, utilizada para criar uma janela do
 	// sistema operacional, onde poderemos renderizar com OpenGL.
 	int success = glfwInit();
@@ -65,14 +65,14 @@ int main(int argc, char *argv[]) {
 	// Criamos uma janela do sistema operacional, com 800 colunas e 600 linhas
 	// de pixels, e com título "INF01047 ...".
 	GLFWwindow *window;
-	window = glfwCreateWindow(mode->width, mode->height, "INF01047 - Seu Cartao - Seu Nome", nullptr, nullptr);
+	window = glfwCreateWindow(mode->width, mode->height, "INF01047 - Penguin Cafe - Trabalho Final", nullptr, nullptr);
 	if (!window) {
 		glfwTerminate();
 		fprintf(stderr, "ERROR: glfwCreateWindow() failed.\n");
 		std::exit(EXIT_FAILURE);
 	}
 
-	// Definimos a função de callback que será chamada sempre que o usuário
+    // Definimos a função de callback que será chamada sempre que o usuário
 	// pressionar alguma tecla do teclado ...
 	glfwSetKeyCallback(window, KeyCallback);
 	// ... ou clicar os botões do mouse ...
@@ -94,7 +94,9 @@ int main(int argc, char *argv[]) {
 	// redimensionada, por consequência alterando o tamanho do "framebuffer"
 	// (região de memória onde são armazenados os pixels da imagem).
 	glfwSetFramebufferSizeCallback(window, FramebufferSizeCallback);
-	FramebufferSizeCallback(window, mode->width, mode->height); // Forçamos a chamada do callback acima, para definir g_ScreenRatio.
+    int realWidht, realHeight;
+    glfwGetFramebufferSize(window, &realWidht, &realHeight);
+    FramebufferSizeCallback(window, realWidht, realHeight);
 	glfwGetCursorPos(window, &g_LastCursorPosX, &g_LastCursorPosY);
 
 	// Imprimimos no terminal informações sobre a GPU do sistema
@@ -104,7 +106,6 @@ int main(int argc, char *argv[]) {
 	const GLubyte *glslversion = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 	printf("GPU: %s, %s, OpenGL %s, GLSL %s\n", vendor, renderer, glversion, glslversion);
-
 
 	// Inicializamos o código para renderização de texto.
 	TextRendering_Init();
@@ -124,8 +125,9 @@ int main(int argc, char *argv[]) {
 	glFrontFace(GL_CCW);
 
     auto game = new Game();
-    auto prevFrameTime = (float) glfwGetTime();
 
+    glfwSetTime(0);
+    auto prevFrameTime = (float) glfwGetTime();
 	// Ficamos em loop, renderizando, até que o usuário feche a janela
 	while (!glfwWindowShouldClose(window)) {
         // Compute frame time
@@ -137,19 +139,8 @@ int main(int argc, char *argv[]) {
         // Render Scene
         game->scene->Render(frameTime, delta);
 
-		// O framebuffer onde OpenGL executa as operações de renderização não
-		// é o mesmo que está sendo mostrado para o usuário, caso contrário
-		// seria possível ver artefatos conhecidos como "screen tearing". A
-		// chamada abaixo faz a troca dos buffers, mostrando para o usuário
-		// tudo que foi renderizado pelas funções acima.
-		// Veja o link: Veja o link: https://en.wikipedia.org/w/index.php?title=Multiple_buffering&oldid=793452829#Double_buffering_in_computer_graphics
         TextRendering_ShowFramesPerSecond(window);
 		glfwSwapBuffers(window);
-
-		// Verificamos com o sistema operacional se houve alguma interação do
-		// usuário (teclado, mouse, ...). Caso positivo, as funções de callback
-		// definidas anteriormente usando glfwSet*Callback() serão chamadas
-		// pela biblioteca GLFW.
 		glfwPollEvents();
 
         prevFrameTime = frameTime;

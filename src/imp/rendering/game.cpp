@@ -3,8 +3,8 @@
 // Cartão: 00303992
 //
 #include "rendering.hpp"
-#include "rendering/game.hpp"
 #include "matrices.h"
+#include "global.hpp"
 
 Food::Food(const ObjectInstance &object, float radius) : ObjectInstance(object) {
     collider = new Physics::ColliderSphere(&position, radius);
@@ -51,9 +51,10 @@ void Table::PutFood(Food* food) {
     food->position.y += ((Physics::ColliderSphere*)food->collider)->radius * 2.0f;
 }
 
-Customer::Customer(const ObjectInstance &object, const char *tableName) : ObjectInstance(object) {
-    this->tableName = tableName;
+Customer::Customer(const ObjectInstance &object, Table* tableReference) : ObjectInstance(object) {
+    this->tableReference = tableReference;
     this->spawnTimer = 5.0f + (float)(rand() % 30);
+    this->initialRotation = rotation.y;
 }
 
 void Customer::Draw() {
@@ -62,10 +63,21 @@ void Customer::Draw() {
     }
 }
 
+float lerp(float a, float b, float t, bool reverse) {
+    if (reverse) t = 1 - t;
+    return a + t * (b - a);
+}
+
 void Customer::Proc(float time, float delta) {
-    // TODO IMPLEMENT CUSTOMER LOGIC
     isBuying = time > spawnTimer;
     if (collider != nullptr) {
         collider->active = isBuying;
+    }
+    if (isBuying && tableReference->food != nullptr) {
+        // Eat food yum
+        tableReference->food->remaining -= delta;
+        // Be happy
+        auto t = (float) fmod(time, 1.0f);
+        rotation.y = initialRotation + lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);
     }
 }

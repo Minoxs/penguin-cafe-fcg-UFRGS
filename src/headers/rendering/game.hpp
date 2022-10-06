@@ -9,6 +9,8 @@
 #include "rendering.hpp"
 
 struct Food : ObjectInstance {
+    float remaining = 100.0f;
+
     Physics::InteractiveCollider* interact;
     explicit Food(ObjectInstance const &object, float radius);
     void TryPutInTable();
@@ -22,11 +24,13 @@ struct Table : ObjectInstance {
 };
 
 struct Customer : ObjectInstance {
-    const char* tableName;
     float spawnTimer;
     bool isBuying = false;
+    float initialRotation;
 
-    explicit Customer(ObjectInstance const &object, const char* tableName);
+    Table* tableReference;
+
+    explicit Customer(ObjectInstance const &object, Table* tableReference);
 
     void Proc(float time, float delta) override;
     void Draw() override;

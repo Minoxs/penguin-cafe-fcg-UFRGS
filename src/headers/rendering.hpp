@@ -5,6 +5,7 @@
 #ifndef PENGUINCAFE_RENDERING_SRC_HEADERS
 #define PENGUINCAFE_RENDERING_SRC_HEADERS
 
+struct Scene;
 struct ObjectInstance;
 
 #include "rendering/object.hpp"

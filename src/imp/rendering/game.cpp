@@ -6,21 +6,28 @@
 #include "rendering.hpp"
 #include "matrices.h"
 #include "global.hpp"
-#include "rendering/game.hpp"
 
 InteractiveObject::InteractiveObject(const ObjectInstance &object) : ObjectInstance(object) {
 
 }
 
-Food::Food(const ObjectInstance &object, float radius) : InteractiveObject(object) {
-    collider = new Physics::ColliderSphere(&position, radius);
+int f_FoodID = 0;
+
+Food::Food(const ObjectInstance &object, float radius, float value) : InteractiveObject(object) {
+    name.append(std::to_string(f_FoodID));
+    f_FoodID += 1;
+    collider = new Physics::ColliderSphere(
+            &position,
+            radius
+    );
     interact = new Physics::InteractiveCollider(
             name,
             this,
             Physics::FOOD,
             &position,
-            1.5f * radius
-   );
+            radius
+    );
+    foodValue = value;
 }
 
 bool Food::TryPutInTable() {
@@ -32,7 +39,10 @@ bool Food::TryPutInTable() {
 }
 
 Food::~Food() {
-    sceneReference->virtualScene.erase(name);
+    if (sceneReference != nullptr) {
+        sceneReference->foodCount -= 1;
+        sceneReference->virtualScene.erase(name);
+    }
     delete collider;
     delete interact;
 }

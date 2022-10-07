@@ -2,16 +2,12 @@
 // Created by Nicolle on 9/5/2022.
 //
 
-#include <stdexcept>
-#include "rendering.hpp"
 #include "global.hpp"
 #include "player.hpp"
 
 #include "glad/glad.h"
 #include "matrices.h"
 #include "glm/gtc/type_ptr.hpp"
-#include "rendering/object.hpp"
-
 
 ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     name = object.name;

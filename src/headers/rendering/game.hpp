@@ -17,8 +17,9 @@ struct InteractiveObject : ObjectInstance {
 struct Food : InteractiveObject {
     float remaining = 100.0f;
     float foodValue = 1.0f;
+    float radius = 1.0f;
 
-    explicit Food(ObjectInstance const &object, float radius);
+    explicit Food(ObjectInstance const &object, float radius, float value);
     ~Food();
 
     bool TryPutInTable();

@@ -19,7 +19,7 @@
 struct ObjectInstance {
     // Name must be unique for each instance
     std::string name;
-    Scene* sceneReference;
+    Scene* sceneReference = nullptr;
 
     // Pointer to object's descriptor of triangles
     // Can be shared between many instances

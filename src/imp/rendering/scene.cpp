@@ -393,29 +393,29 @@ Scene::Scene() {
     baseTea.Ks = {0.70f, 0.90f, 0.70f};
     baseTea.DiffuseTextureID = teaTexture;
 
-    baseApple.name = "exemplar-apple";
-    baseApple.position = glm::vec4(13.42f, 1.85f, -2.0f, 1.0f);
+    baseApple.name = "apple";
+    baseApple.position = glm::vec4(13.42f, 1.85f, -12.0f, 1.0f);
     baseApple.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseApple.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new Food(baseApple, 0.21f));
+    foodCache[baseApple.name] = new Food(baseApple, 0.21f, 3.0f);
 
-    baseCroissant.name = "exemplar-croissant";
-    baseCroissant.position = glm::vec4(13.45f, 1.85f, 3.0f, 1.0f);
+    baseCroissant.name = "croissant";
+    baseCroissant.position = glm::vec4(13.45f, 1.85f, -12.0f, 1.0f);
     baseCroissant.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCroissant.scale = glm::vec4(13.0f, 13.0f, 13.0f, 0.0f);
-    addToScene(new Food(baseCroissant, 0.20f));
+    foodCache[baseCroissant.name] = new Food(baseCroissant, 0.20f, 6.0f);
 
-    baseCake.name = "exemplar-cake";
-    baseCake.position = glm::vec4(13.4f, 1.9f, -7.0f, 1.0f);
+    baseCake.name = "cake";
+    baseCake.position = glm::vec4(13.4f, 1.9f, -12.0f, 1.0f);
     baseCake.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
     baseCake.scale = glm::vec4(10.0f, 10.0f, 10.0f, 0.0f);
-    addToScene(new Food(baseCake, 0.25f));
+    foodCache[baseCake.name] = new Food(baseCake, 0.25f, 20.0f);
 
-    baseTea.name = "exemplar-tea";
-    baseTea.position = glm::vec4(13.42f, 1.9f, 8.0f, 1.0f);
+    baseTea.name = "tea";
+    baseTea.position = glm::vec4(13.42f, 1.9f, -12.0f, 1.0f);
     baseTea.rotation = glm::vec4(0.0f, 90.0f * conversion, 0.0f, 0.0f);
     baseTea.scale = glm::vec4(5.0f, 5.0f, 5.0f, 0.0f);
-    addToScene(new Food(baseTea, 0.35f));
+    foodCache[baseTea.name] = new Food(baseTea, 0.35f, 10.0f);
 
     // Player/Main Penguin
     basePenguin.name = "player";
@@ -465,10 +465,23 @@ void Scene::addToScene(ObjectInstance* object, bool addBoxCollider, float boundi
     object->sceneReference = this;
 }
 
-void Scene::addToScene(Food* food) {
+void Scene::AddFood(const std::string& name) {
+    if (foodCount >= maxFoods) return;
+    auto cache = foodCache[name];
+    if (cache == nullptr) return;
+
+    auto food = new Food(*cache, cache->interact->radius, cache->foodValue);
+
+    foodCount += 1;
     engine->Add(food->interact);
     engine->Add((Physics::ColliderSphere*) food->collider);
     addToScene(food, false);
+
+    int i = maxFoods;
+    while (food->collider->layer->CheckCollision(food->collider) && i > 0) {
+        food->position.z += 2.5f;
+        i--;
+    }
 }
 
 void Scene::addToScene(InteractiveObject* object, bool addBoxCollider, float boundingBoxScale) {

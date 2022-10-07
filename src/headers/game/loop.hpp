@@ -10,13 +10,18 @@
 #include "rendering.hpp"
 
 struct Game {
+    inline static const float rollTime = 10.0f;
+    inline static const std::vector<std::string> foods {
+        "apple",
+        "croissant",
+        "tea",
+        "cake"
+    };
     Scene* scene;
-
-    // Game context
-    //
+    float lastRoll;
 
     Game();
-    void Step();
+    void Step(float time, float delta);
 };
 
 #endif //PENGUINCAFE_LOOP_HEADERS_GAME

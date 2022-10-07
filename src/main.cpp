@@ -137,7 +137,7 @@ int main() {
         float delta = frameTime - prevFrameTime;
 
         // Run a game step
-        game->Step();
+        game->Step(frameTime, delta);
         // Render Scene
         game->scene->Render(frameTime, delta);
 

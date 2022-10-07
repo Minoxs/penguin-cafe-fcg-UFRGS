@@ -90,13 +90,13 @@ void Player::Proc(float time, float delta) {
     cameraPan();
 
     // Delete food on demand
-    if (g_isGPressed && (time - bounceTime) > 0.5f && food != nullptr) {
+    if (g_isGPressed && (time - bounceTime) > 0.25f && food != nullptr) {
         delete food;
         food = nullptr;
     }
 
     // Grab food
-    if (g_isEPressed && (time - bounceTime) > 0.5f) {
+    if (g_isEPressed && (time - bounceTime) > 0.25f) {
         if (food == nullptr) {
             // Check if player is interacting with something
             auto hold = hand->layer->Interacting(hand, Physics::FOOD);

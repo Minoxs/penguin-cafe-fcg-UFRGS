@@ -29,8 +29,8 @@ https://www.crazygames.com/game/penguin-diner
 
 Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moodle.inf.ufrgs.br/mod/assign/view.php?id=112199)
 
-- [ ] Interação em Tempo Real
-- [ ] Objetivo/Lógica não-trivial
+- [X] Interação em Tempo Real
+- [X] Objetivo/Lógica não-trivial
 - [X] Utiliza as matrizes vista em aula
 - [X] Interação com usuário utilizando teclado e mouse
 - [X] Malhas poligonais complexas
@@ -83,7 +83,7 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 - [X] Suportar especularidade
   - [ ] Implementar modelos de iluminação 
 - [X] Definir escopo do jogo
-- [ ] Implementar lógica de jogo
+- [X] Implementar lógica de jogo
 - [X] Implementar colisão
 - [X] Criar cena que será utilizada no jogo
 - [X] Definir quais objetos vamos utilizar

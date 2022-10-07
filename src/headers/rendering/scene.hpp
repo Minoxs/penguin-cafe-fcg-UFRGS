@@ -12,19 +12,23 @@
 #include "physics.hpp"
 
 struct Scene {
+    inline static const int maxFoods = 10;
+
     std::map<std::string, ObjectInstance*> virtualScene {};
+    std::map<std::string, Food*> foodCache {};
+    Physics::Engine* engine;
     Camera* mainCamera;
 
-    Physics::Engine* engine;
+    int foodCount = 0;
 
     Player* player;
     LookAtCamera* lookAtCamera;
 
     explicit Scene();
+    void AddFood(const std::string& name);
 
     void addToScene(ObjectInstance* object, bool addBoxCollider = false, float boundingBoxScale = 1.0f);
     void addToScene(InteractiveObject* object, bool addBoxCollider = false, float boundingBoxScale = 1.0f);
-    void addToScene(Food* food);
 
     void Render(float time, float delta);
 };

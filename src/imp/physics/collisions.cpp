@@ -56,7 +56,9 @@ namespace Physics {
     }
 
     ColliderSphere::~ColliderSphere() {
-        layer->Remove(this);
+        if (layer != nullptr) {
+            layer->Remove(this);
+        }
     }
 
     // Esfera com Esfera
@@ -84,7 +86,9 @@ namespace Physics {
     }
 
     ColliderBox::~ColliderBox() {
-        layer->Remove(this);
+        if (layer != nullptr) {
+            layer->Remove(this);
+        }
     }
 
     // Cubo com Cubo
@@ -128,7 +132,9 @@ namespace Physics {
     }
 
     InteractiveCollider::~InteractiveCollider() {
-        layer->Remove(this);
+        if (layer != nullptr) {
+            layer->Remove(this);
+        }
     }
 
     void Engine::Add(ColliderBox* box) {

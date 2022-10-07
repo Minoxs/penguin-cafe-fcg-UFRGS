@@ -375,6 +375,8 @@ Scene::Scene() {
     // Comidas - Base
     auto appleTriangles = new ObjectTriangles("data/objects/apple.obj");
     ObjectInstance baseApple("", appleTriangles);
+    baseApple.SpecularExponent = 32.0f;
+    baseApple.Ks = {1.0f, 1.0f, 1.0f};
     baseApple.DiffuseTextureID = appleTexture;
 
     auto croissantTriangles = new ObjectTriangles("data/objects/croissant.obj");
@@ -387,6 +389,8 @@ Scene::Scene() {
 
     auto teaTriangles = new ObjectTriangles("data/objects/jug.obj");
     ObjectInstance baseTea("", teaTriangles);
+    baseTea.SpecularExponent = 32.0f;
+    baseTea.Ks = {0.70f, 0.90f, 0.70f};
     baseTea.DiffuseTextureID = teaTexture;
 
     baseApple.name = "exemplar-apple";

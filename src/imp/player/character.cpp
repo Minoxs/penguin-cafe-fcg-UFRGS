@@ -89,6 +89,13 @@ void Player::Proc(float time, float delta) {
     cameraTranslate(delta);
     cameraPan();
 
+    // Delete food on demand
+    if (g_isGPressed && (time - bounceTime) > 0.5f && food != nullptr) {
+        delete food;
+        food = nullptr;
+    }
+
+    // Grab food
     if (g_isEPressed && (time - bounceTime) > 0.5f) {
         if (food == nullptr) {
             // Check if player is interacting with something
@@ -98,14 +105,13 @@ void Player::Proc(float time, float delta) {
                 food = (Food*) hold->referenceObject;
                 food->position.y += food->interact->radius * 1.5f;
                 bounceTime = time;
-                return;
             }
         } else {
-            food->interact->active = true;
-            food->TryPutInTable();
-            food = nullptr;
+            // Only drop food on tables
+            if (food->TryPutInTable()) {
+                food = nullptr;
+            }
             bounceTime = time;
-            return;
         }
 
         // Check if trying to get money from customer

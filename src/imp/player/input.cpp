@@ -35,6 +35,7 @@ bool g_isSPressed = false;
 bool g_isAPressed = false;
 bool g_isDPressed = false;
 bool g_isEPressed = false;
+bool g_isGPressed = false;
 bool g_isKPressed = false;
 
 bool g_is0Pressed = false;
@@ -214,6 +215,10 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mod)
 
         case GLFW_KEY_E:
             g_isEPressed = (action != GLFW_RELEASE);
+            return;
+
+        case GLFW_KEY_G:
+            g_isGPressed = (action != GLFW_RELEASE);
             return;
 
 		case GLFW_KEY_LEFT_ALT:

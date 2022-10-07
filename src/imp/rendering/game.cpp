@@ -23,12 +23,12 @@ Food::Food(const ObjectInstance &object, float radius) : InteractiveObject(objec
    );
 }
 
-void Food::TryPutInTable() {
+bool Food::TryPutInTable() {
     auto coll = interact->layer->Interacting(this->interact, Physics::TABLE);
-    if (coll == nullptr) return;
+    if (coll == nullptr) return false;
 
     auto table = (Table*) coll->referenceObject;
-    table->PutFood(this);
+    return table->PutFood(this);
 }
 
 Food::~Food() {
@@ -57,13 +57,16 @@ Table::Table(ObjectInstance const &object) : InteractiveObject(object) {
    );
 }
 
-void Table::PutFood(Food* food) {
+bool Table::PutFood(Food* food) {
+    if (this->food != nullptr) return false;
+
     this->food = food;
     food->position = *interact->center;
     food->position.y += ((Physics::ColliderSphere*)food->collider)->radius * 2.0f;
 
     food->interact->active = false;
     interact->active = false;
+    return true;
 }
 
 void Table::Proc(float time, float delta) {

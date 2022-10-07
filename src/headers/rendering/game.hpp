@@ -21,22 +21,22 @@ struct Food : InteractiveObject {
     explicit Food(ObjectInstance const &object, float radius);
     ~Food();
 
-    void TryPutInTable();
+    bool TryPutInTable();
 };
 
 struct Table : InteractiveObject {
     Food* food = nullptr;
 
     explicit Table(ObjectInstance const &object);
-    
-    void PutFood(Food* food);
+    bool PutFood(Food* food);
+
     void Proc(float, float) override;
 };
 
 struct Customer : InteractiveObject {
     inline static const float SpawnDelay = 5.0f;
     float initialRotation;
-    glm::vec4 customerFaceDirection;
+    glm::vec4 customerFaceDirection {};
 
     float spawnTimer;
     bool isBuying = false;

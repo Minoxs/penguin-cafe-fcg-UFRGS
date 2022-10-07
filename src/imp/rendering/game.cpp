@@ -31,11 +31,10 @@ void Food::TryPutInTable() {
     table->PutFood(this);
 }
 
-void Food::Clean() {
+Food::~Food() {
     sceneReference->virtualScene.erase(name);
-    collider->Delete();
-    interact->Delete();
-    delete this;
+    delete collider;
+    delete interact;
 }
 
 Table::Table(ObjectInstance const &object) : InteractiveObject(object) {
@@ -69,7 +68,7 @@ void Table::PutFood(Food* food) {
 
 void Table::Proc(float time, float delta) {
     if (food != nullptr && food->remaining <= 0.0f) {
-        food->Clean();
+        delete food;
         food = nullptr;
         interact->active = true;
     }

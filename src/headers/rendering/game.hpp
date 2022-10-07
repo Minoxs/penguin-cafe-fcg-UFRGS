@@ -19,16 +19,17 @@ struct Food : InteractiveObject {
     float foodValue = 1.0f;
 
     explicit Food(ObjectInstance const &object, float radius);
+    ~Food();
+
     void TryPutInTable();
-    void Clean();
 };
 
 struct Table : InteractiveObject {
     Food* food = nullptr;
 
     explicit Table(ObjectInstance const &object);
+    
     void PutFood(Food* food);
-
     void Proc(float, float) override;
 };
 

@@ -55,6 +55,10 @@ namespace Physics {
         this->radius = radius;
     }
 
+    ColliderSphere::~ColliderSphere() {
+        layer->Remove(this);
+    }
+
     // Esfera com Esfera
     bool ColliderSphere::Collide(ColliderSphere* B) {
         return (norm(*this->center - *B->center) <= (this->radius + B->radius)) != (inverted != B->inverted);
@@ -63,11 +67,6 @@ namespace Physics {
     // Esfera com Cubo
     bool ColliderSphere::Collide(ColliderBox* B) {
         return collideSphereBox(this, B);
-    }
-
-    void ColliderSphere::Delete() {
-        layer->Remove(this);
-        delete this;
     }
 
     ColliderBox::ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax, glm::vec4 scale) : Collider(center) {
@@ -82,6 +81,10 @@ namespace Physics {
 
         this->bboxMin = matTrans * matScale * auxBboxMin;
         this->bboxMax = matTrans * matScale * auxBboxMax;
+    }
+
+    ColliderBox::~ColliderBox() {
+        layer->Remove(this);
     }
 
     // Cubo com Cubo
@@ -118,20 +121,14 @@ namespace Physics {
         return true;
     }
 
-    void ColliderBox::Delete() {
-        layer->Remove(this);
-        delete this;
-    }
-
     InteractiveCollider::InteractiveCollider(std::string referenceName, ObjectInstance* referenceObject, InteractiveType type, glm::vec4* center, float radius) : ColliderSphere(center, radius)  {
         this->referenceName = std::move(referenceName);
         this->referenceObject = referenceObject;
         this->type = type;
     }
 
-    void InteractiveCollider::Delete() {
+    InteractiveCollider::~InteractiveCollider() {
         layer->Remove(this);
-        delete this;
     }
 
     void Engine::Add(ColliderBox* box) {

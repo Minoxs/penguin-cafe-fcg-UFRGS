@@ -40,9 +40,6 @@ namespace Physics {
         // Always returns false in the base class
         virtual bool Collide(ColliderBox* B);
         virtual bool Collide(ColliderSphere* B);
-
-        // Functions to delete object
-        virtual void Delete() = 0;
     };
 
     struct ColliderSphere : Collider {
@@ -50,10 +47,10 @@ namespace Physics {
         bool inverted = false;
 
         ColliderSphere(glm::vec4* center, float radius);
+        ~ColliderSphere();
+
         bool Collide(ColliderBox* B) override;
         bool Collide(ColliderSphere* B) override;
-
-        void Delete() override;
     };
 
     struct ColliderBox : Collider {
@@ -61,12 +58,11 @@ namespace Physics {
         glm::vec3 bboxMax {};
 
         ColliderBox(glm::vec4* center, glm::vec3 bboxMin, glm::vec3 bboxMax, glm::vec4 scale);
+        ~ColliderBox();
 
         bool TryMove(glm::vec4 offset, bool checkCollision) override;
         bool Collide(ColliderBox* B) override;
         bool Collide(ColliderSphere* B) override;
-
-        void Delete() override;
     };
 
     enum InteractiveType {
@@ -83,8 +79,7 @@ namespace Physics {
        InteractiveType type;
 
         explicit InteractiveCollider(std::string referenceName, ObjectInstance* referenceObject, InteractiveType type, glm::vec4* center, float radius);
-
-        void Delete() override;
+        ~InteractiveCollider();
     };
 
     struct Engine {

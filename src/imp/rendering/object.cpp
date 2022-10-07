@@ -81,7 +81,7 @@ void ObjectInstance::Draw() {
 	glBindVertexArray(0);
 }
 
-#ifndef NDEBUG
+#ifdef DEBUG
 #include <fstream>
 DebugObject::DebugObject(const ObjectInstance &object, const char* name) : ObjectInstance(object) {
     this->name = name;
@@ -143,7 +143,7 @@ void DebugObject::Proc(float time, float delta) {
         writing = false;
     }
 }
-#endif
+#endif // DEBUG
 
 BezierObject::BezierObject(const ObjectInstance &object, BezierCurve *curve) : ObjectInstance(object) {
     this->curve = curve;

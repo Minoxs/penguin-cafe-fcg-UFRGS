@@ -72,7 +72,7 @@ struct BezierObject : public ObjectInstance {
     void Proc(float time, float delta) override;
 };
 
-#ifndef NDEBUG
+#ifdef DEBUG
 struct DebugObject : public ObjectInstance {
     const char* name;
     int positionIndex;
@@ -83,7 +83,7 @@ struct DebugObject : public ObjectInstance {
     void writePosition();
     void Proc(float time, float delta) override;
 };
-#endif // NDEBUG
+#endif // DEBUG
 
 void PrintObjModelInfo(ObjectModel* model); // Função para debugging
 

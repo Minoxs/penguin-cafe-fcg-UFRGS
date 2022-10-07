@@ -85,10 +85,6 @@ void Player::cameraPan() {
     }
 }
 
-// TODO ATENDER PENGUIN APERTANDO E
-// TODO PEGAR COMIDA NA COZINHA
-// TODO LEVAR COMIDA ATE PENGUIN
-// TODO GANHAR DINHEIRO
 void Player::Proc(float time, float delta) {
     cameraTranslate(delta);
     cameraPan();

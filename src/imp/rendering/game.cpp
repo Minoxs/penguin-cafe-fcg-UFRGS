@@ -2,6 +2,7 @@
 // Guilherme Wagner Correa
 // Cartão: 00303992
 //
+#include <algorithm>
 #include "rendering.hpp"
 #include "matrices.h"
 #include "global.hpp"
@@ -96,7 +97,7 @@ Customer::Customer(const ObjectInstance &object, Table* tableReference) : Intera
 float Customer::GetMoney() {
     if (!waitingForPayment) return 0;
 
-    auto money = amountEaten;
+    auto money = amountEaten / 100.0f;
     isBuying = false;
     waitingForPayment = false;
     interact->active = false;
@@ -141,8 +142,9 @@ void Customer::Proc(float time, float delta) {
 
     if (tableReference->food != nullptr) {
         // Eat food yum
-        tableReference->food->remaining -= delta * 50.0f; // TODO UNDO THIS
-        amountEaten += delta * tableReference->food->foodValue;
+        auto foodCap = std::clamp(delta * 2.5f, 0.0f, tableReference->food->remaining);
+        amountEaten += foodCap * tableReference->food->foodValue;
+        tableReference->food->remaining -= foodCap;
         // Be happy
         auto t = (float) fmod(time, 1.0f);
         rotation.y = initialRotation + lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);

@@ -322,7 +322,7 @@ Scene::Scene() {
     addToScene(table, true);
 
     basePenguin.name = "npc10";
-    basePenguin.position = glm::vec4(-3.0, 1.8f, -5.0f, -1.0f);
+    basePenguin.position = glm::vec4(-3.0, 1.8f, -5.0f, 1.0f);
     basePenguin.rotation = glm::vec4(0.0f * conversion, 270.0f * conversion, 0.0f * conversion, 0.0f);
     addToScene(new Customer(basePenguin, table), true, 0.85f);
 

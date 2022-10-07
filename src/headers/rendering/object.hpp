@@ -77,19 +77,6 @@ struct BezierObject : public ObjectInstance {
     void Proc(float time, float delta) override;
 };
 
-#ifdef DEBUG
-struct DebugObject : public ObjectInstance {
-    const char* name;
-    int positionIndex;
-    bool writing = false;
-
-    explicit DebugObject(const ObjectInstance &object, const char* name);
-
-    void writePosition();
-    void Proc(float time, float delta) override;
-};
-#endif // DEBUG
-
 void PrintObjModelInfo(ObjectModel* model); // Função para debugging
 
 #endif //PENGUINCAFE_OBJECT_SRC_RENDERING

@@ -25,16 +25,6 @@ Scene::Scene() {
 
     // Load all textures and sends to GPU once
     GLint blueTexture = LoadTexture("data/textures/blue.png"); // This is used as the default texture, if none is defined
-
-    #ifdef DEBUG
-    GLint woodTexture = LoadTexture("data/textures/wood.jpg");
-    ObjectInstance debugObjectInstance("debug_object", new ObjectTriangles("data/objects/cube.obj"));
-    debugObjectInstance.DiffuseTextureID = woodTexture;
-    debugObjectInstance.scale = glm::vec4(1.5f, 2.0f, 5.0f, 0.0f);
-    auto debugObject = new DebugObject(debugObjectInstance, "CubePosition.txt");
-    addToScene(debugObject, true);
-    #endif // DEBUG
-
     GLint outsideScenario = LoadTexture("data/textures/outside.jpg");
     GLint penguinTexture = LoadTexture("data/textures/penguin_player.png");
     GLint chefTexture = LoadTexture("data/textures/penguin_chef.png");

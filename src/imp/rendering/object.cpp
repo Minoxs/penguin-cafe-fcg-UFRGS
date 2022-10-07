@@ -15,6 +15,7 @@ ObjectInstance::ObjectInstance(const ObjectInstance &object) {
     rotation = object.rotation;
     scale = object.scale;
     triangles = object.triangles;
+    ShadingType = object.ShadingType;
     DiffuseTextureID = object.DiffuseTextureID;
     Ks = object.Ks;
     SpecularExponent = object.SpecularExponent;
@@ -49,6 +50,9 @@ void ObjectInstance::Draw() {
 
 	// Send model matrix
 	glUniformMatrix4fv(gpu_ModelUniform, 1, GL_FALSE, glm::value_ptr(model));
+
+    // Send shading type
+    glUniform1i(gpu_ShadingIDUniform, ShadingType);
 
     // Send diffuse texture ID
 	glUniform1i(gpu_TextureDiffuseUniform, DiffuseTextureID);

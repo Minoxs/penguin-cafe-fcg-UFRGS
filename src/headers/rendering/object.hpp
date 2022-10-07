@@ -14,6 +14,9 @@
 #include "glm/ext/matrix_float4x4.hpp"
 #include "physics/collisions.hpp"
 
+#define PHONG   0
+#define GOURAUD 1
+
 // Guarda os dados de uma instância de um objeto da cena
 // Pode-se utilizar o mesmo objeto múltiplas vezes
 struct ObjectInstance {
@@ -30,6 +33,8 @@ struct ObjectInstance {
     glm::vec4 rotation{};
     glm::vec4 scale{1.0f, 1.0f, 1.0f, 0.0f};
 
+    // Shading Type
+    GLint ShadingType = PHONG;
     // Variables to control textures
     GLint DiffuseTextureID = 0;
     glm::vec3 Ks {0.0f, 0.0f, 0.0f};

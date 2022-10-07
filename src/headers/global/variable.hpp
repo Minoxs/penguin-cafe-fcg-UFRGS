@@ -30,6 +30,7 @@ extern GLuint g_NumLoadedTextures;
 extern GLuint gpu_VertexShaderID;
 extern GLuint gpu_FragmentShaderID;
 extern GLuint gpu_ProgramID;
+extern GLint gpu_ShadingIDUniform;
 extern GLint gpu_ModelUniform;
 extern GLint gpu_ViewUniform;
 extern GLint gpu_ProjectionUniform;

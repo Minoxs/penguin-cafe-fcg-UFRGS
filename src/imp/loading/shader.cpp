@@ -120,7 +120,8 @@ void LoadGenericShaders() {
 	// Buscamos o endereço das variáveis definidas dentro do Vertex Shader.
 	// Utilizaremos estas variáveis para enviar dados para a placa de vídeo
 	// (GPU)! Veja arquivo "shader_vertex.glsl" e "shader_fragment.glsl".
-	gpu_ModelUniform = glGetUniformLocation(gpu_ProgramID, "model"); // Variável da matriz "model"
+    gpu_ShadingIDUniform = glGetUniformLocation(gpu_ProgramID, "shading_id");
+    gpu_ModelUniform = glGetUniformLocation(gpu_ProgramID, "model"); // Variável da matriz "model"
 	gpu_ViewUniform = glGetUniformLocation(gpu_ProgramID, "view"); // Variável da matriz "view" em shader_vertex.glsl
 	gpu_ProjectionUniform = glGetUniformLocation(gpu_ProgramID, "projection"); // Variável da matriz "projection" em shader_vertex.glsl
     gpu_TextureDiffuseUniform = glGetUniformLocation(gpu_ProgramID, "TextureDiffuse");

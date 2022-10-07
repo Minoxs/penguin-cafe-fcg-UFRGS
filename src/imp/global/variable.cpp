@@ -23,6 +23,7 @@ GLuint g_NumLoadedTextures = 0;
 GLuint gpu_VertexShaderID;
 GLuint gpu_FragmentShaderID;
 GLuint gpu_ProgramID = 0;
+GLint gpu_ShadingIDUniform;
 GLint gpu_ModelUniform;
 GLint gpu_ViewUniform;
 GLint gpu_ProjectionUniform;

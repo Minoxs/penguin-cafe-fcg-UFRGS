@@ -49,7 +49,7 @@ Mais detalhes dos requisitos podem ser vistos no [Moodle da cadeira](https://moo
 - [ ] Modelos de iluminação
   - [X] Lambert **E** Blinn-Phong
   - Interpolação de Iluminação
-    - [ ] Gouraud
+    - [X] Gouraud
     - [X] Phong
 - [X] Mapeamento de Texturas
   - [X] Dois objetos 
@@ -81,7 +81,7 @@ basta modificar os arquivos que estão na pasta e o resto da compilação deve f
 - [ ] Implementar primeira pessoa
   - [ ] Talvez precise de um shader específico 
 - [X] Suportar especularidade
-  - [ ] Implementar modelos de iluminação 
+  - [X] Implementar modelos de iluminação 
 - [X] Definir escopo do jogo
 - [X] Implementar lógica de jogo
 - [X] Implementar colisão

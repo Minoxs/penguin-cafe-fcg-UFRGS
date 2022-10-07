@@ -161,6 +161,7 @@ Scene::Scene() {
     engine->Add(IglooCollider);
 
     // Kitchen
+    baseCube.ShadingType = GOURAUD;
     baseCube.name = "counter-top";
     baseCube.position = glm::vec4(13.44f, -0.58f, 0.6f, 1.0f);
     baseCube.rotation = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);

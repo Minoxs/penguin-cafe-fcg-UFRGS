@@ -32,7 +32,7 @@ struct ObjectInstance {
 
     // Variables to control textures
     GLint DiffuseTextureID = 0;
-    glm::vec3 Ks{};
+    glm::vec3 Ks {0.0f, 0.0f, 0.0f};
     float SpecularExponent = 1.0f;
 
     // Physics stuff

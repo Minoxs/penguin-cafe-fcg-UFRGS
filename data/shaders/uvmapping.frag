@@ -65,22 +65,22 @@ void main()
     // Vetor que define o sentido da fonte de luz em relação ao ponto atual.
     vec4 l = normalize(kitchenLightPos - p);
     // Vetor que define o sentido da reflexão espetacular ideal
-    vec4 r = -normalize(reflect(l, n));
+    vec4 h = normalize(v + l);
 
     // Always using a little bit of Kd0 as if it was ambient light
-    vec3 firstLight = Kd0 * max(0.02, dot(n,l)) + Ks * pow(max(0, dot(r, v)), SpecularExponent);
+    vec3 firstLight = Kd0 * max(0.02, dot(n,l)) + Ks * pow(max(0, dot(n, h)), 100.0f - SpecularExponent);
     firstLight *= Ikitchen;
 
     l = normalize(baladaLightPos - p);
-    r = -normalize(reflect(l, n));
-    vec3 secondLight = Kd0 * max(0.02, dot(n,l)) + Ks * pow(max(0, dot(r, v)), SpecularExponent);
+    h = normalize(v + l);
+    vec3 secondLight = Kd0 * max(0.02, dot(n,l)) + Ks * pow(max(0, dot(n, h)), 100.0f - SpecularExponent);
     secondLight *= Ibalada;
 
     // Taking the average of both lights to keep things a little dimmer
     color.rgb = (firstLight + secondLight)/2;
 
     // Transparency -- Must be 1
-    color.a = 1;
+    color.a = 1.0f;
 
     // Cor final com correção gamma, considerando monitor sRGB.
     // Veja https://en.wikipedia.org/w/index.php?title=Gamma_correction&oldid=751281772#Windows.2C_Mac.2C_sRGB_and_TV.2Fvideo_standard_gammas

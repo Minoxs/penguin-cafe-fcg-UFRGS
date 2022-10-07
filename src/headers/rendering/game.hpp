@@ -8,27 +8,33 @@
 
 #include "rendering.hpp"
 
-struct Food : ObjectInstance {
+
+struct InteractiveObject : ObjectInstance {
+    Physics::InteractiveCollider* interact = nullptr;
+    explicit InteractiveObject(ObjectInstance const &object);
+};
+
+struct Food : InteractiveObject {
     float remaining = 100.0f;
 
-    Physics::InteractiveCollider* interact;
     explicit Food(ObjectInstance const &object, float radius);
     void TryPutInTable();
     void Clean();
 };
 
-struct Table : ObjectInstance {
-    Physics::InteractiveCollider* interact;
+struct Table : InteractiveObject {
     Food* food = nullptr;
+
     explicit Table(ObjectInstance const &object);
     void PutFood(Food* food);
 
     void Proc(float, float) override;
 };
 
-struct Customer : ObjectInstance {
+struct Customer : InteractiveObject {
     inline static const float SpawnDelay = 5.0f;
     float initialRotation;
+    glm::vec4 customerFaceDirection;
 
     float spawnTimer;
     bool isBuying = false;

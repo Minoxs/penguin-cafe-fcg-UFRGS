@@ -7,6 +7,8 @@
 
 #include <matrices.h>
 #include "glm/gtc/type_ptr.hpp"
+#include "rendering/scene.hpp"
+
 #include <global.hpp>
 
 #include <loading.hpp>
@@ -229,7 +231,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-15.0f, -0.4f, 14.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc01";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 16.0f, 1.0f);
@@ -240,7 +242,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-15.0f, -0.4f, 6.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc02";
     basePenguin.position = glm::vec4(-15.0, 1.8f, 8.0f, 1.0f);
@@ -256,7 +258,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-15.0f, -0.4f, -1.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc04";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -3.0f, 1.0f);
@@ -267,7 +269,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-15.0f, -0.4f, -8.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc05";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -6.0f, 1.0f);
@@ -278,7 +280,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-15.0f, -0.4f, -16.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc06";
     basePenguin.position = glm::vec4(-15.0, 1.8f, -18.0f, 1.0f);
@@ -289,7 +291,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-3.0f, -0.4f, 14.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc07";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 16.0f, 1.0f);
@@ -300,7 +302,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-3.0f, -0.4f, 5.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc08";
     basePenguin.position = glm::vec4(-3.0, 1.8f, 7.0f, 1.0f);
@@ -316,7 +318,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-3.0f, -0.4f, -3.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc10";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -5.0f, -1.0f);
@@ -327,7 +329,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-3.0f, -0.4f, -11.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc11";
     basePenguin.position = glm::vec4(-3.0, 1.8f, -9.0f, 1.0f);
@@ -343,7 +345,7 @@ Scene::Scene() {
     baseTable.position = glm::vec4(-3.0f, -0.4f, -21.0f , 1.0f);
     baseTable.scale = glm::vec4(3.0f, 3.0f, 3.0f, 0.0f);
     table = new Table(baseTable);
-    addToScene(table);
+    addToScene(table, true);
 
     basePenguin.name = "npc13";
     basePenguin.position = glm::vec4(-3.0f, 1.8f, -23.0f, 1.0f);
@@ -464,9 +466,11 @@ void Scene::addToScene(Food* food) {
     addToScene(food, false);
 }
 
-void Scene::addToScene(Table* table) {
-    engine->Add(table->interact);
-    addToScene(table, true);
+void Scene::addToScene(InteractiveObject* object, bool addBoxCollider, float boundingBoxScale) {
+    if (object->interact != nullptr) {
+        engine->Add(object->interact);
+    }
+    addToScene((ObjectInstance*) object, addBoxCollider, boundingBoxScale);
 }
 
 void Scene::Render(float time, float delta) {

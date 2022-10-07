@@ -23,8 +23,8 @@ struct Scene {
     explicit Scene();
 
     void addToScene(ObjectInstance* object, bool addBoxCollider = false, float boundingBoxScale = 1.0f);
+    void addToScene(InteractiveObject* object, bool addBoxCollider = false, float boundingBoxScale = 1.0f);
     void addToScene(Food* food);
-    void addToScene(Table* table);
 
     void Render(float time, float delta);
 };

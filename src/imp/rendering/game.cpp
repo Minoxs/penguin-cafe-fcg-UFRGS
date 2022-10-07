@@ -5,8 +5,13 @@
 #include "rendering.hpp"
 #include "matrices.h"
 #include "global.hpp"
+#include "rendering/game.hpp"
 
-Food::Food(const ObjectInstance &object, float radius) : ObjectInstance(object) {
+InteractiveObject::InteractiveObject(const ObjectInstance &object) : ObjectInstance(object) {
+
+}
+
+Food::Food(const ObjectInstance &object, float radius) : InteractiveObject(object) {
     collider = new Physics::ColliderSphere(&position, radius);
     interact = new Physics::InteractiveCollider(
             name,
@@ -32,7 +37,7 @@ void Food::Clean() {
     delete this;
 }
 
-Table::Table(ObjectInstance const &object) : ObjectInstance(object) {
+Table::Table(ObjectInstance const &object) : InteractiveObject(object) {
     // Calculte food position from bounding box
     auto center = glm::vec4(
             (triangles->bbox_min.x + triangles->bbox_max.x)/2.0f,
@@ -63,16 +68,27 @@ void Table::PutFood(Food* food) {
 
 void Table::Proc(float time, float delta) {
     if (food != nullptr && food->remaining <= 0.0f) {
-        interact->active = true;
         food->Clean();
         food = nullptr;
     }
 }
 
-Customer::Customer(const ObjectInstance &object, Table* tableReference) : ObjectInstance(object) {
+Customer::Customer(const ObjectInstance &object, Table* tableReference) : InteractiveObject(object) {
     this->tableReference = tableReference;
     this->spawnTimer = 0.0f;//5.0f + (float)(rand() % 30);
     this->initialRotation = rotation.y;
+    interact = new Physics::InteractiveCollider(
+            name,
+            this,
+            Physics::CUSTOMER,
+            &position,
+            1.0f
+    );
+    // TODO BE SMART SOME OTHER DAY
+    customerFaceDirection =
+            (90.0f * PI / 180.0f == rotation.y) ?
+            glm::vec4(0.0f, 0.0f, -1.0f, 0.0f) :
+            glm::vec4(0.0f, 0.0f, +1.0f, 0.0f);
 }
 
 void Customer::Draw() {
@@ -96,7 +112,7 @@ void Customer::Proc(float time, float delta) {
 
     if (tableReference->food != nullptr) {
         // Eat food yum
-        tableReference->food->remaining -= delta;
+        tableReference->food->remaining -= delta * 50.0f;
         amountEaten += delta;
         // Be happy
         auto t = (float) fmod(time, 1.0f);
@@ -104,9 +120,24 @@ void Customer::Proc(float time, float delta) {
         return;
     } else if (amountEaten > 0.0f) {
         // Done eating
-        isBuying = false;
-        // TODO ADD PAYMENT
-        spawnTimer = time + Customer::SpawnDelay + (float)(rand() % 30);
-        amountEaten = 0.0f;
+        // Wait for player to get your money
+
+        // Look at player
+        auto player = sceneReference->player;
+
+        // Gambiarra to make customer face player
+        auto playerDirection = (player->position - position)/norm(player->position - position);
+        const auto upVector = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
+        auto side = crossproduct(upVector, customerFaceDirection);
+        auto rotationNeeded = dotproduct(playerDirection, customerFaceDirection);
+        auto left = dotproduct(playerDirection, side) > 0.0f;
+        auto invert = (left) ? -1.0f : 1.0f;
+        rotation.y = initialRotation + (rotationNeeded - 1) * PI / 2 * invert;
+        // it works
+
+//        isBuying = false;
+//        // TODO ADD PAYMENT
+//        spawnTimer = time + Customer::SpawnDelay + (float)(rand() % 30);
+//        amountEaten = 0.0f;
     }
 }

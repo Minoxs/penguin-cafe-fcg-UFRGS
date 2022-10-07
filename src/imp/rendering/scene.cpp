@@ -508,7 +508,7 @@ void Scene::Render(float time, float delta) {
 
     // Pedimos para a GPU utilizar o programa de GPU criado acima (contendo
     // os shaders de vértice e fragmentos).
-    glUseProgram(p_program_id);
+    glUseProgram(gpu_ProgramID);
 
     // Agora computamos a matriz de Projeção.
     glm::mat4 projection;
@@ -542,8 +542,8 @@ void Scene::Render(float time, float delta) {
     glm::mat4 model = Matrix_Identity(); // Transformação identidade de modelagem
     glm::mat4 view = mainCamera->GetViewMatrix();
 
-    glUniformMatrix4fv(p_view_uniform, 1, GL_FALSE, glm::value_ptr(view));
-    glUniformMatrix4fv(p_projection_uniform, 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(gpu_ViewUniform, 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(gpu_ProjectionUniform, 1, GL_FALSE, glm::value_ptr(projection));
 
     for (const std::pair<const std::string, ObjectInstance*> &instance: virtualScene) {
         instance.second->Proc(time, delta);

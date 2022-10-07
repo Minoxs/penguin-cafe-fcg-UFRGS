@@ -27,12 +27,12 @@ extern bool g_ShowInfoText;
 extern GLuint g_NumLoadedTextures;
 
 // Variáveis que definem um programa de GPU (shaders). Veja função LoadGenericShaders().
-extern GLuint p_vertex_shader_id;
-extern GLuint p_fragment_shader_id;
-extern GLuint p_program_id;
-extern GLint p_model_uniform;
-extern GLint p_view_uniform;
-extern GLint p_projection_uniform;
+extern GLuint gpu_VertexShaderID;
+extern GLuint gpu_FragmentShaderID;
+extern GLuint gpu_ProgramID;
+extern GLint gpu_ModelUniform;
+extern GLint gpu_ViewUniform;
+extern GLint gpu_ProjectionUniform;
 
 // Textures in the GPU
 extern GLint gpu_TextureDiffuseUniform;

@@ -107,46 +107,28 @@ GLuint loadFragmentShader(const char *filename) {
 // Função que carrega os shaders de vértices e de fragmentos que serão
 // utilizados para renderização. Veja slides 180-200 do documento Aula_03_Rendering_Pipeline_Grafico.pdf.
 void LoadGenericShaders() {
-	// Note que o caminho para os arquivos "shader_vertex.glsl" e
-	// "shader_fragment.glsl" estão fixados, sendo que assumimos a existência
-	// da seguinte estrutura no sistema de arquivos:
-	//
-	//    + FCG_Lab_01/
-	//    |
-	//    +--+ bin/
-	//    |  |
-	//    |  +--+ Release/  (ou Debug/ ou Linux/)
-	//    |     |
-	//    |     o-- main.exe
-	//    |
-	//    +--+ src/
-	//       |
-	//       o-- shader_vertex.glsl
-	//       |
-	//       o-- shader_fragment.glsl
-	//
-	p_vertex_shader_id = loadVertexShader("./data/shaders/shading.vert");
-	p_fragment_shader_id = loadFragmentShader("./data/shaders/shading.frag");
+    gpu_VertexShaderID = loadVertexShader("./data/shaders/shading.vert");
+    gpu_FragmentShaderID = loadFragmentShader("./data/shaders/shading.frag");
 
 	// Deletamos o programa de GPU anterior, caso ele exista.
-	if (p_program_id != 0)
-		glDeleteProgram(p_program_id);
+	if (gpu_ProgramID != 0)
+		glDeleteProgram(gpu_ProgramID);
 
 	// Criamos um programa de GPU utilizando os shaders carregados acima.
-	p_program_id = CreateGpuProgram(p_vertex_shader_id, p_fragment_shader_id);
+	gpu_ProgramID = CreateGpuProgram(gpu_VertexShaderID, gpu_FragmentShaderID);
 
 	// Buscamos o endereço das variáveis definidas dentro do Vertex Shader.
 	// Utilizaremos estas variáveis para enviar dados para a placa de vídeo
 	// (GPU)! Veja arquivo "shader_vertex.glsl" e "shader_fragment.glsl".
-	p_model_uniform = glGetUniformLocation(p_program_id, "model"); // Variável da matriz "model"
-	p_view_uniform = glGetUniformLocation(p_program_id, "view"); // Variável da matriz "view" em shader_vertex.glsl
-	p_projection_uniform = glGetUniformLocation(p_program_id, "projection"); // Variável da matriz "projection" em shader_vertex.glsl
-    gpu_TextureDiffuseUniform = glGetUniformLocation(p_program_id, "TextureDiffuse");
-    gpu_KsUniform = glGetUniformLocation(p_program_id, "Ks");
-    gpu_SpecularExponentUniform = glGetUniformLocation(p_program_id, "SpecularExponent");
+	gpu_ModelUniform = glGetUniformLocation(gpu_ProgramID, "model"); // Variável da matriz "model"
+	gpu_ViewUniform = glGetUniformLocation(gpu_ProgramID, "view"); // Variável da matriz "view" em shader_vertex.glsl
+	gpu_ProjectionUniform = glGetUniformLocation(gpu_ProgramID, "projection"); // Variável da matriz "projection" em shader_vertex.glsl
+    gpu_TextureDiffuseUniform = glGetUniformLocation(gpu_ProgramID, "TextureDiffuse");
+    gpu_KsUniform = glGetUniformLocation(gpu_ProgramID, "Ks");
+    gpu_SpecularExponentUniform = glGetUniformLocation(gpu_ProgramID, "SpecularExponent");
 
 	// Variáveis em "shader_fragment.glsl" para acesso das imagens de textura
-	glUseProgram(p_program_id);
+	glUseProgram(gpu_ProgramID);
 	glUseProgram(0);
 }
 

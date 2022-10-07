@@ -20,12 +20,12 @@ bool g_ShowInfoText = true;
 GLuint g_NumLoadedTextures = 0;
 
 // Variáveis que definem um programa de GPU (shaders). Veja função LoadGenericShaders().
-GLuint p_vertex_shader_id;
-GLuint p_fragment_shader_id;
-GLuint p_program_id = 0;
-GLint p_model_uniform;
-GLint p_view_uniform;
-GLint p_projection_uniform;
+GLuint gpu_VertexShaderID;
+GLuint gpu_FragmentShaderID;
+GLuint gpu_ProgramID = 0;
+GLint gpu_ModelUniform;
+GLint gpu_ViewUniform;
+GLint gpu_ProjectionUniform;
 GLint gpu_TextureDiffuseUniform;
 GLint gpu_KsUniform;
 GLint gpu_SpecularExponentUniform;

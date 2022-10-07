@@ -48,7 +48,7 @@ void ObjectInstance::Draw() {
                         * Matrix_Scale(scale.x, scale.y, scale.z);
 
 	// Send model matrix
-	glUniformMatrix4fv(p_model_uniform, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(gpu_ModelUniform, 1, GL_FALSE, glm::value_ptr(model));
 
     // Send diffuse texture ID
 	glUniform1i(gpu_TextureDiffuseUniform, DiffuseTextureID);

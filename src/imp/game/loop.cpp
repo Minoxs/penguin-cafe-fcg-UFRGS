@@ -8,9 +8,6 @@
 Game::Game() {
     scene = new Scene();
     Step(0, rollTime);
-    Step(0, rollTime);
-    Step(0, rollTime);
-    Step(0, rollTime);
     lastRoll = 0.0f;
 }
 

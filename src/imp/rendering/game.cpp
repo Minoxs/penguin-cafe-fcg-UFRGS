@@ -89,7 +89,7 @@ void Table::Proc(float time, float delta) {
 
 Customer::Customer(const ObjectInstance &object, Table* tableReference) : InteractiveObject(object) {
     this->tableReference = tableReference;
-    this->spawnTimer = 0.0f;//5.0f + (float)(rand() % 30); // TODO UNDO THIS
+    this->spawnTimer = 5.0f + (float)(rand() % 30);
     this->initialRotation = rotation.y;
     interact = new Physics::InteractiveCollider(
             name,

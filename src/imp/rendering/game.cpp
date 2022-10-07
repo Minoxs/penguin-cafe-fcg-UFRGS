@@ -90,6 +90,7 @@ void Table::Proc(float time, float delta) {
 Customer::Customer(const ObjectInstance &object, Table* tableReference) : InteractiveObject(object) {
     this->tableReference = tableReference;
     this->spawnTimer = 5.0f + (float)(rand() % 30);
+    this->initialHeight = position.y;
     this->initialRotation = rotation.y;
     interact = new Physics::InteractiveCollider(
             name,
@@ -110,12 +111,10 @@ float Customer::GetMoney() {
     if (!waitingForPayment) return 0;
 
     auto money = amountEaten / 100.0f;
-    isBuying = false;
+    isLeaving = true;
     waitingForPayment = false;
     interact->active = false;
-    spawnTimer += Customer::SpawnDelay + (float)(rand() % 30);
     amountEaten = 0.0f;
-    rotation.y = initialRotation;
     return money;
 }
 
@@ -137,6 +136,21 @@ void Customer::Proc(float time, float delta) {
     if (!isBuying) return;
     spawnTimer = time;
 
+    if (isLeaving) {
+        rotation.y += delta * 1.5f;
+        position.y += delta * 4.5f;
+        if (position.y > 10.0f) {
+            spawnTimer += Customer::SpawnDelay + (float)(rand() % 30);
+            rotation.y = initialRotation;
+            position.y = initialHeight;
+            isLeaving = false;
+            isBuying = false;
+        }
+        return;
+    }
+
+    rotation.y = initialRotation;
+
     if (waitingForPayment) {
         // Look at player
         auto player = sceneReference->player;
@@ -148,7 +162,7 @@ void Customer::Proc(float time, float delta) {
         auto rotationNeeded = dotproduct(playerDirection, customerFaceDirection);
         auto left = dotproduct(playerDirection, side) > 0.0f;
         auto invert = (left) ? -1.0f : 1.0f;
-        rotation.y = initialRotation + (rotationNeeded - 1) * PI / 2 * invert;
+        rotation.y += (rotationNeeded - 1) * PI / 2 * invert;
         return;
     }
 
@@ -159,7 +173,7 @@ void Customer::Proc(float time, float delta) {
         tableReference->food->remaining -= foodCap;
         // Be happy
         auto t = (float) fmod(time, 1.0f);
-        rotation.y = initialRotation + lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);
+        rotation.y += lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);
     } else if (amountEaten > 0.0f) {
         // Done eating
         // Wait for player to get your money

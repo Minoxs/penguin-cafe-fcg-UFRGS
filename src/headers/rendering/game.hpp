@@ -36,12 +36,14 @@ struct Table : InteractiveObject {
 
 struct Customer : InteractiveObject {
     inline static const float SpawnDelay = 5.0f;
+    float initialHeight;
     float initialRotation;
     glm::vec4 customerFaceDirection {};
 
     float spawnTimer;
     bool isBuying = false;
     bool waitingForPayment = false;
+    bool isLeaving = false;
     float amountEaten = 0.0f;
 
     Table* tableReference;

@@ -93,7 +93,7 @@ void Player::Proc(float time, float delta) {
     cameraTranslate(delta);
     cameraPan();
 
-    if (g_isEPressed && (time-grabTime) > 0.5f) {
+    if (g_isEPressed && (time - bounceTime) > 0.5f) {
         if (food == nullptr) {
             // Check if player is interacting with something
             auto hold = hand->layer->Interacting(hand, Physics::FOOD);
@@ -101,13 +101,22 @@ void Player::Proc(float time, float delta) {
                 hold->active = false;
                 food = (Food*) hold->referenceObject;
                 food->position.y += food->interact->radius * 1.5f;
-                grabTime = time;
+                bounceTime = time;
+                return;
             }
         } else {
             food->interact->active = true;
             food->TryPutInTable();
             food = nullptr;
-            grabTime = time;
+            bounceTime = time;
+            return;
+        }
+
+        // Check if trying to get money from customer
+        auto hold = hand->layer->Interacting(hand, Physics::CUSTOMER);
+        if (hold != nullptr) {
+            auto customer = (Customer*) hold->referenceObject;
+            money += customer->GetMoney();
         }
     }
 }

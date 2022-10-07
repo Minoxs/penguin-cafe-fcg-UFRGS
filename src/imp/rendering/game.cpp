@@ -70,12 +70,13 @@ void Table::Proc(float time, float delta) {
     if (food != nullptr && food->remaining <= 0.0f) {
         food->Clean();
         food = nullptr;
+        interact->active = true;
     }
 }
 
 Customer::Customer(const ObjectInstance &object, Table* tableReference) : InteractiveObject(object) {
     this->tableReference = tableReference;
-    this->spawnTimer = 0.0f;//5.0f + (float)(rand() % 30);
+    this->spawnTimer = 0.0f;//5.0f + (float)(rand() % 30); // TODO UNDO THIS
     this->initialRotation = rotation.y;
     interact = new Physics::InteractiveCollider(
             name,
@@ -84,11 +85,25 @@ Customer::Customer(const ObjectInstance &object, Table* tableReference) : Intera
             &position,
             1.0f
     );
+    interact->active = false;
     // TODO BE SMART SOME OTHER DAY
     customerFaceDirection =
             (90.0f * PI / 180.0f == rotation.y) ?
             glm::vec4(0.0f, 0.0f, -1.0f, 0.0f) :
             glm::vec4(0.0f, 0.0f, +1.0f, 0.0f);
+}
+
+float Customer::GetMoney() {
+    if (!waitingForPayment) return 0;
+
+    auto money = amountEaten;
+    isBuying = false;
+    waitingForPayment = false;
+    interact->active = false;
+    spawnTimer += Customer::SpawnDelay + (float)(rand() % 30);
+    amountEaten = 0.0f;
+    rotation.y = initialRotation;
+    return money;
 }
 
 void Customer::Draw() {
@@ -104,24 +119,12 @@ float lerp(float a, float b, float t, bool reverse) {
 
 void Customer::Proc(float time, float delta) {
     isBuying = time > spawnTimer;
-    if (collider != nullptr) {
-        collider->active = isBuying;
-    }
+    collider->active = isBuying;
 
     if (!isBuying) return;
+    spawnTimer = time;
 
-    if (tableReference->food != nullptr) {
-        // Eat food yum
-        tableReference->food->remaining -= delta * 50.0f;
-        amountEaten += delta;
-        // Be happy
-        auto t = (float) fmod(time, 1.0f);
-        rotation.y = initialRotation + lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);
-        return;
-    } else if (amountEaten > 0.0f) {
-        // Done eating
-        // Wait for player to get your money
-
+    if (waitingForPayment) {
         // Look at player
         auto player = sceneReference->player;
 
@@ -133,11 +136,20 @@ void Customer::Proc(float time, float delta) {
         auto left = dotproduct(playerDirection, side) > 0.0f;
         auto invert = (left) ? -1.0f : 1.0f;
         rotation.y = initialRotation + (rotationNeeded - 1) * PI / 2 * invert;
-        // it works
+        return;
+    }
 
-//        isBuying = false;
-//        // TODO ADD PAYMENT
-//        spawnTimer = time + Customer::SpawnDelay + (float)(rand() % 30);
-//        amountEaten = 0.0f;
+    if (tableReference->food != nullptr) {
+        // Eat food yum
+        tableReference->food->remaining -= delta * 50.0f; // TODO UNDO THIS
+        amountEaten += delta * tableReference->food->foodValue;
+        // Be happy
+        auto t = (float) fmod(time, 1.0f);
+        rotation.y = initialRotation + lerp(-PI/2, PI/2, t, fmod(time, 2.0f) > 1.0f);
+    } else if (amountEaten > 0.0f) {
+        // Done eating
+        // Wait for player to get your money
+        interact->active = true;
+        waitingForPayment = true;
     }
 }

@@ -16,6 +16,7 @@ struct InteractiveObject : ObjectInstance {
 
 struct Food : InteractiveObject {
     float remaining = 100.0f;
+    float foodValue = 1.0f;
 
     explicit Food(ObjectInstance const &object, float radius);
     void TryPutInTable();
@@ -38,11 +39,13 @@ struct Customer : InteractiveObject {
 
     float spawnTimer;
     bool isBuying = false;
+    bool waitingForPayment = false;
     float amountEaten = 0.0f;
 
     Table* tableReference;
 
     explicit Customer(ObjectInstance const &object, Table* tableReference);
+    float GetMoney();
 
     void Proc(float time, float delta) override;
     void Draw() override;

@@ -124,6 +124,8 @@ int main() {
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CCW);
 
+    auto strMoney = std::string();
+    strMoney.resize(1000);
     auto game = new Game();
 
     glfwSetTime(0);
@@ -139,7 +141,15 @@ int main() {
         // Render Scene
         game->scene->Render(frameTime, delta);
 
+        // Render text
         TextRendering_ShowFramesPerSecond(window);
+
+        // FONTE: text.cpp
+        int numChars = std::sprintf(strMoney.data(), "Money: PG$%.2f", game->scene->player->money);
+        float lineHeight = TextRendering_LineHeight(window);
+        float charWidht  = TextRendering_CharWidth (window);
+        TextRendering_PrintString(window, strMoney, 0.0f - (float)numChars * charWidht, -1.0f + lineHeight, 1.5f);
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 

@@ -12,10 +12,12 @@
 struct Player : ObjectInstance {
     inline static const float speed {10.0f};
 
+    float money = 0.0f;
+
     Camera* view = nullptr;
     Physics::InteractiveCollider* hand = nullptr;
     Food* food = nullptr;
-    float grabTime = 0.0f;
+    float bounceTime = 0.0f;
 
     explicit Player(const ObjectInstance &object, Camera* view);
 
